@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="templates/_template.xhtml">
+	<ui:define name="section_title"></ui:define>
+	<ui:define name="content">		
+		<div id="client_info">
+			<div class="info_block">
+				<span class="info"><b>Id: </b>#{clientManagedBean.client.id}</span>
+				<span class="info"><b>Nome: </b>#{clientManagedBean.client.name}</span>
+				<span class="info"><b>CPF: </b>#{clientManagedBean.client.cpf}</span>
+				<ui:repeat value="#{clientManagedBean.client.phoneNumbers}" var="phone">
+					<span class="info"><b>#{phone.type}: </b>#{phone.number}</span>	
+				</ui:repeat>				
+				<span class="info"><b>Endereço: </b>#{clientManagedBean.client.address}</span>
+				<h:form>
+					<h:commandLink action="#{clientManagedBean.editClient}"
+						value="Editar">
+						<f:param name="clientId" value="#{clientManagedBean.client.id}" />
+					</h:commandLink>
+				</h:form>
+			</div>
+		</div>
+
+		<a id="hide_order" href="#">+ pedido</a>
+		<ui:include src="templates/new_order_form.xhtml"></ui:include>
+
+		<div id="client_orders_inprogress">
+			<ui:repeat var="order" value="#{clientManagedBean.ordersInProgress}">
+				<div class="info_block">
+						<span class="info"><b>Id: </b>#{order.id}</span>
+					<span class="info"><b>Pedido: </b>#{order.description}</span> <span
+						class="info"><b>Data: </b><h:outputText value="#{order.requestDate}"><f:convertDateTime pattern="yyyy-mm-dd" type="date" /></h:outputText></span> <span
+						class="info"><b>Entrega: </b><h:outputText value="#{order.deliveryDate}"><f:convertDateTime pattern="yyyy-mm-dd" type="date" /></h:outputText></span> <span
+						class="info"><b>Custo: </b>#{order.cost}</span> <span class="info"><b>Valor:
+					</b>#{order.value}</span> <span class="info"><b>Status: </b>#{order.status.viewName}</span>
+					<span class="info"><b>Responsável: </b>#{order.owner.name}</span>
+					<h:form>
+					<h:commandLink action="#{orderManagedBean.editOrder}"
+						value="Editar">
+						<f:param name="orderId" value="#{order.id}" />
+					</h:commandLink>
+				</h:form>
+				</div>
+				<br />
+			</ui:repeat>
+		</div>
+		
+		<div id="client_orders_ready">
+			<ui:repeat var="order" value="#{clientManagedBean.ordersReady}">
+				<div class="info_block">
+						<span class="info"><b>Id: </b>#{order.id}</span>
+					<span class="info"><b>Pedido: </b>#{order.description}</span> <span
+						class="info"><b>Data: </b>#{order.requestDate}</span> <span
+						class="info"><b>Entrega: </b>#{order.deliveryDate}</span> <span
+						class="info"><b>Custo: </b>#{order.cost}</span> <span class="info"><b>Valor:
+					</b>#{order.value}</span> <span class="info"><b>Status: </b>#{order.status.viewName}</span>
+					<span class="info"><b>Responsável: </b>#{order.owner.name}</span>
+					<h:form>
+					<h:commandLink action="#{orderManagedBean.editOrder}"
+						value="Editar">
+						<f:param name="orderId" value="#{order.id}" />
+					</h:commandLink>
+				</h:form>
+				</div>
+				<br />
+			</ui:repeat>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>

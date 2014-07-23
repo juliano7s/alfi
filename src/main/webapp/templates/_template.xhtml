@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+	<ui:insert name="head">
+		<title><ui:insert name="title">POBS</ui:insert></title>
+		<h:outputScript name="jquery/js/jquery-1.9.1.js" />
+		<h:outputScript name="jquery/js/jquery-ui-1.10.3.custom.js" />
+		<h:outputStylesheet name="css/main.css" />
+		<h:outputStylesheet
+			name="jquery/css/ui-lightness/jquery-ui-1.10.3.custom.css" />
+		<!--  <h:outputScript library="js" target="jquery/js/jquery-ui-1.10.3.custom.min.js"></h:outputScript> -->
+
+		<h:outputScript name="js/main.js" />
+		
+	</ui:insert>
+</h:head>
+
+<h:body>
+	<div id="header">
+		<ui:insert name="header">
+			<!--  include your header file or uncomment the include below and create header.xhtml in this directory -->
+			<ui:include src="_header.xhtml" />
+		</ui:insert>
+	</div>
+
+
+	<div id="content">
+		<ui:insert name="section_title">
+			<h3>Section Title</h3>
+		</ui:insert>
+		<ui:insert name="content">
+    	Content area.  See comments below this line in the source.
+		</ui:insert>
+	</div>
+
+	<div id="footer">
+		<ui:insert name="footer">
+			<!--  include your header file or uncomment the include below and create footer.xhtml in this directory -->
+			<ui:include src="_footer.xhtml" />
+		</ui:insert>
+	</div>
+
+</h:body>
+</html>
