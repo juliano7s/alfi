@@ -36,13 +36,8 @@
 							<h:inputText value="#{phone.number}" /></div>
 					</ui:repeat>
 					</h:panelGroup>
-					<h:commandButton value="+ Telefone" action="#{clientManagedBean.addPhoneNumber}" />
+					<h:commandButton value="+ Telefone" action="#{clientManagedBean.addPhoneNumber}" />					
 					
-					<h:outputText>Telefone: </h:outputText>
-					<h:inputText id="client_phone_input"
-						value="#{clientManagedBean.client.phone}" />
-					<h:message for="client_phone_input"></h:message>
-
 					<h:outputText>Endereço: </h:outputText>
 					<h:inputText id="client_address_input"
 						value="#{clientManagedBean.client.address}" />

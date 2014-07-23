@@ -22,7 +22,7 @@ public abstract class EntityManager<T> {
 	protected javax.persistence.EntityManager getEntityManager() {
 		if (this.e == null) {
 			EntityManagerFactory entityManagerFactory = Persistence
-					.createEntityManagerFactory(Constants.POBS_PERSISTENCE_UNIT);
+					.createEntityManagerFactory(Constants.ALFI_PERSISTENCE_UNIT);
 			javax.persistence.EntityManager entityManager = entityManagerFactory
 					.createEntityManager();
 

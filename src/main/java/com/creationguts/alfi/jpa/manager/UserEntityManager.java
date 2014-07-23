@@ -16,7 +16,7 @@ public class UserEntityManager {
 	public List<User> getUsers() {
 		
 		logger.debug("Getting users");
-		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(Constants.POBS_PERSISTENCE_UNIT);
+		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(Constants.ALFI_PERSISTENCE_UNIT);
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		entityManager.getTransaction().begin();
 		List<User> result = entityManager.createQuery( "from User", User.class ).getResultList();
