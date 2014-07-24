@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
-
-<ui:composition template="templates/_template.xhtml">
-	<ui:define name="section_title"></ui:define>
-	<ui:define name="content">
-		<h:form id="new_client_form">
-			<div id="new_client">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:t="http://myfaces.apache.org/tomahawk">
+<body>
+	<ui:composition>
+		<h:form id="client_form">
+			<div id="client">
 				<h:outputText>#{clientManagedBean.client.id}</h:outputText>
 				<h:panelGrid columns="3">
 					<h:outputText>Nome: </h:outputText>
@@ -55,6 +51,6 @@
 				</h:panelGrid>
 			</div>
 		</h:form>
-	</ui:define>
-</ui:composition>
+	</ui:composition>
+</body>
 </html>

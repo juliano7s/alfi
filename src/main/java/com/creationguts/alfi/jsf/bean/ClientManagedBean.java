@@ -78,7 +78,7 @@ public class ClientManagedBean implements Serializable {
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage("Cliente não encontrado."));
 			newClient();
-			view = "newclient";
+			view = "edit_client";
 		} else {
 			String foundClients = (clients.size() > 1) ? " clientes econtrados."
 					: " cliente encontrado.";
@@ -91,7 +91,7 @@ public class ClientManagedBean implements Serializable {
 	}
 
 	/**
-	 * Action: create new client to persist and redirect to newclient.xhtml
+	 * Action: create new client to persist and redirect to edit_client.xhtml
 	 */
 	@PostConstruct
 	public void newClient() {
@@ -116,7 +116,7 @@ public class ClientManagedBean implements Serializable {
 			}
 		}
 
-		return "newclient";
+		return "edit_client";
 	}
 
 	/**
@@ -169,7 +169,7 @@ public class ClientManagedBean implements Serializable {
 	public String addPhoneNumber() {
 		logger.debug("Adding phone number");
 		phoneNumbers.add(new Phone());
-		return "newclient";
+		return "edit_client";
 	}
 	
 	/**

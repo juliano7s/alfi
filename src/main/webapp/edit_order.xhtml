@@ -9,17 +9,19 @@
 
 <ui:composition template="templates/_template.xhtml">
 	<ui:define name="section_title"></ui:define>
-	<ui:define name="content">		
+	<ui:define name="content">
 		<div id="edit_order">
 			<h:form id="edit_order_form">
-			<div id="edit_order_menu">
-				<span><h:commandLink value="Pronto" /> | </span>
-				<span><h:commandLink value="Entregue" /> | </span>
-			</div>
+				<div id="edit_order_menu">
+					<span><h:commandLink value="Pronto" /> | </span>
+					<!-- ajax call -->
+					<span><h:commandLink value="Entregue" /> | </span>
+					<!-- ajax call -->
+				</div>
 			</h:form>
 			<h:outputText>#{orderManagedBean.order.id}</h:outputText>
-			<ui:include src="templates/new_order_form.xhtml"></ui:include>
-		</div>		
+			<ui:include src="includes/order_form.xhtml"></ui:include>
+		</div>
 	</ui:define>
 </ui:composition>
 </html>
