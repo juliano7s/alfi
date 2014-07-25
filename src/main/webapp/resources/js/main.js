@@ -5,18 +5,20 @@ $(document).ready(function() {
 	$('.jquery').each(function() {
 		eval($(this).html());
 	});
+	
+	$("#order").hide();
 });
 
 $(function() {
 	$(".datepicker").datepicker({
 		dateFormat : "dd/mm/yy"
-	});
+	});	
 
 	$("#hide_order").click(function() {
-		if ($("#new_order").is(":visible")) {
-			$("#new_order").slideUp("fast");
+		if ($("#order").is(":visible")) {
+			$("#order").slideUp("fast");
 		} else {
-			$("#new_order").slideDown("fast");
+			$("#order").slideDown("fast");
 		}
 	});
 });

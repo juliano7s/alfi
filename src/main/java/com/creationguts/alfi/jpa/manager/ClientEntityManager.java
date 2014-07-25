@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.creationguts.alfi.jpa.model.Client;
+import com.creationguts.alfi.jpa.vo.Client;
 
 public class ClientEntityManager extends EntityManager<Client> {
 
@@ -25,8 +25,8 @@ public class ClientEntityManager extends EntityManager<Client> {
 		getEntityManager().getTransaction().begin();
 		List<Client> result = getEntityManager()
 				.createQuery(
-						"from Client c where c.name like '" + name
-								+ "%' order by c.name", Client.class)
+						"from Client c where upper(c.name) like upper('%" + name
+								+ "%') order by c.name", Client.class)
 				.getResultList();
 		logger.debug("total clients returned: " + result.size());
 		getEntityManager().getTransaction().commit();

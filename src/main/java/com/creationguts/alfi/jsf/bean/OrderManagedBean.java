@@ -20,8 +20,9 @@ import scala.actors.threadpool.Arrays;
 
 import com.creationguts.alfi.jpa.manager.OrderEntityManager;
 import com.creationguts.alfi.jpa.manager.UserEntityManager;
-import com.creationguts.alfi.jpa.model.Order;
-import com.creationguts.alfi.jpa.model.User;
+import com.creationguts.alfi.jpa.vo.Order;
+import com.creationguts.alfi.jpa.vo.Order.Status;
+import com.creationguts.alfi.jpa.vo.User;
 
 @ManagedBean
 @RequestScoped
@@ -92,6 +93,16 @@ public class OrderManagedBean implements Serializable {
 		}
 		
 		return "edit_order";
+	}
+	
+	/**
+	 * Action
+	 * @return
+	 */
+	public String setOrderReady() {
+		order.setStatus(Status.READY);
+		saveOrder();
+		return null;
 	}
 	
 	/**

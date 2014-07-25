@@ -12,7 +12,7 @@ import javax.persistence.TypedQuery;
 
 import org.apache.log4j.Logger;
 
-import com.creationguts.alfi.jpa.model.Order;
+import com.creationguts.alfi.jpa.vo.Order;
 
 public class OrderEntityManager extends EntityManager<Order> {
 	

@@ -28,3 +28,11 @@ CREATE TABLE `pobs`.`client_phones` (
   ALTER TABLE `pobs`.`client_phones` 
 CHANGE COLUMN `clientid` `clientid` INT(10) NOT NULL ,
 DROP PRIMARY KEY;
+
+ALTER TABLE `pobs`.`orders` 
+DROP COLUMN `ready`,
+DROP COLUMN `delivered`;
+
+ALTER TABLE `pobs`.`orders` 
+ADD COLUMN `payment_date` DATETIME NULL DEFAULT NULL AFTER `ready_date`,
+ADD COLUMN `paid` BIT NULL DEFAULT 0 AFTER `cost`;

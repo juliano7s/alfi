@@ -13,9 +13,13 @@
 		<div id="edit_order">
 			<h:form id="edit_order_form">
 				<div id="edit_order_menu">
-					<span><h:commandLink value="Pronto" /> | </span>
+					<span><h:commandLink value="Pronto" action="#{orderManagedBean.setOrderReady}">
+						<!-- <f:ajax render="order_status_input"/> -->
+					</h:commandLink> | </span>
 					<!-- ajax call -->
 					<span><h:commandLink value="Entregue" /> | </span>
+					<!-- ajax call -->
+					<span><h:commandLink value="Pago" /> | </span>
 					<!-- ajax call -->
 				</div>
 			</h:form>

@@ -8,8 +8,15 @@
 	xmlns:f="http://java.sun.com/jsf/core">
 
 <ui:composition template="templates/_template.xhtml">
+	<h:head>
+		<h:outputStylesheet name='css/client.css' />
+	</h:head>
 	<ui:define name="section_title"></ui:define>
-	<ui:define name="content">		
+	<ui:define name="content">
+	
+		<a id="hide_order" href="#">+ pedido</a>
+		<ui:include src="includes/order_form.xhtml"></ui:include>	
+			
 		<div id="client_info">
 			<div class="info_block">
 				<span class="info"><b>Id: </b>#{clientManagedBean.client.id}</span>
@@ -28,10 +35,8 @@
 			</div>
 		</div>
 
-		<a id="hide_order" href="#">+ pedido</a>
-		<ui:include src="includes/order_form.xhtml"></ui:include>
-
 		<div id="client_orders_inprogress">
+			<h4>Pedidos em andamento</h4>
 			<ui:repeat var="order" value="#{clientManagedBean.ordersInProgress}">
 				<div class="info_block">
 						<span class="info"><b>Id: </b>#{order.id}</span>
@@ -53,6 +58,7 @@
 		</div>
 		
 		<div id="client_orders_ready">
+			<h4>Pedidos prontos</h4>
 			<ui:repeat var="order" value="#{clientManagedBean.ordersReady}">
 				<div class="info_block">
 						<span class="info"><b>Id: </b>#{order.id}</span>

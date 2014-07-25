@@ -1,4 +1,4 @@
-package com.creationguts.alfi.jpa.model;
+package com.creationguts.alfi.jpa.vo;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -56,6 +56,13 @@ public class Order implements Serializable {
 	public void setReadyDate(Date readyDate) {
 		this.readyDate = readyDate;
 	}
+	@Column(name="payment_date")
+	public Date getPaymentDate() {
+		return paymentDate;
+	}
+	public void setPaymentDate(Date paymentDate) {
+		this.paymentDate = paymentDate;
+	}
 	public Float getValue() {
 		return value;
 	}
@@ -87,6 +94,12 @@ public class Order implements Serializable {
 		this.owner = owner;
 	}
 
+	public Boolean isPaid() {
+		return paid;
+	}
+	public void setPaid(Boolean paid) {
+		this.paid = paid;
+	}
 	@Enumerated(EnumType.STRING)
 	public Status getStatus() {
 		return status;
@@ -142,6 +155,8 @@ public class Order implements Serializable {
 	private Date requestDate;
 	private Date deliveryDate;
 	private Date readyDate;
+	private Date paymentDate;
+	private Boolean paid;
 	private Status status = Status.INPROGRESS;
 	private Float value;
 	private Float cost;

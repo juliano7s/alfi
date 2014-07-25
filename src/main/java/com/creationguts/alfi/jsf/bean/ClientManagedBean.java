@@ -16,10 +16,10 @@ import javax.faces.validator.ValidatorException;
 import org.apache.log4j.Logger;
 
 import com.creationguts.alfi.jpa.manager.ClientEntityManager;
-import com.creationguts.alfi.jpa.model.Client;
-import com.creationguts.alfi.jpa.model.Order;
-import com.creationguts.alfi.jpa.model.Order.Status;
-import com.creationguts.alfi.jpa.model.Phone;
+import com.creationguts.alfi.jpa.vo.Client;
+import com.creationguts.alfi.jpa.vo.Order;
+import com.creationguts.alfi.jpa.vo.Order.Status;
+import com.creationguts.alfi.jpa.vo.Phone;
 
 @ManagedBean
 @SessionScoped
@@ -241,7 +241,7 @@ public class ClientManagedBean implements Serializable {
 		if (client != null) {
 			for (Order o : client.getOrders()) {
 				logger.debug("Checking order status: " + o.getStatus());
-				if (o.getStatus().equals(Status.READY)){
+				if (o.getStatus().equals(Status.READY)) {
 					list.add(o);
 				}
 			}

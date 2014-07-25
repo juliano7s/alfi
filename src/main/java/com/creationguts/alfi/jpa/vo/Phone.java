@@ -1,4 +1,4 @@
-package com.creationguts.alfi.jpa.model;
+package com.creationguts.alfi.jpa.vo;
 
 import java.io.Serializable;
 

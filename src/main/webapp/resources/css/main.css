@@ -1,6 +1,7 @@
 
 body {
 	padding: 0 0 0 0;
+	font-family: Helvetica, Arial
 }
 
 #header {
@@ -31,6 +32,8 @@ body {
 
 .info_block {
 	margin: 0 0 10px 0;
+	padding: 3px 3px 3px 3px;
+	border: 1px solid gray;
 }
 .info {
 	margin: 0 5px 5px 0;

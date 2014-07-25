@@ -9,7 +9,7 @@ import javax.persistence.Persistence;
 import org.apache.log4j.Logger;
 
 import com.creationguts.alfi.Constants;
-import com.creationguts.alfi.jpa.model.User;
+import com.creationguts.alfi.jpa.vo.User;
 
 public class UserEntityManager {
 	
