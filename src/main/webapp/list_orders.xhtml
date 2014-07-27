@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="templates/_template.xhtml">
+	<ui:define name="section_title"></ui:define>
+	<ui:define name="content">
+		<h:panelGrid columns="1">
+			<h:panelGroup>
+				<div id="client_list">
+					<h4>Busca "#{clientManagedBean.wholeSearch}"</h4>
+					<ui:repeat var="client" value="#{clientManagedBean.clients}">
+						<div class="info_block">
+							<span class="info"><b>Id: </b>#{client.id}</span>
+							<span class="info"><b>Nome: </b>#{client.name}</span> <span
+								class="info"><b>CPF: </b>#{client.cpf}</span> <br />
+							<ui:repeat value="#{client.phoneNumbers}" var="phone">
+								<span class="info"><b>#{phone.type}: </b>#{phone.number}</span>
+							</ui:repeat>
+							<span> <h:form>
+									<h:commandLink action="#{clientManagedBean.viewClient}"
+										value="Info">
+										<f:param name="clientId" value="#{client.id}" />
+									</h:commandLink>
+								</h:form>
+							</span>
+						</div>
+						<br />
+					</ui:repeat>
+				</div>
+			</h:panelGroup>
+		</h:panelGrid>
+	</ui:define>
+</ui:composition>
+</html>

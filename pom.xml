@@ -1,14 +1,15 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.creationguts.alfi</groupId>
-  <artifactId>alfi</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>war</packaging>
-  <name>Sistema Alfi</name>
-  
-  <build>
-  	<plugins>
-	<!-- Maven War file generator plugin -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.creationguts.alfi</groupId>
+	<artifactId>alfi</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+	<name>Sistema Alfi</name>
+
+	<build>
+		<plugins>
+			<!-- Maven War file generator plugin -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
@@ -21,7 +22,7 @@
 								<include>**/*.properties</include>
 								<include>**/*.xml</include>
 								<include>**/*.css</include>
-								<include>**/*.html</include>								
+								<include>**/*.html</include>
 							</includes>
 						</resource>
 					</webResources>
@@ -37,8 +38,8 @@
 			</plugin>
 		</plugins>
 	</build>
-  
-  <dependencies>
+
+	<dependencies>
 		<dependency>
 			<groupId>javax.servlet.jsp</groupId>
 			<artifactId>jsp-api</artifactId>
@@ -46,19 +47,18 @@
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>3.0</version>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.0.1</version>
 		</dependency>
-  
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
-			<version>4.2.12.Final</version>
+			<version>4.3.3.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
-			<version>4.2.12.Final</version>
+			<version>4.3.3.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>mysql</groupId>

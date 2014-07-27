@@ -9,7 +9,7 @@
             Persistence unit for Alfi app
         </description>
         
-		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		<class>com.creationguts.alfi.jpa.vo.Client</class>
 		<class>com.creationguts.alfi.jpa.vo.Order</class>
 		<class>com.creationguts.alfi.jpa.vo.User</class>
@@ -17,7 +17,7 @@
 		<!-- http://docs.jboss.org/hibernate/orm/4.2/quickstart/en-US/html/index.html -->
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/pobs" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/alfi_dev" />
 			<property name="javax.persistence.jdbc.user" value="pobs" />
 			<property name="javax.persistence.jdbc.password" value="LszxRcHWKd8CHvxE" />
 		</properties>		

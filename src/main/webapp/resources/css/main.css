@@ -41,3 +41,11 @@ body {
 .info_message {
 	color: green;
 }
+
+#footer {
+	margin: 10px 0 0 0;	
+	padding: 5px 5px 5px 5px;
+	background-color: #2E5CB8;
+	color: white;
+	text-decoration: bold;
+}

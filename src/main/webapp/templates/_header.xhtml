@@ -7,12 +7,15 @@
 	<ui:composition>
 		<h:form id="main_client_search">
 		<div id="header_menu1">			
-			<span><h:outputLink value="index.xhtml">Sistema Alfi</h:outputLink></span>
+			<span><h:outputLink value="index.xhtml">Início</h:outputLink></span>
 			<span>			
 				<span><h:inputText id="main_search" value="#{clientManagedBean.wholeSearch}" styleClass="default_input" /> 
-				<h:commandButton id="main_search_button" action="#{clientManagedBean.executeWholeSearch}" value="Procurar" styleClass="default_button" /></span>			
+				<h:commandButton id="main_search_button" action="#{clientManagedBean.executeWholeSearch}" value="Procurar clientes" styleClass="default_button" /></span>			
 			</span>
-			<span><h:outputLink value="edit_client.xhtml">+ Cliente</h:outputLink></span>			
+			<span><h:outputLink value="edit_client.xhtml">+ Cliente</h:outputLink></span>   			
+			<span><h:outputLink value="edit_product.xhtml">+ Produto</h:outputLink></span>  
+			<span><h:outputLink value="search_orders.xhtml">Pesquisar pedidos</h:outputLink></span>  
+			<span><h:outputLink value="search_products.xhtml">Pesquisar produtos</h:outputLink></span>
 		</div>
 		<div id="header_message_block">
 			<span class="error"><h:message for="main_search_button" /></span>

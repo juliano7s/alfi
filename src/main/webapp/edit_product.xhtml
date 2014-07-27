@@ -10,9 +10,11 @@
 <ui:composition template="templates/_template.xhtml">
 	<ui:define name="section_title"></ui:define>
 	<ui:define name="content">
-		<h4>Informações do Cliente</h4>
-		Índice: <h:outputText>#{clientManagedBean.client.id}</h:outputText>
-		<ui:include src="includes/client_form.xhtml"></ui:include>
+		<h4>Informações do Produto</h4>
+		<div id="edit_order">
+			Índice: <h:outputText>#{orderManagedBean.order.id}</h:outputText>
+			<ui:include src="includes/order_form.xhtml"></ui:include>
+		</div>
 	</ui:define>
 </ui:composition>
 </html>

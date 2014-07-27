@@ -60,7 +60,7 @@ public class ClientManagedBean implements Serializable {
 					client = clients.get(0);
 					view = viewClient();
 				} else
-					view = "clients";
+					view = "list_clients";
 			}
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
