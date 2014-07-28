@@ -10,6 +10,10 @@ ALTER TABLE `pobs`.`orders`
 ADD COLUMN `status` VARCHAR(15) NULL DEFAULT 'INPROGRESS' COMMENT 'Values:' /* comment truncated */ /*INPROGRESS
 READY
 DELIVERED*/ AFTER `ownerid`;
+  
+ALTER TABLE `pobs`.`orders` 
+DROP COLUMN `ready`,
+DROP COLUMN `delivered`;
 
 ALTER TABLE `pobs`.`clients`
 CHANGE COLUMN `clientid` `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT ;
@@ -22,16 +26,8 @@ CHANGE COLUMN `ownerid` `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT ;
 
 CREATE TABLE `pobs`.`client_phones` (
   `clientid` INT(10) UNSIGNED NOT NULL,
-  `phone` VARCHAR(45) NULL,
-  PRIMARY KEY (`clientid`));
-  
-  ALTER TABLE `pobs`.`client_phones` 
-CHANGE COLUMN `clientid` `clientid` INT(10) NOT NULL ,
-DROP PRIMARY KEY;
-
-ALTER TABLE `pobs`.`orders` 
-DROP COLUMN `ready`,
-DROP COLUMN `delivered`;
+  `number` VARCHAR(45) NULL,
+  `type` VARCHAR(45) NULL);
 
 ALTER TABLE `pobs`.`orders` 
 ADD COLUMN `payment_date` DATETIME NULL DEFAULT NULL AFTER `ready_date`,
