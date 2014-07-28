@@ -94,11 +94,11 @@ public class Order implements Serializable {
 		this.owner = owner;
 	}
 
-	public Boolean isPaid() {
-		return paid;
+	public Boolean getPaidStatus() {
+		return paidStatus;
 	}
-	public void setPaid(Boolean paid) {
-		this.paid = paid;
+	public void setPaidStatus(Boolean paidStatus) {
+		this.paidStatus = paidStatus;
 	}
 	@Enumerated(EnumType.STRING)
 	public Status getStatus() {
@@ -117,6 +117,13 @@ public class Order implements Serializable {
 				+ owner + "]";
 	}
 	
+	public Boolean getOwnerPaidStatus() {
+		return ownerPaidStatus;
+	}
+	public void setOwnerPaidStatus(Boolean ownerPaidStatus) {
+		this.ownerPaidStatus = ownerPaidStatus;
+	}
+
 	public enum Status {
 	    INPROGRESS("INPROGRESS"),
 	    READY("READY"),
@@ -156,12 +163,14 @@ public class Order implements Serializable {
 	private Date deliveryDate;
 	private Date readyDate;
 	private Date paymentDate;
-	private Boolean paid;
 	private Status status = Status.INPROGRESS;
 	private Float value;
 	private Float cost;
+	private Float paidValue;
+	private Boolean paidStatus;
 	private Client client;
 	private User owner;
+	private Boolean ownerPaidStatus;
 	
 	private static final long serialVersionUID = 1710642303009857896L;
 }
