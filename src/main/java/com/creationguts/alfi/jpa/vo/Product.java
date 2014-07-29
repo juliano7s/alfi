@@ -32,10 +32,17 @@ public class Product implements Serializable {
 	public void setBarcode(String barcode) {
 		this.barcode = barcode;
 	}
+	public Integer getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
 
 	private Long id;
 	private String description;
 	private String barcode;
+	private Integer quantity;
 	
 	private static final long serialVersionUID = -1833250359689114783L;
 	

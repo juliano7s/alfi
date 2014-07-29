@@ -13,6 +13,9 @@
 		<class>com.creationguts.alfi.jpa.vo.Client</class>
 		<class>com.creationguts.alfi.jpa.vo.Order</class>
 		<class>com.creationguts.alfi.jpa.vo.User</class>
+		<class>com.creationguts.alfi.jpa.vo.Purchase</class>
+		<class>com.creationguts.alfi.jpa.vo.Product</class>
+		<class>com.creationguts.alfi.jpa.vo.Phone</class>
 
 		<!-- http://docs.jboss.org/hibernate/orm/4.2/quickstart/en-US/html/index.html -->
 		<properties>
