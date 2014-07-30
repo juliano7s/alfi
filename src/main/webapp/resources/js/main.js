@@ -7,6 +7,7 @@ $(document).ready(function() {
 	});
 	
 	$("#order").hide();
+	$("#purchase").hide();
 	$("#open_orders_tab").show();
 	$("#delayed_orders_tab").hide();
 	$("#clients_in_debt_tab").hide();
@@ -22,6 +23,14 @@ $(function() {
 			$("#order").slideUp("fast");
 		} else {
 			$("#order").slideDown("fast");
+		}
+	});
+	
+	$("#hide_purchase").click(function() {
+		if ($("#purchase").is(":visible")) {
+			$("#purchase").slideUp("fast");
+		} else {
+			$("#purchase").slideDown("fast");
 		}
 	});
 	

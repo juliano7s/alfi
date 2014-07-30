@@ -14,8 +14,10 @@
 	<ui:define name="section_title"></ui:define>
 	<ui:define name="content">
 	
-		<a id="hide_order" href="#">+ pedido</a>
-		<ui:include src="includes/order_form.xhtml"></ui:include>	
+		<a id="hide_order" href="#">+ pedido</a> | 
+		<a id="hide_purchase" href="#">+ produto</a> 
+		<ui:include src="includes/order_form.xhtml"></ui:include>
+		<ui:include src="includes/purchase_form.xhtml"></ui:include>
 			
 		<div id="client_info">
 			<div class="info_block">
@@ -36,7 +38,29 @@
 		</div>
 
 		<div id="client_orders_inprogress">
-			<h4>Pedidos em andamento</h4>
+			<h4>Pedidos em aberto</h4>
+			<ui:repeat var="order" value="#{clientManagedBean.ordersInProgress}">
+				<div class="info_block">
+						<span class="info"><b>Id: </b>#{order.id}</span>
+					<span class="info"><b>Pedido: </b>#{order.description}</span> <span
+						class="info"><b>Data: </b><h:outputText value="#{order.requestDate}"><f:convertDateTime pattern="yyyy-mm-dd" type="date" /></h:outputText></span> <span
+						class="info"><b>Entrega: </b><h:outputText value="#{order.deliveryDate}"><f:convertDateTime pattern="yyyy-mm-dd" type="date" /></h:outputText></span> <span
+						class="info"><b>Custo: </b>#{order.cost}</span> <span class="info"><b>Valor:
+					</b>#{order.value}</span> <span class="info"><b>Status: </b>#{order.status.viewName}</span>
+					<span class="info"><b>Responsável: </b>#{order.owner.name}</span>
+					<h:form>
+					<h:commandLink action="#{orderManagedBean.editOrder}"
+						value="Editar">
+						<f:param name="orderId" value="#{order.id}" />
+					</h:commandLink>
+				</h:form>
+				</div>
+				<br />
+			</ui:repeat>
+		</div>
+		
+		<div id="client_orders_inprogress">
+			<h4>Compras em aberto</h4>
 			<ui:repeat var="order" value="#{clientManagedBean.ordersInProgress}">
 				<div class="info_block">
 						<span class="info"><b>Id: </b>#{order.id}</span>
@@ -58,7 +82,7 @@
 		</div>
 		
 		<div id="client_orders_ready">
-			<h4>Pedidos prontos</h4>
+			<h4>Histórico</h4>
 			<ui:repeat var="order" value="#{clientManagedBean.ordersReady}">
 				<div class="info_block">
 						<span class="info"><b>Id: </b>#{order.id}</span>

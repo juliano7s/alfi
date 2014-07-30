@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:t="http://myfaces.apache.org/tomahawk">
+<body>
+	<ui:composition>
+		<h:form id="purchase_form">
+			<h:inputHidden value="#{purchaseManagedBean.purchase.id}" />
+			<div id="purchase">
+				<h:panelGrid columns="1">
+
+					<h:panelGroup>
+						<ui:repeat value="#{purchaseManagedBean.purchasedProducts}" var="mapEntry">
+							<div>
+								Código do produto: <h:inputText value="#{mapEntry.key}" />
+								Quantidade: <h:inputText value="#{mapEntry.value}" />
+							</div>
+						</ui:repeat>
+					</h:panelGroup>
+					<h:commandButton value="+ Produto"
+						action="#{purchaseManagedBean.addPurchasedProduct}" />
+
+					<h:panelGrid columns="3">
+						<h:panelGrid columns="2">
+							<h:outputText>Data da compra: </h:outputText>
+							<h:inputText id="purchase_date_input" cols="10"
+								value="#{purchaseManagedBean.purchase.date}"
+								styleClass="datepicker">
+								<f:convertDateTime pattern="yyyy-MM-dd" type="date" />
+							</h:inputText>
+
+							<h:outputText>Data do pagamento: </h:outputText>
+							<h:inputText id="purchase_payment_date_input" cols="10"
+								value="#{purchaseManagedBean.purchase.paymentDate}"
+								styleClass="datepicker">
+								<f:convertDateTime pattern="yyyy-MM-dd" type="date" />
+							</h:inputText>
+						</h:panelGrid>
+
+						<h:panelGrid columns="2">
+							<h:outputText>Valor da compra (R$): </h:outputText>
+							<h:inputText id="purchase_paid_value_input" cols="10"
+								value="#{purchaseManagedBean.purchase.paidValue}"
+								converter="javax.faces.Float" />
+
+							<h:outputText>Status do pagamento: </h:outputText>
+							<h:selectOneMenu id="purchase_status_input"
+								value="#{purchaseManagedBean.purchase.paidStatus}">
+								<f:selectItem itemLabel="PAGO" itemValue="true"></f:selectItem>
+								<f:selectItem itemLabel="NÃO PAGO" itemValue="false"></f:selectItem>
+							</h:selectOneMenu>
+						</h:panelGrid>
+
+						<h:commandButton id="purchase_button" value="Salvar"
+							action="#{purchaseManagedBean.savePurchase}"></h:commandButton>
+					</h:panelGrid>
+				</h:panelGrid>
+
+			</div>
+			<div id="purchase_message">
+				<span class="error"><h:message for="purchase_button" /></span>
+			</div>
+		</h:form>
+	</ui:composition>
+</body>
+</html>

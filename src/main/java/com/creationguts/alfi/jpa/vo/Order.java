@@ -94,6 +94,7 @@ public class Order implements Serializable {
 		this.owner = owner;
 	}
 
+	@Column(name="paid_status")
 	public Boolean getPaidStatus() {
 		return paidStatus;
 	}
@@ -117,11 +118,20 @@ public class Order implements Serializable {
 				+ owner + "]";
 	}
 	
+	@Column(name="owner_paid_status")
 	public Boolean getOwnerPaidStatus() {
 		return ownerPaidStatus;
 	}
 	public void setOwnerPaidStatus(Boolean ownerPaidStatus) {
 		this.ownerPaidStatus = ownerPaidStatus;
+	}
+
+	@Column(name="paid_value")
+	public Float getPaidValue() {
+		return paidValue;
+	}
+	public void setPaidValue(Float paidValue) {
+		this.paidValue = paidValue;
 	}
 
 	public enum Status {

@@ -106,6 +106,8 @@ CREATE TABLE `products` (
   `id` int(10) unsigned NOT NULL,
   `barcode` varchar(45) DEFAULT NULL,
   `description` varchar(100) DEFAULT NULL,
+  `value` float(10,2) DEFAULT '0.00',
+  `cost` float(10,2) DEFAULT '0.00',
   `quantity` tinyint(3) unsigned DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -151,4 +153,4 @@ CREATE TABLE `purchases` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-07-29 16:31:00
+-- Dump completed on 2014-07-30 14:12:20

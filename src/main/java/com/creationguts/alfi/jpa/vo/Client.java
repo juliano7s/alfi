@@ -21,37 +21,31 @@ public class Client implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	public Long getId() {
-		return this.id;
+		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getName() {
-		return this.name;
+		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
 	}
 	public String getCpf() {
-		return this.cpf;
+		return cpf;
 	}
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
 	public String getAddress() {
-		return this.address;
+		return address;
 	}
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public String getPhone() {
-		return this.phone;
-	}
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
 	public String getEmail() {
-		return this.email;
+		return email;
 	}
 	public void setEmail(String email) {
 		this.email = email;
@@ -59,7 +53,7 @@ public class Client implements Serializable {
 	
 	@OneToMany(targetEntity=Order.class, mappedBy="client")
 	public List<Order> getOrders() {
-		return this.orders;
+		return orders;
 	}
 	public void setOrders(List<Order> orders) {
 		this.orders = orders;
@@ -68,7 +62,7 @@ public class Client implements Serializable {
 	@ElementCollection(fetch=FetchType.EAGER)
 	@CollectionTable(name="client_phones", joinColumns=@JoinColumn(name="clientid"))
 	public List<Phone> getPhoneNumbers() {
-		return this.phoneNumbers;
+		return phoneNumbers;
 	}
 	public void setPhoneNumbers(List<Phone> phoneNumbers) {
 		this.phoneNumbers = phoneNumbers;
@@ -76,17 +70,16 @@ public class Client implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "Client [id=" + this.id + ", name=" + this.name + ", cpf=" + this.cpf
-				+ ", address=" + this.address + ", phone=" + this.phone + ", email="
-				+ this.email + ", orders=" + this.orders + ", phoneNumbers="
-				+ this.phoneNumbers + "]";
+		return "Client [id=" + id + ", name=" + name + ", cpf=" + cpf
+				+ ", address=" + address + ", email="
+				+ email + ", orders=" + orders + ", phoneNumbers="
+				+ phoneNumbers + "]";
 	}
 
 	private Long id;
 	private String name;
 	private String cpf;
 	private String address;
-	private String phone;
 	private String email;
 	private List<Order> orders;
 	private List<Phone> phoneNumbers;

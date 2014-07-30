@@ -20,12 +20,7 @@ UPDATE alfi_dev.orders
 SET 
     status = 'INPROGRESS'
 WHERE
-    id in (SELECT 
-            id
-        FROM
-            pobs.orders
-        WHERE
-            delivered = 0 AND ready = 0);
+    id in (SELECT id FROM pobs.orders WHERE delivered = 0 AND ready = 0);
 
 SELECT 
     COUNT(*)
@@ -37,12 +32,7 @@ UPDATE alfi_dev.orders
 SET 
     status = 'READY'
 WHERE
-    id in (SELECT 
-            id
-        FROM
-            pobs.orders
-        WHERE
-            delivered = 0 AND ready = 1);
+    id in (SELECT id FROM pobs.orders WHERE delivered = 0 AND ready = 1);
 
 SELECT 
     COUNT(*)
@@ -54,9 +44,4 @@ UPDATE alfi_dev.orders
 SET 
     status = 'DELIVERED'
 WHERE
-    id in (SELECT 
-            id
-        FROM
-            pobs.orders
-        WHERE
-            delivered = 1);
+    id in (SELECT id FROM pobs.orders WHERE delivered = 1);

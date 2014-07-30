@@ -49,7 +49,7 @@ public class Purchase implements Serializable {
 	public void setPaymentDate(Date paymentDate) {
 		this.paymentDate = paymentDate;
 	}
-	@Column(name="paid_status")
+	@Column(name="paid_value")
 	public Float getPaidValue() {
 		return paidValue;
 	}
