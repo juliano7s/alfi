@@ -25,7 +25,8 @@ SET time_zone = "+00:00";
 --
 -- Table structure for table `clients`
 --
-
+CREATE DATABASE pobs;
+USE pobs;
 CREATE TABLE IF NOT EXISTS `clients` (
   `clientid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(150) NOT NULL,
