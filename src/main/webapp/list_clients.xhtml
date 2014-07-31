@@ -16,11 +16,11 @@
 					<h4>Busca "#{clientManagedBean.wholeSearch}"</h4>
 					<ui:repeat var="client" value="#{clientManagedBean.clients}">
 						<div class="info_block">
-							<span class="info"><b>Id: </b>#{client.id}</span>
-							<span class="info"><b>Nome: </b>#{client.name}</span> <span
-								class="info"><b>CPF: </b>#{client.cpf}</span> <br />
+							<span class="info">Id: <b>#{client.id}</b></span>
+							<span class="info">Nome: <b>#{client.name}</b></span> <span
+								class="info">CPF: <b>#{client.cpf}</b></span>
 							<ui:repeat value="#{client.phoneNumbers}" var="phone">
-								<span class="info"><b>#{phone.type}: </b>#{phone.number}</span>
+								<span class="info">#{phone.type}: <b>#{phone.number}</b></span>
 							</ui:repeat>
 							<span> <h:form>
 									<h:commandLink action="#{clientManagedBean.viewClient}"

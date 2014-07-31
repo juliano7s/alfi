@@ -5,3 +5,16 @@
 #client_orders_ready {
 	margin: 5px 0 10px 0;
 }
+
+#order_form_group {
+	margin: 0 40px 0 0;
+}
+
+#purchase_form_group {
+	
+}
+
+#order_purchase_forms_grid>tbody>tr>td {
+	vertical-align: top;
+	padding: 0 10px 0 0;	
+}

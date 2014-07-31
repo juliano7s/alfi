@@ -30,7 +30,11 @@ body {
 
 }
 
+.info_block b {
+	color: black;	
+}
 .info_block {
+	color: gray;
 	margin: 0 0 10px 0;
 	padding: 3px 3px 3px 3px;
 	border: 1px solid gray;

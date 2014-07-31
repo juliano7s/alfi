@@ -1,51 +1,35 @@
 package com.creationguts.alfi.jsf.bean;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
+
+import org.apache.log4j.Logger;
 
 import com.creationguts.alfi.jpa.vo.Purchase;
+import com.creationguts.alfi.jsf.bean.util.PurchasedProduct;
 
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class PurchaseManagedBean implements Serializable {
 	
 	@PostConstruct
 	public void init() {
-		purchasedProducts = new HashMap<String, Integer>();
-		purchasedProducts.put("", 1);
+		purchasedProducts = new ArrayList<PurchasedProduct>();
+		purchasedProducts.add(new PurchasedProduct());
 		purchase = new Purchase();
 	}
 	
 	public String addPurchasedProduct() {
-		purchasedProducts.put("", 1);
+		purchasedProducts.add(new PurchasedProduct());
+		logger.debug("Added product to the purchase. Now with: " + purchasedProducts.size());
 		return "client";
 	}
 	
-	public Map<String, Integer> getPurchasedProducts() {
-		return purchasedProducts;
-	}
-
-	public void setPurchasedProducts(Map<String, Integer> purchasedProducts) {
-		this.purchasedProducts = purchasedProducts;
-	}
-	
-	public Set<Map.Entry<String,Integer>> getPurchasedProductsEntrySet() {
-		return purchasedProducts.entrySet();
-	}
-	
-	public void setPurchasedProductsEntrySet(Set<Map.Entry<String, Integer>> entrySet) {
-		purchasedProducts = new HashMap<String, Integer>();
-		for (Map.Entry<String, Integer> entry : entrySet) {
-			purchasedProducts.put(entry.getKey(), entry.getValue());
-		}
-	}
-
 	public Purchase getPurchase() {
 		return purchase;
 	}
@@ -54,8 +38,17 @@ public class PurchaseManagedBean implements Serializable {
 		this.purchase = purchase;
 	}
 
-	private Map<String, Integer> purchasedProducts;
+	public List<PurchasedProduct> getPurchasedProducts() {
+		return purchasedProducts;
+	}
+
+	public void setPurchasedProducts(List<PurchasedProduct> purchasedProducts) {
+		this.purchasedProducts = purchasedProducts;
+	}
+
+	private List<PurchasedProduct> purchasedProducts;
 	private Purchase purchase;
 	
+	private static Logger logger = Logger.getLogger(PurchaseManagedBean.class);
 	private static final long serialVersionUID = 8465332615340553012L;
 }

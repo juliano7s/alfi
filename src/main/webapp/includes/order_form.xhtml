@@ -9,24 +9,25 @@
 		<h:form id="order_form">
 			<h:inputHidden value="#{orderManagedBean.order.id}" />
 			<div id="order">
-				<h:panelGrid columns="1">
-					<h:panelGrid columns="3">
-						<h:panelGrid columns="2">
-							<h:outputText>Descrição: </h:outputText>
-							<h:inputTextarea id="order_description_input" cols="40"
-								rows="1" value="#{orderManagedBean.order.description}" />
-						</h:panelGrid>
+				<h:panelGrid columns="1" styleClass="form_grid">
+
+					<h:panelGrid columns="1">
+						<h:outputText>Descrição: </h:outputText>
+						<h:inputTextarea id="order_description_input" cols="40" rows="1"
+							value="#{orderManagedBean.order.description}" />
 					</h:panelGrid>
 
-					<h:panelGrid columns="3">
-						<h:panelGrid columns="2">
+					<h:panelGrid columns="2">
+						<h:panelGrid columns="1">
 							<h:outputText>Data do pedido: </h:outputText>
 							<h:inputText id="order_request_date_input" cols="10"
 								value="#{orderManagedBean.order.requestDate}"
 								styleClass="datepicker">
 								<f:convertDateTime pattern="yyyy-MM-dd" type="date" />
 							</h:inputText>
+						</h:panelGrid>
 
+						<h:panelGrid columns="1">
 							<h:outputText>Data da entrega: </h:outputText>
 							<h:inputText id="order_delivery_date_input" cols="10"
 								value="#{orderManagedBean.order.deliveryDate}"
@@ -35,26 +36,30 @@
 							</h:inputText>
 						</h:panelGrid>
 
-						<h:panelGrid columns="2">
+						<h:panelGrid columns="1">
 							<h:outputText>Valor (R$): </h:outputText>
 							<h:inputText id="order_value_input" cols="10"
 								value="#{orderManagedBean.order.value}"
 								converter="javax.faces.Float" />
+						</h:panelGrid>
 
+						<h:panelGrid columns="1">
 							<h:outputText>Custo (R$): </h:outputText>
 							<h:inputText id="order_cost_input" cols="10"
 								value="#{orderManagedBean.order.cost}"
 								converter="javax.faces.Float" />
 						</h:panelGrid>
 
-						<h:panelGrid columns="2">
+						<h:panelGrid columns="1">
 							<h:outputText>Responsável: </h:outputText>
 							<h:selectOneMenu id="order_owner_input"
 								value="#{orderManagedBean.orderOwnerId}">
 								<f:selectItems value="#{orderManagedBean.owners}" var="owner"
 									itemValue="#{owner.id}" itemLabel="#{owner.name}" />
 							</h:selectOneMenu>
+						</h:panelGrid>
 
+						<h:panelGrid columns="1">
 							<h:outputText>Status: </h:outputText>
 							<h:selectOneMenu id="order_status_input"
 								value="#{orderManagedBean.order.status}">
@@ -66,6 +71,7 @@
 						<h:commandButton id="order_button" value="Salvar"
 							action="#{orderManagedBean.saveOrder}"></h:commandButton>
 					</h:panelGrid>
+
 				</h:panelGrid>
 
 			</div>

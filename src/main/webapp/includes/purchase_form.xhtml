@@ -11,26 +11,33 @@
 			<div id="purchase">
 				<h:panelGrid columns="1">
 
-					<h:panelGroup>
-						<ui:repeat value="#{purchaseManagedBean.purchasedProducts}" var="mapEntry">
-							<div>
-								Código do produto: <h:inputText value="#{mapEntry.key}" />
-								Quantidade: <h:inputText value="#{mapEntry.value}" />
-							</div>
-						</ui:repeat>
-					</h:panelGroup>
-					<h:commandButton value="+ Produto"
-						action="#{purchaseManagedBean.addPurchasedProduct}" />
-
-					<h:panelGrid columns="3">
+					<ui:repeat value="#{purchaseManagedBean.purchasedProducts}" var="product">
 						<h:panelGrid columns="2">
+							<h:panelGrid columns="1">
+								<h:outputText>Código do produto: </h:outputText>
+								<h:inputText value="#{product.barcode}" />
+							</h:panelGrid>
+							<h:panelGrid columns="1">
+								<h:outputText>Quantidade: </h:outputText>
+								<h:inputText value="#{product.quantity}" />
+							</h:panelGrid>
+	                    </h:panelGrid>
+					</ui:repeat>
+                    
+                	<h:commandButton value="+ Produto"
+                        action="#{purchaseManagedBean.addPurchasedProduct}" />
+
+					<h:panelGrid columns="2">
+						<h:panelGrid columns="1">
 							<h:outputText>Data da compra: </h:outputText>
 							<h:inputText id="purchase_date_input" cols="10"
 								value="#{purchaseManagedBean.purchase.date}"
 								styleClass="datepicker">
 								<f:convertDateTime pattern="yyyy-MM-dd" type="date" />
 							</h:inputText>
+						</h:panelGrid>
 
+						<h:panelGrid columns="1">
 							<h:outputText>Data do pagamento: </h:outputText>
 							<h:inputText id="purchase_payment_date_input" cols="10"
 								value="#{purchaseManagedBean.purchase.paymentDate}"
@@ -39,12 +46,14 @@
 							</h:inputText>
 						</h:panelGrid>
 
-						<h:panelGrid columns="2">
+						<h:panelGrid columns="1">
 							<h:outputText>Valor da compra (R$): </h:outputText>
 							<h:inputText id="purchase_paid_value_input" cols="10"
 								value="#{purchaseManagedBean.purchase.paidValue}"
 								converter="javax.faces.Float" />
+						</h:panelGrid>
 
+						<h:panelGrid columns="1">
 							<h:outputText>Status do pagamento: </h:outputText>
 							<h:selectOneMenu id="purchase_status_input"
 								value="#{purchaseManagedBean.purchase.paidStatus}">

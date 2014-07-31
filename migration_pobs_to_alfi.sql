@@ -10,6 +10,12 @@ INSERT INTO alfi_dev.orders
 	SELECT orderid, clientid, ownerid, description, request_date, delivery_date, ready_date, NULL, 'INPROGRESS', value, cost, NULL, 0, 0
 	FROM pobs.orders;
 
+INSERT INTO alfi_dev.owners ()
+	VALUES (0, 'Nenhum', '', '', '');
+	
+INSERT INTO alfi_dev.owners 
+	SELECT * from pobs.owners;
+
 SELECT 
     COUNT(*)
 FROM

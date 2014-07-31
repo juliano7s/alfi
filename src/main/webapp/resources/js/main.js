@@ -6,8 +6,8 @@ $(document).ready(function() {
 		eval($(this).html());
 	});
 	
-	$("#order").hide();
-	$("#purchase").hide();
+	//$("#order").hide();
+	//$("#purchase").hide();
 	$("#open_orders_tab").show();
 	$("#delayed_orders_tab").hide();
 	$("#clients_in_debt_tab").hide();
@@ -18,6 +18,7 @@ $(function() {
 		dateFormat : "dd/mm/yy"
 	});	
 
+	/*
 	$("#hide_order").click(function() {
 		if ($("#order").is(":visible")) {
 			$("#order").slideUp("fast");
@@ -25,7 +26,9 @@ $(function() {
 			$("#order").slideDown("fast");
 		}
 	});
+	*/
 	
+	/*
 	$("#hide_purchase").click(function() {
 		if ($("#purchase").is(":visible")) {
 			$("#purchase").slideUp("fast");
@@ -33,6 +36,7 @@ $(function() {
 			$("#purchase").slideDown("fast");
 		}
 	});
+	*/
 	
 	$("#delayed_orders_tab_link").click(function() {
 		if ($("#delayed_orders_tab").is(":visible")) {
