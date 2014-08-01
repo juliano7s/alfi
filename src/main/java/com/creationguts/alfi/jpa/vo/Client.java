@@ -1,6 +1,7 @@
 package com.creationguts.alfi.jpa.vo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CollectionTable;
@@ -17,6 +18,10 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "clients")
 public class Client implements Serializable {
+	
+	public Client() {
+		phoneNumbers = new ArrayList<Phone>();
+	}
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

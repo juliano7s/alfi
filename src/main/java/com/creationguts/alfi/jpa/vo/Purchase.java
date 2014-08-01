@@ -11,9 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -64,13 +63,12 @@ public class Purchase implements Serializable {
 		this.paidStatus = paidStatus;
 	}
 	
-	@ManyToMany(targetEntity = Product.class, fetch = FetchType.LAZY)
-	@JoinTable(name = "purchase_product_xref", joinColumns = { @JoinColumn(name = "purchaseid", referencedColumnName = "id") })
-	public Set<Product> getProducts() {
-		return products;
+	@OneToMany(targetEntity=PurchaseProduct.class, mappedBy="purchase", fetch = FetchType.LAZY)
+	public Set<PurchaseProduct> getPurchaseProducts() {
+		return purchasedProducts;
 	}
-	public void setProducts(Set<Product> products) {
-		this.products = products;
+	public void setPurchaseProducts(Set<PurchaseProduct> products) {
+		purchasedProducts = products;
 	}
 
 	private Long id;
@@ -79,7 +77,7 @@ public class Purchase implements Serializable {
 	private Date paymentDate;
 	private Float paidValue;
 	private Boolean paidStatus;
-	private Set<Product> products;
+	private Set<PurchaseProduct> purchasedProducts;
 	
 	private static final long serialVersionUID = -1899087253078689858L;
 }

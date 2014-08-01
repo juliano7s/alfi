@@ -10,23 +10,26 @@
 			<h:inputHidden value="#{purchaseManagedBean.purchase.id}" />
 			<div id="purchase">
 				<h:panelGrid columns="1">
-
-					<ui:repeat value="#{purchaseManagedBean.purchasedProducts}" var="product">
+				
+					<h:outputText>Código do produto: </h:outputText>
+					<h:inputText value="#{purchaseManagedBean.barcodeToAdd}" />
+				
+					<h:commandButton value="+ Produto"
+                        action="#{purchaseManagedBean.addProduct}" />
+					
+					<ui:repeat value="#{purchaseManagedBean.purchasedProducts}" var="p">
 						<h:panelGrid columns="2">
 							<h:panelGrid columns="1">
-								<h:outputText>Código do produto: </h:outputText>
-								<h:inputText value="#{product.barcode}" />
+								<h:outputText>Código: </h:outputText>
+								<h:outputText>#{p.product.barcode}</h:outputText>
 							</h:panelGrid>
 							<h:panelGrid columns="1">
 								<h:outputText>Quantidade: </h:outputText>
-								<h:inputText value="#{product.quantity}" />
+								<h:inputText value="#{p.quantity}" />
 							</h:panelGrid>
 	                    </h:panelGrid>
 					</ui:repeat>
                     
-                	<h:commandButton value="+ Produto"
-                        action="#{purchaseManagedBean.addPurchasedProduct}" />
-
 					<h:panelGrid columns="2">
 						<h:panelGrid columns="1">
 							<h:outputText>Data da compra: </h:outputText>

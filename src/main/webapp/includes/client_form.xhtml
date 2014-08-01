@@ -7,45 +7,68 @@
 <body>
 	<ui:composition>
 		<h:form id="client_form">
-			<div id="client">				
-				<h:panelGrid columns="3">
-					<h:outputText>Nome: </h:outputText>
-					<h:inputText id="client_name_input"
-						value="#{clientManagedBean.client.name}" />
-					<h:message for="client_name_input"></h:message>
+			<div id="client">
+				<h:panelGrid columns="1">
+					<h:panelGrid columns="1">
+						<h:outputText>Nome: </h:outputText>
+						<h:panelGroup>
+							<h:inputText id="client_name_input" size="10"
+								value="#{clientManagedBean.client.name}" />
+							<h:message for="client_name_input"></h:message>
+						</h:panelGroup>
+					</h:panelGrid>
 
-					<h:outputText>CPF: </h:outputText>
-					<h:inputText id="client_cpf_input" validator="#{clientManagedBean.validateCpf}"
-						value="#{clientManagedBean.client.cpf}" />
-					<h:message for="client_cpf_input"></h:message>
-					
-					<h:outputText>Telefones: </h:outputText>
-					<h:panelGroup>
-					<ui:repeat value="#{clientManagedBean.phoneNumbers}" var="phone">
-						<div>
-							<h:selectOneMenu value="#{phone.type}">
-								<f:selectItem itemLabel="Celular" itemValue="Celular" />
-								<f:selectItem itemLabel="Casa"  itemValue="Casa" />
-								<f:selectItem itemLabel="Trabalho" itemValue="Trabalho" />
-							</h:selectOneMenu>: 
-							<h:inputText value="#{phone.number}" /></div>
-					</ui:repeat>
-					</h:panelGroup>
-					<h:commandButton value="+ Telefone" action="#{clientManagedBean.addPhoneNumber}" />					
-					
-					<h:outputText>Endereço: </h:outputText>
-					<h:inputText id="client_address_input"
-						value="#{clientManagedBean.client.address}" />
-					<h:message for="client_address_input"></h:message>
+					<h:panelGrid columns="1">
+						<h:outputText>CPF: </h:outputText>
+						<h:panelGroup>
+							<h:inputText id="client_cpf_input" size="10"
+								validator="#{clientManagedBean.validateCpf}"
+								value="#{clientManagedBean.client.cpf}" />
+							<h:message for="client_cpf_input"></h:message>
+						</h:panelGroup>
+					</h:panelGrid>
 
-					<h:outputText>Email: </h:outputText>
-					<h:inputText id="client_email_input"
-						value="#{clientManagedBean.client.email}" />
-					<h:message for="client_email_input"></h:message>
+					<h:panelGrid columns="1">
+						<h:outputText>Telefones: </h:outputText>
+						<h:panelGroup>
+							<ui:repeat value="#{clientManagedBean.client.phoneNumbers}"
+								var="phone">
+								<div>
+									<h:selectOneMenu value="#{phone.type}">
+										<f:selectItem itemLabel="Celular" itemValue="Celular" />
+										<f:selectItem itemLabel="Casa" itemValue="Casa" />
+										<f:selectItem itemLabel="Trabalho" itemValue="Trabalho" />
+									</h:selectOneMenu>
+									:
+									<h:inputText value="#{phone.number}" size="10" />
+								</div>
+							</ui:repeat>
+						</h:panelGroup>
+					</h:panelGrid>
+					<h:commandButton value="+ Telefone"
+						action="#{clientManagedBean.addPhoneNumber}" />
+
+					<h:panelGrid columns="1">
+						<h:outputText>Endereço: </h:outputText>
+						<h:panelGroup>
+							<h:inputText id="client_address_input" size="10"
+								value="#{clientManagedBean.client.address}" />
+							<h:message for="client_address_input"></h:message>
+						</h:panelGroup>
+					</h:panelGrid>
+
+					<h:panelGrid columns="1">
+						<h:outputText>Email: </h:outputText>
+						<h:panelGroup>
+							<h:inputText id="client_email_input" size="10"
+								value="#{clientManagedBean.client.email}" />
+							<h:message for="client_email_input"></h:message>
+						</h:panelGroup>
+					</h:panelGrid>
 
 					<h:commandButton id="client_button"
 						action="#{clientManagedBean.saveClient}">
-						<f:param id="client_id" value="#{clientManagedBean.client.id}"></f:param>	
+						<f:param id="client_id" value="#{clientManagedBean.client.id}"></f:param>
 					</h:commandButton>
 				</h:panelGrid>
 			</div>

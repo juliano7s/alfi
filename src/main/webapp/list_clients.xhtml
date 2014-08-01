@@ -13,25 +13,40 @@
 		<h:panelGrid columns="1">
 			<h:panelGroup>
 				<div id="client_list">
-					<h4>Busca "#{clientManagedBean.wholeSearch}"</h4>
-					<ui:repeat var="client" value="#{clientManagedBean.clients}">
-						<div class="info_block">
-							<span class="info">Id: <b>#{client.id}</b></span>
-							<span class="info">Nome: <b>#{client.name}</b></span> <span
-								class="info">CPF: <b>#{client.cpf}</b></span>
+					<h:dataTable rowClasses="rowOdd, rowEven" var="client"
+						value="#{clientManagedBean.clients}" cellpadding="5">
+						<h:column>
+							<f:facet name="header">Índice</f:facet>
+							#{client.id}
+						</h:column>
+						<h:column>
+							<f:facet name="header">Nome</f:facet>
+							#{client.name}
+						</h:column>
+						<h:column>
+							<f:facet name="header">CPF</f:facet>
+							#{client.cpf}
+						</h:column>
+						<h:column>
+							<f:facet name="header">Telefones</f:facet>
 							<ui:repeat value="#{client.phoneNumbers}" var="phone">
-								<span class="info">#{phone.type}: <b>#{phone.number}</b></span>
+								[#{phone.type}: <b>#{phone.number}</b>]  
 							</ui:repeat>
-							<span> <h:form>
-									<h:commandLink action="#{clientManagedBean.viewClient}"
-										value="Info">
-										<f:param name="clientId" value="#{client.id}" />
-									</h:commandLink>
-								</h:form>
-							</span>
-						</div>
-						<br />
-					</ui:repeat>
+						</h:column>
+						<h:column>
+							<f:facet name="header">Ações</f:facet>
+							<h:form>
+								<h:commandLink action="#{clientManagedBean.viewClient}"
+									value="info">
+									<f:param name="clientId" value="#{client.id}" />
+								</h:commandLink> | 
+								<h:commandLink action="#{clientManagedBean.editClient}"
+									value="editar">
+									<f:param name="clientId" value="#{client.id}" />
+								</h:commandLink>
+							</h:form>
+						</h:column>
+					</h:dataTable>
 				</div>
 			</h:panelGroup>
 		</h:panelGrid>

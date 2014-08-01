@@ -23,7 +23,7 @@ public abstract class EntityManager<T> {
 		return entity;
 	}
 	
-	public T findById(Integer id) {
+	public T findById(Long id) {
 		this.getEntityManager().getTransaction().begin();
 		T entity = this.getEntityManager().find(entityManagerType, id);
 		this.getEntityManager().getTransaction().commit();

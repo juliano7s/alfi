@@ -20,6 +20,7 @@ import com.creationguts.alfi.jpa.vo.Client;
 import com.creationguts.alfi.jpa.vo.Order;
 import com.creationguts.alfi.jpa.vo.Order.Status;
 import com.creationguts.alfi.jpa.vo.Phone;
+import com.creationguts.alfi.jpa.vo.Purchase;
 
 @ManagedBean
 @SessionScoped
@@ -80,8 +81,9 @@ public class ClientManagedBean implements Serializable {
 			newClient();
 			view = "edit_client";
 		} else {
-			String foundClients = (clients.size() > 1) ? " clientes econtrados."
-					: " cliente encontrado.";
+			String foundClients = (clients.size() > 1) ? " clientes econtrados "
+					: " cliente encontrado ";
+			foundClients += "para o termo de busca '" + wholeSearch +"'";
 			logger.debug(clients.size() + foundClients);
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(clients.size() + foundClients));
@@ -96,12 +98,13 @@ public class ClientManagedBean implements Serializable {
 	@PostConstruct
 	public void newClient() {
 		client = new Client();
+		client.getPhoneNumbers().add(new Phone());
 		phoneNumbers = new ArrayList<Phone>();
 		phoneNumbers.add(new Phone());
 	}
 
 	/**
-	 * Action: choose client to edit on client.xhtml
+	 * Action: choose client to edit on edit_client.xhtml
 	 */
 	public String editClient() {
 		logger.debug("Editing client");
@@ -109,12 +112,9 @@ public class ClientManagedBean implements Serializable {
 				.getExternalContext().getRequestParameterMap().get("clientId"));
 		logger.debug("Id: " + clientId);
 
-		for (Client c : clients) {
-			if (c.getId() == clientId) {
-				client = c;
-				phoneNumbers = client.getPhoneNumbers();
-			}
-		}
+		client = (new ClientEntityManager()).findById(clientId);
+		client = (new ClientEntityManager()).loadAll(client);
+		logger.debug("Client to edit: " + client);
 
 		return "edit_client";
 	}
@@ -149,12 +149,12 @@ public class ClientManagedBean implements Serializable {
 	 */
 	public String saveClient() throws Throwable {
 		logger.debug("Saving client on the database");
-		logger.debug("Phones submitted: " + phoneNumbers);
-		for (Phone p : phoneNumbers) {
-			logger.debug(p);
-		}
+		//logger.debug("Phones submitted: " + phoneNumbers);
+		//for (Phone p : phoneNumbers) {
+			//logger.debug(p);
+		//}
 		ClientEntityManager cem = new ClientEntityManager();
-		client.setPhoneNumbers(phoneNumbers);
+		//client.setPhoneNumbers(phoneNumbers);
 		client = cem.save(client);
 	
 		logger.debug("Cliente salvo com id " + client.getId());
@@ -168,7 +168,7 @@ public class ClientManagedBean implements Serializable {
 
 	public String addPhoneNumber() {
 		logger.debug("Adding phone number");
-		phoneNumbers.add(new Phone());
+		client.getPhoneNumbers().add(new Phone());
 		return "edit_client";
 	}
 	
@@ -254,6 +254,10 @@ public class ClientManagedBean implements Serializable {
 	private String wholeSearch;
 	private List<Client> clients;
 	private Client client;
+	private List<Order> clientOpenOrders;
+	private List<Order> clientClosedOrders;
+	private List<Purchase> clientOpenPurchases;
+	private List<Purchase> clientClosedPurchases;
 	private List<Phone> phoneNumbers;
 	
 	private static Logger logger = Logger.getLogger(ClientManagedBean.class);

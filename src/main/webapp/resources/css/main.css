@@ -21,13 +21,16 @@ body {
 #header_menu1 span {
 	margin: 0 10px 0 0;
 }
+#header_message_block {
+	text-decoration: bold;
+}
 #header_message_block .error {
 	color: red;
 	text-decoration: bold;
 }
 
 #content {
-
+	padding:10px 0 0 0;
 }
 
 .info_block b {
@@ -36,14 +39,21 @@ body {
 .info_block {
 	color: gray;
 	margin: 0 0 10px 0;
-	padding: 3px 3px 3px 3px;
-	border: 1px solid gray;
+	padding: 3px 3px 3px 3px;	
 }
 .info {
 	margin: 0 5px 5px 0;
 }
 .info_message {
 	color: green;
+}
+
+.rowOdd {
+	background-color: #DDD
+}
+
+.rowEven {
+	background-color: #EEF
 }
 
 #footer {
