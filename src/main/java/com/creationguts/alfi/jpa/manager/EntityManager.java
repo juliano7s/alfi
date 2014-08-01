@@ -9,10 +9,23 @@ import com.creationguts.alfi.Constants;
 
 public abstract class EntityManager<T> {
 	
+	public EntityManager(Class<T> clazz) {
+		entityManagerType = clazz;
+	}
+	
 	public T save(T entity) {
 		this.getEntityManager().getTransaction().begin();
 		entity = this.getEntityManager().merge(entity);
 		logger.debug("Saving entity " + entity);
+		this.getEntityManager().getTransaction().commit();
+		this.closeEntityManager();
+		
+		return entity;
+	}
+	
+	public T findById(Integer id) {
+		this.getEntityManager().getTransaction().begin();
+		T entity = this.getEntityManager().find(entityManagerType, id);
 		this.getEntityManager().getTransaction().commit();
 		this.closeEntityManager();
 		
@@ -39,7 +52,8 @@ public abstract class EntityManager<T> {
 
 		this.e = null;
 	}
-	
+
+	private final Class<T> entityManagerType;
 	private javax.persistence.EntityManager e;
 	private static Logger logger = Logger.getLogger(EntityManager.class);
 

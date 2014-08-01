@@ -16,6 +16,15 @@ import com.creationguts.alfi.jpa.vo.Order;
 
 public class OrderEntityManager extends EntityManager<Order> {
 	
+	public OrderEntityManager() {
+		super(Order.class);
+	}
+
+	public OrderEntityManager(Class<Order> clazz) {
+		super(clazz);
+		// TODO Auto-generated constructor stub
+	}
+
 	public List<Order> getOrders() {
 		
 		logger.debug("Getting orders");

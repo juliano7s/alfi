@@ -8,6 +8,15 @@ import com.creationguts.alfi.jpa.vo.Client;
 
 public class ClientEntityManager extends EntityManager<Client> {
 
+	public ClientEntityManager() {
+		super(Client.class);
+	}
+
+	public ClientEntityManager(Class<Client> clazz) {
+		super(clazz);
+		// TODO Auto-generated constructor stub
+	}
+
 	public List<Client> getClients() {
 		logger.debug("Getting clients");
 		getEntityManager().getTransaction().begin();

@@ -2,22 +2,26 @@ package com.creationguts.alfi.jpa.manager;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-
 import org.apache.log4j.Logger;
 
-import com.creationguts.alfi.Constants;
 import com.creationguts.alfi.jpa.vo.User;
 
-public class UserEntityManager {
+public class UserEntityManager extends EntityManager<User> {
 	
+	public UserEntityManager() {
+		super(User.class);
+		// TODO Auto-generated constructor stub
+	}
+	
+	public UserEntityManager(Class<User> clazz) {
+		super(clazz);
+		// TODO Auto-generated constructor stub
+	}
+
 	public List<User> getUsers() {
 		
 		logger.debug("Getting users");
-		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(Constants.ALFI_PERSISTENCE_UNIT);
-		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		javax.persistence.EntityManager entityManager = getEntityManager();
 		entityManager.getTransaction().begin();
 		List<User> result = entityManager.createQuery( "from User", User.class ).getResultList();
 		logger.debug("total users returned: " + result.size());
