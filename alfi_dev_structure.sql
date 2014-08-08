@@ -45,7 +45,7 @@ CREATE TABLE `clients` (
   `address` varchar(1000) DEFAULT NULL,
   `email` varchar(150) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=493 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=494 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -103,26 +103,30 @@ DROP TABLE IF EXISTS `products`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `products` (
-  `id` int(10) unsigned NOT NULL,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `barcode` varchar(45) DEFAULT NULL,
   `description` varchar(100) DEFAULT NULL,
   `value` float(10,2) DEFAULT '0.00',
   `cost` float(10,2) DEFAULT '0.00',
   `quantity` tinyint(3) unsigned DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `barcode_UNIQUE` (`barcode`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `purchase_product_xref`
+-- Table structure for table `purchase_product`
 --
 
-DROP TABLE IF EXISTS `purchase_product_xref`;
+DROP TABLE IF EXISTS `purchase_product`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `purchase_product_xref` (
+CREATE TABLE `purchase_product` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
   `purchaseid` int(10) unsigned NOT NULL,
-  `productid` int(10) unsigned NOT NULL
+  `productid` int(10) unsigned NOT NULL,
+  `quantity` tinyint(4) DEFAULT '0',
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -153,4 +157,4 @@ CREATE TABLE `purchases` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-07-31 13:07:59
+-- Dump completed on 2014-08-08 12:53:30
