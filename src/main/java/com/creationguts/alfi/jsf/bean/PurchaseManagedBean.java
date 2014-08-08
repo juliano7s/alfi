@@ -1,7 +1,9 @@
 package com.creationguts.alfi.jsf.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
@@ -31,8 +33,6 @@ public class PurchaseManagedBean implements Serializable {
 	public String savePurchase() {
 
 		PurchaseEntityManager purchaseEntityManager = new PurchaseEntityManager();
-		ProductEntityManager productEntityManager = new ProductEntityManager();
-
 		purchase = purchaseEntityManager.save(purchase);
 
 		FacesContext.getCurrentInstance()
@@ -45,17 +45,20 @@ public class PurchaseManagedBean implements Serializable {
 	}
 
 	public String addProduct() {
-		if (barcodeToAdd.trim().equals("")) {
+		if (!barcodeToAdd.trim().equals("")) {
 			Product p = (new ProductEntityManager()).findByBarcode(barcodeToAdd);
 			PurchaseProduct pp = new PurchaseProduct();
 			pp.setProduct(p);
 			pp.setPurchase(purchase);
 			purchasedProducts.add(pp);
+			logger.debug("Added product to the purchase. Now with: "
+					+ purchasedProducts.size());
+		} else {
+			logger.debug("barcode empty. Product not added to purchase.");
 		}
 
 		barcodeToAdd = "";
-		logger.debug("Added product to the purchase. Now with: "
-				+ purchasedProducts.size());
+		
 		return "client";
 	}
 
@@ -81,6 +84,14 @@ public class PurchaseManagedBean implements Serializable {
 
 	public void setPurchasedProducts(Set<PurchaseProduct> purchasedProducts) {
 		this.purchasedProducts = purchasedProducts;
+	}
+	
+	public List<PurchaseProduct> getPurchasedProductsList() {
+		return new ArrayList<PurchaseProduct>(purchasedProducts);
+	}
+	
+	public void setPurchasedProductsList(List<PurchaseProduct> productList) {
+		purchasedProducts = new HashSet<PurchaseProduct>(productList);
 	}
 
 	private Purchase purchase;

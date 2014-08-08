@@ -17,11 +17,15 @@
 					<h:commandButton value="+ Produto"
                         action="#{purchaseManagedBean.addProduct}" />
 					
-					<ui:repeat value="#{purchaseManagedBean.purchasedProducts}" var="p">
-						<h:panelGrid columns="2">
+					<ui:repeat value="#{purchaseManagedBean.purchasedProductsList}" var="p">
+						<h:panelGrid columns="3">
 							<h:panelGrid columns="1">
 								<h:outputText>Código: </h:outputText>
-								<h:outputText>#{p.product.barcode}</h:outputText>
+								<h:inputText disabled="true">#{p.product.barcode}</h:inputText>
+							</h:panelGrid>
+							<h:panelGrid columns="1">
+								<h:outputText>Descrição: </h:outputText>
+								<h:inputText disabled="true">#{p.product.description}</h:inputText>
 							</h:panelGrid>
 							<h:panelGrid columns="1">
 								<h:outputText>Quantidade: </h:outputText>

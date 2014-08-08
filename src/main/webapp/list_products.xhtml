@@ -12,25 +12,46 @@
 	<ui:define name="content">
 		<h:panelGrid columns="1">
 			<h:panelGroup>
-				<div id="client_list">
-					<h4>Busca "#{clientManagedBean.wholeSearch}"</h4>
-					<ui:repeat var="client" value="#{clientManagedBean.clients}">
-						<div class="info_block">
-							<span class="info"><b>Id: </b>#{client.id}</span>
-							<span class="info"><b>Nome: </b>#{client.name}</span> <span
-								class="info"><b>CPF: </b>#{client.cpf}</span> <br />
-							<ui:repeat value="#{client.phoneNumbers}" var="phone">
-								<span class="info"><b>#{phone.type}: </b>#{phone.number}</span>
-							</ui:repeat>
-							<span> <h:form>
-									<h:commandLink action="#{clientManagedBean.viewClient}"
-										value="Info">
-										<f:param name="clientId" value="#{client.id}" />
+				<div id="product_list">
+					<h4>Busca: "código de barra: #{productSearchManagedBean.barcode} | descrição: #{productSearchManagedBean.description} "</h4>
+					<ui:repeat var="product"
+						value="#{productSearchManagedBean.foundProducts}">
+						<h:dataTable rowClasses="rowOdd, rowEven" var="product"
+							value="#{productSearchManagedBean.foundProducts}" cellpadding="5">
+							<h:column>
+								<f:facet name="header">Índice</f:facet>
+							#{product.id}
+						</h:column>
+							<h:column>
+								<f:facet name="header">Código de Barra</f:facet>
+							#{product.barcode}
+						</h:column>
+							<h:column>
+								<f:facet name="header">Descrição</f:facet>
+							#{product.description}
+						</h:column>
+						<h:column>
+								<f:facet name="header">Valor</f:facet>
+							#{product.value}
+						</h:column>
+						<h:column>
+								<f:facet name="header">Custo</f:facet>
+							#{product.cost}
+						</h:column>	
+							<h:column>
+								<f:facet name="header">Ações</f:facet>
+								<h:form>
+									<h:commandLink action="#{productManagedBean.viewProduct}"
+										value="info">
+										<f:param name="productId" value="#{product.id}" />
+									</h:commandLink> | 
+								<h:commandLink action="#{productManagedBean.editProduct}"
+										value="editar">
+										<f:param name="productId" value="#{product.id}" />
 									</h:commandLink>
 								</h:form>
-							</span>
-						</div>
-						<br />
+							</h:column>
+						</h:dataTable>
 					</ui:repeat>
 				</div>
 			</h:panelGroup>

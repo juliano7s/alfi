@@ -25,6 +25,11 @@ import com.creationguts.alfi.jpa.vo.Purchase;
 @ManagedBean
 @SessionScoped
 public class ClientManagedBean implements Serializable {
+	
+	@PostConstruct
+	public void init() {
+		newClient();
+	}
 
 	/**
 	 * Action: execute search for name, phone and cpf
@@ -95,12 +100,13 @@ public class ClientManagedBean implements Serializable {
 	/**
 	 * Action: create new client to persist and redirect to edit_client.xhtml
 	 */
-	@PostConstruct
-	public void newClient() {
+	public String newClient() {
+		logger.debug("Adding new client");
 		client = new Client();
 		client.getPhoneNumbers().add(new Phone());
 		phoneNumbers = new ArrayList<Phone>();
 		phoneNumbers.add(new Phone());
+		return "edit_client";
 	}
 
 	/**
@@ -149,12 +155,7 @@ public class ClientManagedBean implements Serializable {
 	 */
 	public String saveClient() throws Throwable {
 		logger.debug("Saving client on the database");
-		//logger.debug("Phones submitted: " + phoneNumbers);
-		//for (Phone p : phoneNumbers) {
-			//logger.debug(p);
-		//}
 		ClientEntityManager cem = new ClientEntityManager();
-		//client.setPhoneNumbers(phoneNumbers);
 		client = cem.save(client);
 	
 		logger.debug("Cliente salvo com id " + client.getId());

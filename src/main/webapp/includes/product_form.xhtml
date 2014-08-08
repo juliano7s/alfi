@@ -10,40 +10,41 @@
 			<h:inputHidden value="#{productManagedBean.product.id}" />
 			<div id="product">
 				<h:panelGrid columns="1">
-					<h:panelGrid columns="3">
-						<h:panelGrid columns="2">
-							<h:outputText>Código de barra: </h:outputText>
-							<h:inputTextarea id="product_barcode_input" cols="40" rows="1"
-								value="#{productManagedBean.product.barcode}" />
-						</h:panelGrid>
+
+					<h:outputText>Índice: </h:outputText>
+					<h:outputText>#{orderManagedBean.order.id}</h:outputText>
+
+					<h:panelGrid columns="1">
+						<h:outputText>Código de barra: </h:outputText>
+						<h:inputTextarea id="product_barcode_input" cols="40" rows="1"
+							value="#{productManagedBean.product.barcode}" />
 					</h:panelGrid>
 
-					<h:panelGrid columns="3">
-						<h:panelGrid columns="2">
-							<h:outputText>Descrição: </h:outputText>
-							<h:inputTextarea id="product_description_input" cols="40"
-								rows="1" value="#{productManagedBean.product.description}" />
-						</h:panelGrid>
+					<h:panelGrid columns="1">
+						<h:outputText>Descrição: </h:outputText>
+						<h:inputTextarea id="product_description_input" cols="40" rows="1"
+							value="#{productManagedBean.product.description}" />
 					</h:panelGrid>
 
 					<h:panelGrid columns="2">
-						<h:outputText>Valor (R$): </h:outputText>
-						<h:inputText id="product_value_input" cols="10"
-							value="#{productManagedBean.product.value}"
-							converter="javax.faces.Float" />
-
-						<h:outputText>Custo (R$): </h:outputText>
-						<h:inputText id="product_cost_input" cols="10"
-							value="#{productManagedBean.product.cost}"
-							converter="javax.faces.Float" />
+						<h:panelGrid columns="1">
+							<h:outputText>Valor (R$): </h:outputText>
+							<h:inputText id="product_value_input" cols="10"
+								value="#{productManagedBean.product.value}"
+								converter="javax.faces.Float" />
+						</h:panelGrid>
+						<h:panelGrid columns="1">
+							<h:outputText>Custo (R$): </h:outputText>
+							<h:inputText id="product_cost_input" cols="10"
+								value="#{productManagedBean.product.cost}"
+								converter="javax.faces.Float" />
+						</h:panelGrid>
 					</h:panelGrid>
 
-					<h:panelGrid columns="3">
-						<h:panelGrid columns="2">
-							<h:outputText>Quantidade: </h:outputText>
-							<h:inputTextarea id="product_quantity_input" cols="40"
-								rows="1" value="#{productManagedBean.product.quantity}" />
-						</h:panelGrid>
+					<h:panelGrid columns="1">
+						<h:outputText>Quantidade: </h:outputText>
+						<h:inputTextarea id="product_quantity_input" cols="10" rows="1"
+							value="#{productManagedBean.product.quantity}" />
 					</h:panelGrid>
 
 					<h:commandButton id="product_button" value="Salvar"

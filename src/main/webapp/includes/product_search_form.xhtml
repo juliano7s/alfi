@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:t="http://myfaces.apache.org/tomahawk">
+<body>
+	<ui:composition>
+		<h:form id="product_search_form">
+			<div id="product_search_fields">
+				<h:panelGrid columns="1">
+
+					<h:panelGrid columns="1">
+						<h:outputText>Código de barra: </h:outputText>
+						<h:inputTextarea id="product_barcode_input" cols="40" rows="1"
+							value="#{productSearchManagedBean.barcode}" />
+					</h:panelGrid>
+
+					<h:panelGrid columns="1">
+						<h:outputText>Descrição: </h:outputText>
+						<h:inputTextarea id="product_description_input" cols="40" rows="1"
+							value="#{productSearchManagedBean.description}" />
+					</h:panelGrid>
+
+					<h:commandButton id="product_button" value="Procurar"
+						action="#{productSearchManagedBean.searchProduct}"></h:commandButton>
+				</h:panelGrid>
+
+			</div>
+			<div id="product_message">
+				<span class="error"><h:message for="product_button" /></span>
+			</div>
+		</h:form>
+	</ui:composition>
+</body>
+</html>

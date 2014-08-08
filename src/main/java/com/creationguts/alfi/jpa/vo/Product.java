@@ -39,10 +39,26 @@ public class Product implements Serializable {
 		this.quantity = quantity;
 	}
 
+	public Float getValue() {
+		return value;
+	}
+	public void setValue(Float value) {
+		this.value = value;
+	}
+
+	public Float getCost() {
+		return cost;
+	}
+	public void setCost(Float cost) {
+		this.cost = cost;
+	}
+
 	private Long id;
 	private String description;
 	private String barcode;
 	private Integer quantity;
+	private Float value;
+	private Float cost;
 	
 	private static final long serialVersionUID = -1833250359689114783L;
 	
