@@ -13,6 +13,13 @@ public class PurchaseEntityManager extends EntityManager<Purchase> {
 	public PurchaseEntityManager(Class<Purchase> clazz) {
 		super(Purchase.class);
 	}
+	
+	@Override
+	public Purchase loadAll(Purchase purchase) {
+		return purchase;
+	}
 
 	private static Logger logger = Logger.getLogger(PurchaseEntityManager.class);
+
+
 }

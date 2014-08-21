@@ -24,10 +24,16 @@ public class ProductEntityManager extends EntityManager<Product> {
 	}
 
 	public List<Product> findByDescription(String description) {
+		logger.debug("Finding products by description: " + description);
 		List<Product> prods = getEntityManager().createQuery(
-				"from Product where description like '%" + description + "'",
+				"from Product where description like '%" + description + "%'",
 				Product.class).getResultList();
+		logger.debug(prods.size() + " products found.");
 		return prods;
+	}
+	
+	public Product loadAll(Product product) {
+		return product;
 	}
 
 	private static Logger logger = Logger.getLogger(ProductEntityManager.class);

@@ -13,46 +13,40 @@
 		<h:panelGrid columns="1">
 			<h:panelGroup>
 				<div id="product_list">
-					<h4>Busca: "código de barra: #{productSearchManagedBean.barcode} | descrição: #{productSearchManagedBean.description} "</h4>
-					<ui:repeat var="product"
-						value="#{productSearchManagedBean.foundProducts}">
-						<h:dataTable rowClasses="rowOdd, rowEven" var="product"
-							value="#{productSearchManagedBean.foundProducts}" cellpadding="5">
-							<h:column>
-								<f:facet name="header">Índice</f:facet>
+					<b>Busca: </b>"código de barra: #{productSearchManagedBean.barcode}
+					| descrição: #{productSearchManagedBean.description} "
+					<h:dataTable rowClasses="rowOdd, rowEven" var="product"
+						value="#{productSearchManagedBean.foundProducts}" cellpadding="5">
+						<h:column>
+							<f:facet name="header">Índice</f:facet>
 							#{product.id}
 						</h:column>
-							<h:column>
-								<f:facet name="header">Código de Barra</f:facet>
+						<h:column>
+							<f:facet name="header">Código de Barra</f:facet>
 							#{product.barcode}
 						</h:column>
-							<h:column>
-								<f:facet name="header">Descrição</f:facet>
+						<h:column>
+							<f:facet name="header">Descrição</f:facet>
 							#{product.description}
 						</h:column>
 						<h:column>
-								<f:facet name="header">Valor</f:facet>
+							<f:facet name="header">Valor</f:facet>
 							#{product.value}
 						</h:column>
 						<h:column>
-								<f:facet name="header">Custo</f:facet>
+							<f:facet name="header">Custo</f:facet>
 							#{product.cost}
-						</h:column>	
-							<h:column>
-								<f:facet name="header">Ações</f:facet>
-								<h:form>
-									<h:commandLink action="#{productManagedBean.viewProduct}"
-										value="info">
-										<f:param name="productId" value="#{product.id}" />
-									</h:commandLink> | 
-								<h:commandLink action="#{productManagedBean.editProduct}"
-										value="editar">
-										<f:param name="productId" value="#{product.id}" />
-									</h:commandLink>
-								</h:form>
-							</h:column>
-						</h:dataTable>
-					</ui:repeat>
+						</h:column>
+						<h:column>
+							<f:facet name="header">Ações</f:facet>
+							<h:form>
+								<h:commandLink action="#{productSearchManagedBean.editProduct}"
+									value="editar">
+									<f:param name="productId" value="#{product.id}" />
+								</h:commandLink>
+							</h:form>
+						</h:column>
+					</h:dataTable>
 				</div>
 			</h:panelGroup>
 		</h:panelGrid>

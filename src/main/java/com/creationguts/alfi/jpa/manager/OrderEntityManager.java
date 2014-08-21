@@ -13,6 +13,7 @@ import javax.persistence.TypedQuery;
 import org.apache.log4j.Logger;
 
 import com.creationguts.alfi.jpa.vo.Order;
+import com.creationguts.alfi.jsf.bean.OrderSearchManagedBean;
 
 public class OrderEntityManager extends EntityManager<Order> {
 	
@@ -35,6 +36,139 @@ public class OrderEntityManager extends EntityManager<Order> {
 		getEntityManager().close();
 	
 		return result;
+	}
+	
+	public List<Order> getOrders(OrderSearchManagedBean searchBean) {
+		logger.debug("Getting orders by order search bean");
+		String query = "from Order where 1=1";
+		
+		String requestDateCondition = "";
+		if (searchBean.getRequestDateAfter() != null) {
+			requestDateCondition += "requestDate >= :reqDateBegin";
+			if (searchBean.getRequestDateBefore() != null) {
+				requestDateCondition += " and requestDate <= :reqDateEnd";
+			}
+		} else {
+			if (searchBean.getRequestDateBefore() != null) {
+				requestDateCondition += "requestDate <= :reqDateEnd";
+			}
+		}
+		if (!requestDateCondition.equals("")) {
+			query += " and " + requestDateCondition;
+		}
+		
+		String deliveryDateCondition = "";
+		if (searchBean.getRequestDateAfter() != null) {
+			deliveryDateCondition += "deliveryDate >= :dvryDateBegin";
+			if (searchBean.getRequestDateBefore() != null) {
+				deliveryDateCondition += " and deliveryDate <= :dvryDateEnd";
+			}
+		} else {
+			if (searchBean.getRequestDateBefore() != null) {
+				deliveryDateCondition += "deliveryDate <= :dvryDateEnd";
+			}
+		}
+		if (!deliveryDateCondition.equals("")) {
+			query += " and " + deliveryDateCondition;
+		}
+		
+		String valueCondition = "";
+		if (searchBean.getValueLesser() != 0.0) {
+			valueCondition += "value >= :valueLesser";
+			if (searchBean.getValueGreater() != 0.0) {
+				valueCondition += " and value <= :valueGreater";
+			}
+		} else {
+			if (searchBean.getValueGreater() != 0.0) {
+				valueCondition += "value <= :valueGreater";
+			}
+		}
+		if (!valueCondition.equals("")) {
+			query += " and " + valueCondition;
+		}
+		
+		String costCondition = "";
+		if (searchBean.getValueLesser() != 0.0) {
+			costCondition += "cost >= :costLesser";
+			if (searchBean.getValueGreater() != 0.0) {
+				costCondition += " and cost <= :costGreater";
+			}
+		} else {
+			if (searchBean.getValueGreater() != 0) {
+				costCondition += "cost <= :costGreater";
+			}
+		}
+		if (!costCondition.equals("")) {
+			query += " and " + costCondition;
+		}
+		
+		String descriptionCondition = "";
+		if (searchBean.getDescription() != null && !searchBean.getDescription().equals("")) {
+			descriptionCondition += "description like :desc";
+		}
+		if (!descriptionCondition.equals("")) {
+			query += " and " + descriptionCondition;
+		}
+
+		String statusCondition = "";
+		if (!searchBean.getStatus().getViewName().equals("")) {
+			statusCondition += "status = ':status'";
+		}
+		if (!statusCondition.equals("")) {
+			query += " and " + statusCondition;
+		}
+		logger.debug("query: " + query);
+		
+		TypedQuery<Order> q = getEntityManager().createQuery(query, Order.class);
+		for (Parameter<?> p : q.getParameters()) {
+			if (p.getName().equals("reqDateBegin")) {
+				q.setParameter("reqDateBegin", searchBean.getRequestDateAfter(), TemporalType.DATE);
+			}
+			
+			if (p.getName().equals("reqDateEnd")) {
+				q.setParameter("reqDateEnd", searchBean.getRequestDateBefore(), TemporalType.DATE);
+			}
+			
+			if (p.getName().equals("dvryDateBegin")) {
+				q.setParameter("dvryDateBegin", searchBean.getDeliveryDateAfter(), TemporalType.DATE);
+			}
+			
+			if (p.getName().equals("dvryDateEnd")) {
+				q.setParameter("dvryDateEnd", searchBean.getDeliveryDateBefore(), TemporalType.DATE);
+			}
+			
+			if (p.getName().equals("valueLesser")) {
+				q.setParameter("valueLesser", searchBean.getValueLesser());
+			}
+			
+			if (p.getName().equals("valueGreater")) {
+				q.setParameter("valueGreater", searchBean.getValueGreater());
+			}
+			
+			if (p.getName().equals("costLesser")) {
+				q.setParameter("costLesser", searchBean.getCostLesser());
+			}
+			
+			if (p.getName().equals("costGreater")) {
+				q.setParameter("costGreater", searchBean.getCostGreater());
+			}
+			
+			if (p.getName().equals("desc")) {
+				q.setParameter("desc", "%" + searchBean.getDescription() + "%");
+			}
+			
+			if (p.getName().equals("status")) {
+				q.setParameter("status", searchBean.getStatus().toString());
+			}
+		}
+
+		getEntityManager().getTransaction().begin();
+		List<Order> orders = q.getResultList();
+		logger.debug("total orders returned: " + orders.size());
+		getEntityManager().getTransaction().commit();
+		getEntityManager().close();
+
+		return orders;
 	}
 	
 	public Map<Date, List<Order>> getOrders(Date beginDeliveryDate,
@@ -137,6 +271,13 @@ public class OrderEntityManager extends EntityManager<Order> {
 
 		return resultMap;
 	}
+
+	@Override
+	public Order loadAll(Order order) {
+		return order;
+	}
 	
 	private static Logger logger = Logger.getLogger(OrderEntityManager.class);
+
+	
 }

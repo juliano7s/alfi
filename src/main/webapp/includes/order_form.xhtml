@@ -69,7 +69,9 @@
 						</h:panelGrid>
 
 						<h:commandButton id="order_button" value="Salvar"
-							action="#{orderManagedBean.saveOrder}"></h:commandButton>
+							action="#{orderManagedBean.saveOrder}">
+                        	<f:param name="fromPage" value="#{fromPage}" />	
+						</h:commandButton>
 					</h:panelGrid>
 
 				</h:panelGrid>

@@ -11,7 +11,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import org.apache.log4j.Logger;
@@ -25,7 +25,7 @@ import com.creationguts.alfi.jpa.vo.Order.Status;
 import com.creationguts.alfi.jpa.vo.User;
 
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class OrderManagedBean implements Serializable {
 	
 	public Date getLateOrdersEnd() {
@@ -86,6 +86,11 @@ public class OrderManagedBean implements Serializable {
 		Long orderId = Long.parseLong(FacesContext.getCurrentInstance()
 				.getExternalContext().getRequestParameterMap().get("orderId"));
 		logger.debug("Id: " + orderId);
+		String fromPage = FacesContext.getCurrentInstance()
+				.getExternalContext().getRequestParameterMap().get("fromPage");
+		logger.debug("fromPage: " + fromPage);
+		
+		FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("fromPage", fromPage);
 		
 		for (Order o : clientManagedBean.getClient().getOrders()) {
 			if (o.getId().equals(orderId))
@@ -111,6 +116,13 @@ public class OrderManagedBean implements Serializable {
 	 */
 	public String saveOrder() {
 		logger.debug("Saving new order: " + order);
+		String fromPage = FacesContext.getCurrentInstance()
+				.getExternalContext().getRequestParameterMap().get("fromPage");
+		logger.debug("fromPage: " + fromPage);
+		OrderEntityManager oem = new OrderEntityManager();
+		if (order.getId() != 0)
+			order = oem.loadAll(order);
+		
 		for (User o : owners) {
 			if (o.getId().equals(orderOwnerId)) {
 				if (o.getName().equals("Nenhum"))
@@ -119,7 +131,6 @@ public class OrderManagedBean implements Serializable {
 					order.setOwner(o);
 			}
 		}
-		OrderEntityManager oem = new OrderEntityManager();
 		order.setClient(clientManagedBean.getClient());
 		oem.save(order);
 		
@@ -131,7 +142,7 @@ public class OrderManagedBean implements Serializable {
 		clientManagedBean.setClient(order.getClient());
 		logger.debug("Order saved. Clearing order bean.");
 		order = new Order();
-		return clientManagedBean.viewClient();
+		return fromPage;
 	}
 	
 	public String loadLateOrders() {
@@ -231,9 +242,6 @@ public class OrderManagedBean implements Serializable {
 	@ManagedProperty(value="#{clientManagedBean}")
 	private ClientManagedBean clientManagedBean;
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 536149967322807306L;
 	private static Logger logger = Logger.getLogger(OrderManagedBean.class);
 }

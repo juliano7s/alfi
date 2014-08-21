@@ -31,6 +31,8 @@ public abstract class EntityManager<T> {
 		
 		return entity;
 	}
+	
+	public abstract T loadAll(T entity);
 
 	protected javax.persistence.EntityManager getEntityManager() {
 		if (this.e == null) {

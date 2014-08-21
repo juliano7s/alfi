@@ -6,7 +6,8 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 import org.apache.log4j.Logger;
 
@@ -14,9 +15,8 @@ import com.creationguts.alfi.jpa.manager.ProductEntityManager;
 import com.creationguts.alfi.jpa.vo.Product;
 
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class ProductSearchManagedBean implements Serializable {
-
 
 	@PostConstruct
 	public void init() {
@@ -25,11 +25,11 @@ public class ProductSearchManagedBean implements Serializable {
 		foundProduct = null;
 		foundProducts = null;
 	}
-	
+
 	public String searchProduct() {
 		ProductEntityManager pem = new ProductEntityManager();
-		String page = "list_product";
-		
+		String page = "list_products";
+
 		if (description.trim().equals("")) {
 			if (!barcode.trim().equals("")) {
 				foundProduct = pem.findByBarcode(barcode);
@@ -37,16 +37,32 @@ public class ProductSearchManagedBean implements Serializable {
 		} else {
 			foundProducts = pem.findByDescription(description);
 		}
-		
-		if (foundProduct != null || (foundProducts != null && foundProducts.size() == 1)) {
-			Product product = foundProduct == null ? foundProducts.get(0) : foundProduct;
-			productManagedBean.setProduct(product);
+
+		if (foundProduct != null
+				|| (foundProducts != null && foundProducts.size() == 1)) {
+			Product product = foundProduct == null ? foundProducts.get(0)
+					: foundProduct;
+			getProductManagedBean().setProduct(product);
 			page = "edit_product";
 		}
-		
+
 		return page;
 	}
-	
+
+	public String editProduct() {
+		logger.debug("Editing product");
+		Long productId = Long
+				.parseLong(FacesContext.getCurrentInstance()
+						.getExternalContext().getRequestParameterMap()
+						.get("productId"));
+		logger.debug("Id: " + productId);
+		productManagedBean.setProduct((new ProductEntityManager())
+				.findById(productId));
+		productManagedBean.setProduct((new ProductEntityManager())
+				.loadAll(productManagedBean.getProduct()));
+		return "edit_product";
+	}
+
 	public String getBarcode() {
 		return barcode;
 	}
@@ -79,15 +95,23 @@ public class ProductSearchManagedBean implements Serializable {
 		this.foundProduct = foundProduct;
 	}
 
+	public ProductManagedBean getProductManagedBean() {
+		return productManagedBean;
+	}
+
+	public void setProductManagedBean(ProductManagedBean productManagedBean) {
+		this.productManagedBean = productManagedBean;
+	}
+
 	private String barcode;
 	private String description;
 	private List<Product> foundProducts;
 	private Product foundProduct;
-	
-	@ManagedProperty(value="#{productManagedBean}")
+
+	@ManagedProperty(value = "#{productManagedBean}")
 	private ProductManagedBean productManagedBean;
 
-	
 	private static final long serialVersionUID = 1619203277603284655L;
-	private static Logger logger = Logger.getLogger(ProductSearchManagedBean.class);
+	private static Logger logger = Logger
+			.getLogger(ProductSearchManagedBean.class);
 }

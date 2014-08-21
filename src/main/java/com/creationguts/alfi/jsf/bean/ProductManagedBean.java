@@ -5,7 +5,7 @@ import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import org.apache.log4j.Logger;
@@ -14,7 +14,7 @@ import com.creationguts.alfi.jpa.manager.ProductEntityManager;
 import com.creationguts.alfi.jpa.vo.Product;
 
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class ProductManagedBean implements Serializable {
 
 	@PostConstruct

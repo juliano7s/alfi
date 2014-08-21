@@ -135,6 +135,7 @@ public class Order implements Serializable {
 	}
 
 	public enum Status {
+	    NONE(""),
 	    INPROGRESS("INPROGRESS"),
 	    READY("READY"),
 	    DELIVERED("DELIVERED");
@@ -156,6 +157,8 @@ public class Order implements Serializable {
 				return "Pronto";
 			} else if (equals(Status.DELIVERED)) {
 				return "Entregue";
+			} else if (equals(Status.NONE)) {
+				return "";
 			} else {
 				return "ERRO";
 			}

@@ -31,5 +31,12 @@ public class UserEntityManager extends EntityManager<User> {
 		return result;
 	}
 	
+	@Override
+	public User loadAll(User user) {
+		return user;
+	}
+	
 	private static Logger logger = Logger.getLogger(UserEntityManager.class);
+
+
 }
