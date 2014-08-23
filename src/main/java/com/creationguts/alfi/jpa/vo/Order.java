@@ -15,6 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.apache.log4j.Logger;
+
 @Entity
 @Table(name = "orders")
 public class Order implements Serializable {
@@ -186,4 +188,5 @@ public class Order implements Serializable {
 	private Boolean ownerPaidStatus;
 	
 	private static final long serialVersionUID = 1710642303009857896L;
+	private static Logger logger = Logger.getLogger(Order.class);
 }

@@ -63,6 +63,7 @@ public class OrderManagedBean implements Serializable {
 	@SuppressWarnings("unchecked")
 	@PostConstruct
 	public void init() {
+		logger.debug("initializing orderManagedBean");
 		order = new Order();
 		owners = (new UserEntityManager()).getUsers();
 		statuses = new ArrayList<Order.Status>(Arrays.asList(Order.Status.values()));
@@ -91,11 +92,7 @@ public class OrderManagedBean implements Serializable {
 		logger.debug("fromPage: " + fromPage);
 		
 		FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("fromPage", fromPage);
-		
-		for (Order o : clientManagedBean.getClient().getOrders()) {
-			if (o.getId().equals(orderId))
-				order = o;
-		}
+		order = (new OrderEntityManager()).findById(orderId);
 		
 		return "edit_order";
 	}
@@ -164,10 +161,12 @@ public class OrderManagedBean implements Serializable {
 	}
 	
 	public Order getOrder() {
+		logger.debug("getting order " + order.hashCode() + " from object " + this);
 		return order;
 	}
 
 	public void setOrder(Order order) {
+		logger.debug("setting order " + order.hashCode() + " in object " + this);
 		this.order = order;
 	}
 	

@@ -24,11 +24,10 @@
 					<!-- ajax call -->
 				</div>
 			</h:form>
-			Índice: <h:outputText>#{orderManagedBean.order.id}</h:outputText>
-			DEBUG fromPage: #{requestScope.fromPage}
+			Índice: <h:outputText value="#{orderManagedBean.order.id}" />
 			<ui:include src="includes/order_form.xhtml">
 				<f:param id="fromPage" value="#{requestScope.fromPage}"></f:param>
-			</ui:include>
+			</ui:include>				
 		</div>
 	</ui:define>
 </ui:composition>

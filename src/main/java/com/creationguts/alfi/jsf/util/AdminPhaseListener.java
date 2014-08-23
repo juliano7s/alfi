@@ -9,12 +9,12 @@ public class AdminPhaseListener implements PhaseListener {
 	
 	@Override
 	public void afterPhase(PhaseEvent event) {
-		System.out.println("START PHASE " + event.getPhaseId());
+		//System.out.println("START PHASE " + event.getPhaseId());
 	}
 
 	@Override
 	public void beforePhase(PhaseEvent event) {
-		System.out.println("END PHASE " + event.getPhaseId());
+		//System.out.println("END PHASE " + event.getPhaseId());
 	}
 
 	@Override

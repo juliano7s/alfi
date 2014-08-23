@@ -111,7 +111,7 @@ CREATE TABLE `products` (
   `quantity` tinyint(3) unsigned DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `barcode_UNIQUE` (`barcode`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -157,4 +157,4 @@ CREATE TABLE `purchases` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-08-08 12:53:30
+-- Dump completed on 2014-08-21 17:24:00

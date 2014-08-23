@@ -33,7 +33,8 @@
 			</div>
 		</div>
 
-		<h:panelGrid columns="2" id="order_purchase_forms_grid" cellspacing="20">
+		<h:panelGrid columns="2" id="order_purchase_forms_grid"
+			cellspacing="20">
 			<h:panelGroup id="order_form_group">
 				<h4>Registrar pedido:</h4>
 				<ui:include src="includes/order_form.xhtml"></ui:include>
@@ -46,78 +47,89 @@
 
 		<div id="client_orders_inprogress">
 			<h4>Pedidos em aberto</h4>
-			<ui:repeat var="order" value="#{clientManagedBean.ordersInProgress}">
-				<div class="info_block">
-					<span class="info"><b>Id: </b>#{order.id}</span> <span class="info"><b>Pedido:
-					</b>#{order.description}</span> <span class="info"><b>Data: </b>
-					<h:outputText value="#{order.requestDate}">
-							<f:convertDateTime pattern="yyyy-mm-dd" type="date" />
-						</h:outputText></span> <span class="info"><b>Entrega: </b>
-					<h:outputText value="#{order.deliveryDate}">
-							<f:convertDateTime pattern="yyyy-mm-dd" type="date" />
-						</h:outputText></span> <span class="info"><b>Custo: </b>#{order.cost}</span> <span
-						class="info"><b>Valor: </b>#{order.value}</span> <span
-						class="info"><b>Status: </b>#{order.status.viewName}</span> <span
-						class="info"><b>Responsável: </b>#{order.owner.name}</span>
+			<h:dataTable rowClasses="rowOdd, rowEven" var="order"
+				value="#{clientManagedBean.ordersInProgress}" cellpadding="5">
+				<h:column>
+					<f:facet name="header">Índice</f:facet>
+							#{order.id}
+						</h:column>
+				<h:column>
+					<f:facet name="header">Cliente</f:facet>
+							#{order.client.name}
+						</h:column>
+				<h:column>
+					<f:facet name="header">Descrição</f:facet>
+							#{order.description}
+						</h:column>
+				<h:column>
+					<f:facet name="header">Ações</f:facet>
 					<h:form>
 						<h:commandLink action="#{orderManagedBean.editOrder}"
-							value="Editar">
+							value="editar">
 							<f:param name="orderId" value="#{order.id}" />
 							<f:param name="fromPage" value="client" />
 						</h:commandLink>
 					</h:form>
-				</div>
-				<br />
-			</ui:repeat>
+				</h:column>
+			</h:dataTable>
 		</div>
 
 		<div id="client_orders_inprogress">
 			<h4>Compras em aberto</h4>
-			<ui:repeat var="order" value="#{clientManagedBean.ordersInProgress}">
-				<div class="info_block">
-					<span class="info"><b>Id: </b>#{order.id}</span> <span class="info"><b>Pedido:
-					</b>#{order.description}</span> <span class="info"><b>Data: </b>
-					<h:outputText value="#{order.requestDate}">
-							<f:convertDateTime pattern="yyyy-mm-dd" type="date" />
-						</h:outputText></span> <span class="info"><b>Entrega: </b>
-					<h:outputText value="#{order.deliveryDate}">
-							<f:convertDateTime pattern="yyyy-mm-dd" type="date" />
-						</h:outputText></span> <span class="info"><b>Custo: </b>#{order.cost}</span> <span
-						class="info"><b>Valor: </b>#{order.value}</span> <span
-						class="info"><b>Status: </b>#{order.status.viewName}</span> <span
-						class="info"><b>Responsável: </b>#{order.owner.name}</span>
+			<h:dataTable rowClasses="rowOdd, rowEven" var="order"
+				value="#{clientManagedBean.ordersInProgress}" cellpadding="5">
+				<h:column>
+					<f:facet name="header">Índice</f:facet>
+							#{order.id}
+						</h:column>
+				<h:column>
+					<f:facet name="header">Cliente</f:facet>
+							#{order.client.name}
+						</h:column>
+				<h:column>
+					<f:facet name="header">Descrição</f:facet>
+							#{order.description}
+						</h:column>
+				<h:column>
+					<f:facet name="header">Ações</f:facet>
 					<h:form>
 						<h:commandLink action="#{orderManagedBean.editOrder}"
-							value="Editar">
+							value="editar">
 							<f:param name="orderId" value="#{order.id}" />
 							<f:param name="fromPage" value="client" />
 						</h:commandLink>
 					</h:form>
-				</div>
-				<br />
-			</ui:repeat>
+				</h:column>
+			</h:dataTable>
 		</div>
 
 		<div id="client_orders_ready">
 			<h4>Histórico</h4>
-			<ui:repeat var="order" value="#{clientManagedBean.ordersReady}">
-				<div class="info_block">
-					<span class="info"><b>Id: </b>#{order.id}</span> <span class="info"><b>Pedido:
-					</b>#{order.description}</span> <span class="info"><b>Data: </b>#{order.requestDate}</span>
-					<span class="info"><b>Entrega: </b>#{order.deliveryDate}</span> <span
-						class="info"><b>Custo: </b>#{order.cost}</span> <span class="info"><b>Valor:
-					</b>#{order.value}</span> <span class="info"><b>Status: </b>#{order.status.viewName}</span>
-					<span class="info"><b>Responsável: </b>#{order.owner.name}</span>
+			<h:dataTable rowClasses="rowOdd, rowEven" var="order"
+				value="#{clientManagedBean.ordersReady}" cellpadding="5">
+				<h:column>
+					<f:facet name="header">Índice</f:facet>
+							#{order.id}
+						</h:column>
+				<h:column>
+					<f:facet name="header">Cliente</f:facet>
+							#{order.client.name}
+						</h:column>
+				<h:column>
+					<f:facet name="header">Descrição</f:facet>
+							#{order.description}
+						</h:column>
+				<h:column>
+					<f:facet name="header">Ações</f:facet>
 					<h:form>
 						<h:commandLink action="#{orderManagedBean.editOrder}"
-							value="Editar">
+							value="editar">
 							<f:param name="orderId" value="#{order.id}" />
 							<f:param name="fromPage" value="client" />
 						</h:commandLink>
 					</h:form>
-				</div>
-				<br />
-			</ui:repeat>
+				</h:column>
+			</h:dataTable>
 		</div>
 	</ui:define>
 </ui:composition>

@@ -34,17 +34,18 @@ public class OrderSearchManagedBean implements Serializable {
 	public String editOrder() {
 		logger.debug("Editing order");
 		logger.debug("request path info: " + FacesContext.getCurrentInstance().getExternalContext().getRequestPathInfo());
-		Long orderId = Long
-				.parseLong(FacesContext.getCurrentInstance()
-						.getExternalContext().getRequestParameterMap()
-						.get("orderId"));
+		Long orderId = Long .parseLong(FacesContext.getCurrentInstance()
+						.getExternalContext().getRequestParameterMap().get("orderId"));
+		logger.debug("orderId: " + orderId);
 		String fromPage = FacesContext.getCurrentInstance()
 				.getExternalContext().getRequestParameterMap().get("fromPage");
 		logger.debug("fromPage: " + fromPage);
 		Order order = (new OrderEntityManager()).findById(orderId);
-		order = (new OrderEntityManager()).loadAll(getOrderManagedBean().getOrder());
-		getOrderManagedBean().setOrder(order);
-		getOrderManagedBean().getClientManagedBean().setClient(order.getClient());
+		order = (new OrderEntityManager()).loadAll(order);
+		logger.debug("order: " + order);
+		logger.debug("setting order " + order.hashCode() + " on " + orderManagedBean);
+		orderManagedBean.setOrder(order);
+		orderManagedBean.getClientManagedBean().setClient(order.getClient());
 		return "edit_order";
 	}
 

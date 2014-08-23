@@ -274,6 +274,14 @@ public class OrderEntityManager extends EntityManager<Order> {
 
 	@Override
 	public Order loadAll(Order order) {
+		getEntityManager().getTransaction().begin();
+		order = getEntityManager().createQuery(
+				"from Order o left join fetch o.client c where o.id = "
+						+ order.getId(), Order.class).getSingleResult();
+		getEntityManager().getTransaction().commit();
+		closeEntityManager();
+		
+		logger.debug("All attributes loaded from order: " + order);
 		return order;
 	}
 	
