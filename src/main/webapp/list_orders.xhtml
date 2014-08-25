@@ -28,6 +28,10 @@
 							#{order.description}
 						</h:column>
 						<h:column>
+							<f:facet name="header">Status</f:facet>
+							#{order.status.viewName}
+						</h:column>
+						<h:column>
 							<f:facet name="header">Ações</f:facet>
 							<h:form>
 								<h:commandLink action="#{orderSearchManagedBean.editOrder}"

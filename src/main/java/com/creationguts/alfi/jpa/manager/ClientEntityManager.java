@@ -28,6 +28,19 @@ public class ClientEntityManager extends EntityManager<Client> {
 
 		return result;
 	}
+	
+	public List<Client> getClientsInDebt() {
+		logger.debug("Getting clients in debt");
+		getEntityManager().getTransaction().begin();
+		List<Client> result = getEntityManager()
+				.createQuery(
+						"from Client c where c in (select Client from Order o join p.client where o.paidStatus = 0)",
+						Client.class).getResultList();
+		getEntityManager().getTransaction().commit();
+		closeEntityManager();
+		
+		return result;
+	}
 
 	public List<Client> getClientsByName(String name) {
 		logger.debug("Getting clients by name: " + name);

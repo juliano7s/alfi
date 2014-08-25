@@ -22,6 +22,7 @@ FROM
     pobs.orders
 WHERE
     delivered = 0 AND ready = 0;
+
 UPDATE alfi_dev.orders 
 SET 
     status = 'INPROGRESS'
@@ -34,6 +35,7 @@ FROM
     pobs.orders
 WHERE
     delivered = 0 AND ready = 1;
+
 UPDATE alfi_dev.orders 
 SET 
     status = 'READY'
@@ -46,6 +48,7 @@ FROM
     pobs.orders
 WHERE
     delivered = 1;
+
 UPDATE alfi_dev.orders 
 SET 
     status = 'DELIVERED'

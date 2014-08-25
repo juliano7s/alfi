@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -82,7 +83,7 @@ public class ClientManagedBean implements Serializable {
 		if (client == null && clients == null || clients.size() == 0) {
 			logger.debug("Client not found, going to new client view");
 			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage("Cliente não encontrado."));
+					new FacesMessage("Cliente nï¿½o encontrado."));
 			newClient();
 			view = "edit_client";
 		} else {
@@ -144,6 +145,8 @@ public class ClientManagedBean implements Serializable {
 			}
 		}
 		
+		orderManagedBean.setOrder(new Order());
+		
 		logger.debug("Client to view: " + client.getName());
 		client = (new ClientEntityManager()).loadAll(client);
 
@@ -183,7 +186,7 @@ public class ClientManagedBean implements Serializable {
 	public void validateCpf(FacesContext context, UIComponent component, Object value) throws ValidatorException {
 		String cpf = ((String) value).trim().replace(".", "").replace("-", "");
 		if (cpf.length() != 11) {
-			throw new ValidatorException(new FacesMessage("CPF deve ter 11 dígitos."));
+			throw new ValidatorException(new FacesMessage("CPF deve ter 11 dï¿½gitos."));
 		}
 	}
 
@@ -252,6 +255,14 @@ public class ClientManagedBean implements Serializable {
 	
 	public void setOrdersReady(List<Order> list) {}
 
+	public OrderManagedBean getOrderManagedBean() {
+		return orderManagedBean;
+	}
+
+	public void setOrderManagedBean(OrderManagedBean orderManagedBean) {
+		this.orderManagedBean = orderManagedBean;
+	}
+
 	private String wholeSearch;
 	private List<Client> clients;
 	private Client client;
@@ -260,6 +271,9 @@ public class ClientManagedBean implements Serializable {
 	private List<Purchase> clientOpenPurchases;
 	private List<Purchase> clientClosedPurchases;
 	private List<Phone> phoneNumbers;
+	
+	@ManagedProperty(value="#{orderManagedBean}")
+	private OrderManagedBean orderManagedBean;
 	
 	private static Logger logger = Logger.getLogger(ClientManagedBean.class);
 	private static final long serialVersionUID = 2461829560777826670L;

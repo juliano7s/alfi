@@ -10,7 +10,6 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
@@ -18,8 +17,10 @@ import org.apache.log4j.Logger;
 
 import scala.actors.threadpool.Arrays;
 
+import com.creationguts.alfi.jpa.manager.ClientEntityManager;
 import com.creationguts.alfi.jpa.manager.OrderEntityManager;
 import com.creationguts.alfi.jpa.manager.UserEntityManager;
+import com.creationguts.alfi.jpa.vo.Client;
 import com.creationguts.alfi.jpa.vo.Order;
 import com.creationguts.alfi.jpa.vo.Order.Status;
 import com.creationguts.alfi.jpa.vo.User;
@@ -116,9 +117,16 @@ public class OrderManagedBean implements Serializable {
 		String fromPage = FacesContext.getCurrentInstance()
 				.getExternalContext().getRequestParameterMap().get("fromPage");
 		logger.debug("fromPage: " + fromPage);
+		String cId = FacesContext.getCurrentInstance()
+		 		.getExternalContext().getRequestParameterMap().get("clientId");		
+		
+		if (!cId.equals("")) {
+			ClientEntityManager cem = new ClientEntityManager();
+			Client c = cem.findById(Long.parseLong(cId));
+			order.setClient(c);				
+		}	
+		
 		OrderEntityManager oem = new OrderEntityManager();
-		if (order.getId() != 0)
-			order = oem.loadAll(order);
 		
 		for (User o : owners) {
 			if (o.getId().equals(orderOwnerId)) {
@@ -128,15 +136,13 @@ public class OrderManagedBean implements Serializable {
 					order.setOwner(o);
 			}
 		}
-		order.setClient(clientManagedBean.getClient());
 		oem.save(order);
 		
 		FacesContext.getCurrentInstance().addMessage(
 				null,
 				new FacesMessage("Pedido salvo com sucesso para o cliente: "
 						+ order.getClient().getName()));
-				
-		clientManagedBean.setClient(order.getClient());
+
 		logger.debug("Order saved. Clearing order bean.");
 		order = new Order();
 		return fromPage;
@@ -151,15 +157,7 @@ public class OrderManagedBean implements Serializable {
 		getNextOrders();
 		return "index";
 	}
-			
-	public ClientManagedBean getClientManagedBean() {
-		return clientManagedBean;
-	}
-
-	public void setClientManagedBean(ClientManagedBean clientManagedBean) {
-		this.clientManagedBean = clientManagedBean;
-	}
-	
+				
 	public Order getOrder() {
 		logger.debug("getting order " + order.hashCode() + " from object " + this);
 		return order;
@@ -237,9 +235,6 @@ public class OrderManagedBean implements Serializable {
 	private Date lateOrdersBegin, lateOrdersEnd;
 	private Date nextOrdersBegin, nextOrdersEnd;
 	private Map<Date, List<Order>> nextOrders;
-	
-	@ManagedProperty(value="#{clientManagedBean}")
-	private ClientManagedBean clientManagedBean;
 
 	private static final long serialVersionUID = 536149967322807306L;
 	private static Logger logger = Logger.getLogger(OrderManagedBean.class);

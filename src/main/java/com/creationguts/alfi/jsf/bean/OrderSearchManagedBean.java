@@ -8,6 +8,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 import org.apache.log4j.Logger;
@@ -26,6 +27,9 @@ public class OrderSearchManagedBean implements Serializable {
 			goTo = "search_orders";
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage("Nenhum pedido encontrado."));
+		} else {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(ordersFound.size() + " pedidos encontrados."));
 		}
 			
 		return goTo;
@@ -33,19 +37,17 @@ public class OrderSearchManagedBean implements Serializable {
 	
 	public String editOrder() {
 		logger.debug("Editing order");
-		logger.debug("request path info: " + FacesContext.getCurrentInstance().getExternalContext().getRequestPathInfo());
-		Long orderId = Long .parseLong(FacesContext.getCurrentInstance()
-						.getExternalContext().getRequestParameterMap().get("orderId"));
+		ExternalContext exCont = FacesContext.getCurrentInstance().getExternalContext();
+		Long orderId = Long .parseLong(exCont.getRequestParameterMap().get("orderId"));
 		logger.debug("orderId: " + orderId);
-		String fromPage = FacesContext.getCurrentInstance()
-				.getExternalContext().getRequestParameterMap().get("fromPage");
+		String fromPage = exCont.getRequestParameterMap().get("fromPage");
 		logger.debug("fromPage: " + fromPage);
+		exCont.getRequestMap().put("fromPage", fromPage);
 		Order order = (new OrderEntityManager()).findById(orderId);
 		order = (new OrderEntityManager()).loadAll(order);
 		logger.debug("order: " + order);
 		logger.debug("setting order " + order.hashCode() + " on " + orderManagedBean);
 		orderManagedBean.setOrder(order);
-		orderManagedBean.getClientManagedBean().setClient(order.getClient());
 		return "edit_order";
 	}
 

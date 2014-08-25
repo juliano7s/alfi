@@ -58,13 +58,13 @@ public class OrderEntityManager extends EntityManager<Order> {
 		}
 		
 		String deliveryDateCondition = "";
-		if (searchBean.getRequestDateAfter() != null) {
+		if (searchBean.getDeliveryDateAfter() != null) {
 			deliveryDateCondition += "deliveryDate >= :dvryDateBegin";
-			if (searchBean.getRequestDateBefore() != null) {
+			if (searchBean.getDeliveryDateBefore() != null) {
 				deliveryDateCondition += " and deliveryDate <= :dvryDateEnd";
 			}
 		} else {
-			if (searchBean.getRequestDateBefore() != null) {
+			if (searchBean.getDeliveryDateBefore() != null) {
 				deliveryDateCondition += "deliveryDate <= :dvryDateEnd";
 			}
 		}
@@ -74,13 +74,13 @@ public class OrderEntityManager extends EntityManager<Order> {
 		
 		String valueCondition = "";
 		if (searchBean.getValueLesser() != 0.0) {
-			valueCondition += "value >= :valueLesser";
+			valueCondition += "value <= :valueLesser";
 			if (searchBean.getValueGreater() != 0.0) {
-				valueCondition += " and value <= :valueGreater";
+				valueCondition += " and value >= :valueGreater";
 			}
 		} else {
 			if (searchBean.getValueGreater() != 0.0) {
-				valueCondition += "value <= :valueGreater";
+				valueCondition += "value >= :valueGreater";
 			}
 		}
 		if (!valueCondition.equals("")) {
@@ -88,14 +88,14 @@ public class OrderEntityManager extends EntityManager<Order> {
 		}
 		
 		String costCondition = "";
-		if (searchBean.getValueLesser() != 0.0) {
-			costCondition += "cost >= :costLesser";
-			if (searchBean.getValueGreater() != 0.0) {
-				costCondition += " and cost <= :costGreater";
+		if (searchBean.getCostLesser() != 0.0) {
+			costCondition += "cost <= :costLesser";
+			if (searchBean.getCostGreater() != 0.0) {
+				costCondition += " and cost >= :costGreater";
 			}
 		} else {
-			if (searchBean.getValueGreater() != 0) {
-				costCondition += "cost <= :costGreater";
+			if (searchBean.getCostGreater() != 0) {
+				costCondition += "cost >= :costGreater";
 			}
 		}
 		if (!costCondition.equals("")) {
@@ -108,6 +108,14 @@ public class OrderEntityManager extends EntityManager<Order> {
 		}
 		if (!descriptionCondition.equals("")) {
 			query += " and " + descriptionCondition;
+		}
+		
+		String ownerCondition = "";
+		if (searchBean.getOwnerId() != 0) {
+			ownerCondition += "owner.id = :ownerid";
+		}
+		if (!ownerCondition.equals("")) {
+			query += " and " + ownerCondition;
 		}
 
 		String statusCondition = "";
@@ -155,6 +163,10 @@ public class OrderEntityManager extends EntityManager<Order> {
 			
 			if (p.getName().equals("desc")) {
 				q.setParameter("desc", "%" + searchBean.getDescription() + "%");
+			}
+			
+			if (p.getName().equals("ownerid")) {
+				q.setParameter("ownerid", searchBean.getOwnerId());
 			}
 			
 			if (p.getName().equals("status")) {
