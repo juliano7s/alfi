@@ -220,7 +220,9 @@ public class OrderEntityManager extends EntityManager<Order> {
 		}
 		
 		String statusQry = status.length > 0 ? " and (" : "";
+		logger.debug("status parameter: ");
 		for (int i = 0; i < status.length; i++) {
+			logger.debug(status[i]);
 			statusQry += " o.status = :status" + i;
 			if (i + 1 < status.length)
 				statusQry += " or ";
@@ -232,7 +234,7 @@ public class OrderEntityManager extends EntityManager<Order> {
 		TypedQuery<Order> q = getEntityManager().createQuery(
 				"from Order o where 1=1 " + dvrDate + rdyDate + statusQry + orderBy,
 				Order.class);
-		logger.debug(" query formed: " + q);
+		logger.debug(" query formed: " + "from Order o where 1=1 " + dvrDate + rdyDate + statusQry + orderBy);
 		
 		for (Parameter<?> p : q.getParameters()) {
 			if (p.getName().equals("begindvry")) {

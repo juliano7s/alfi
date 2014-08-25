@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:t="http://myfaces.apache.org/tomahawk">
+<body>
+	<ui:composition>
+		Size #{orderList.size}
+		<h:dataTable var="order" value="#{orderList}">
+			<h:column>
+				<f:facet name="header">Índice</f:facet>
+							#{order.id}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Pedido</f:facet>
+							#{order.description}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Data</f:facet>
+							#{order.requestDate}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Entrega</f:facet>
+							#{order.deliveryDate}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Custo</f:facet>
+							R$ #{order.cost}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Valor</f:facet>
+							$ #{order.value}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Status</f:facet>
+							#{order.status.viewName}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Responsável</f:facet>
+							#{order.owner.name}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Ações</f:facet>
+				<h:form>
+					<h:commandLink action="#{orderManagedBean.editOrder}"
+						value="Editar">
+						<f:param name="orderId" value="#{order.id}" />
+					</h:commandLink>
+				</h:form>
+			</h:column>
+		</h:dataTable>
+	</ui:composition>
+</body>
+</html>

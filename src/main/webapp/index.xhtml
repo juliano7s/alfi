@@ -41,26 +41,10 @@
 							<f:convertDateTime pattern="dd/MM/yyyy" />
 						</h:outputText>
 					</h3>
-					<ui:repeat var="order"
-						value="#{orderManagedBean.lateOrders[keyDate]}">
-						<div class="info_block">
-							<span class="info"><b>Id: </b>#{order.id}</span> <span
-								class="info"><b>Pedido: </b>#{order.description}</span> <span
-								class="info"><b>Data: </b>#{order.requestDate}</span> <span
-								class="info"><b>Entrega: </b>#{order.deliveryDate}</span> <span
-								class="info"><b>Custo: </b>R$ #{order.cost}</span> <span
-								class="info"><b>Valor: </b>R$ #{order.value}</span> <span
-								class="info"><b>Status: </b>#{order.status.viewName}</span> <span
-								class="info"><b>Responsável: </b>#{order.owner.name}</span>
-							<h:form>
-								<h:commandLink action="#{orderManagedBean.editOrder}"
-									value="Editar">
-									<f:param name="orderId" value="#{order.id}" />
-								</h:commandLink>
-							</h:form>
-						</div>
-						<br />
-					</ui:repeat>
+					Tamanho #{orderManagedBean.lateOrders[keydate].size} #{keydate}
+					<ui:include src="includes/order_table.xhtml">
+						<ui:param name="orderList" value="#{orderManagedBean.lateOrders[keydate]}"></ui:param>
+					</ui:include>
 				</ui:repeat>
 			</div>
 		</h:panelGroup>
@@ -91,26 +75,10 @@
 							<f:convertDateTime pattern="dd/MM/yyyy" />
 						</h:outputText>
 					</h3>
-					<ui:repeat var="order"
-						value="#{orderManagedBean.nextOrders[keyDate]}">
-						<div class="info_block">
-							<span class="info"><b>Id: </b>#{order.id}</span> <span
-								class="info"><b>Pedido: </b>#{order.description}</span> <span
-								class="info"><b>Data: </b>#{order.requestDate}</span> <span
-								class="info"><b>Entrega: </b>#{order.deliveryDate}</span> <span
-								class="info"><b>Custo: </b>#{order.cost}</span> <span
-								class="info"><b>Valor: </b>#{order.value}</span> <span
-								class="info"><b>Status: </b>#{order.status.viewName}</span> <span
-								class="info"><b>Responsável: </b>#{order.owner.name}</span>
-							<h:form>
-								<h:commandLink action="#{orderManagedBean.editOrder}"
-									value="Editar">
-									<f:param name="orderId" value="#{order.id}" />
-								</h:commandLink>
-							</h:form>
-						</div>
-						<br />
-					</ui:repeat>
+					Tamanho #{orderManagedBean.nextOrders[keydate].size} #{keydate}
+					<ui:include src="includes/order_table.xhtml">
+						<ui:param name="orderList" value="#{orderManagedBean.nextOrders[keydate]}"></ui:param>
+					</ui:include>
 				</ui:repeat>
 			</div>
 		</h:panelGroup>

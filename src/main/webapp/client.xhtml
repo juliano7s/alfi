@@ -36,9 +36,10 @@
 		<h:panelGrid columns="2" id="order_purchase_forms_grid"
 			cellspacing="20">
 			<h:panelGroup id="order_form_group">
-				<h4>Registrar pedido:</h4>
+				<h4>Registrar pedido:</h4>				
 				<ui:include src="includes/order_form.xhtml">
-					<f:param id="clientId" value="#{clientManagedBean.client.id}"></f:param>
+					<ui:param name="fromPage" value="client"></ui:param>
+					<ui:param name="clientId" value="#{clientManagedBean.client.id}"></ui:param>
 				</ui:include>
 			</h:panelGroup>
 			<h:panelGroup id="purchase_form_group">

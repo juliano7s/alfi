@@ -29,38 +29,6 @@ import com.creationguts.alfi.jpa.vo.User;
 @SessionScoped
 public class OrderManagedBean implements Serializable {
 	
-	public Date getLateOrdersEnd() {
-		return lateOrdersEnd;
-	}
-
-	public void setLateOrdersEnd(Date lateOrdersEnd) {
-		this.lateOrdersEnd = lateOrdersEnd;
-	}
-
-	public Date getNextOrdersEnd() {
-		return nextOrdersEnd;
-	}
-
-	public void setNextOrdersEnd(Date nextOrdersEnd) {
-		this.nextOrdersEnd = nextOrdersEnd;
-	}
-
-	public Date getLateOrdersBegin() {
-		return lateOrdersBegin;
-	}
-
-	public void setLateOrdersBegin(Date lateOrdersBegin) {
-		this.lateOrdersBegin = lateOrdersBegin;
-	}
-
-	public Date getNextOrdersBegin() {
-		return nextOrdersBegin;
-	}
-
-	public void setNextOrdersBegin(Date nextOrdersBegin) {
-		this.nextOrdersBegin = nextOrdersBegin;
-	}
-
 	@SuppressWarnings("unchecked")
 	@PostConstruct
 	public void init() {
@@ -117,15 +85,17 @@ public class OrderManagedBean implements Serializable {
 		String fromPage = FacesContext.getCurrentInstance()
 				.getExternalContext().getRequestParameterMap().get("fromPage");
 		logger.debug("fromPage: " + fromPage);
-		String cId = FacesContext.getCurrentInstance()
-		 		.getExternalContext().getRequestParameterMap().get("clientId");		
 		
-		if (!cId.equals("")) {
+		String cId = FacesContext.getCurrentInstance()
+				.getExternalContext().getRequestParameterMap().get("clientId");
+		logger.debug("clientId: " + cId);
+
+		if (cId != null && !cId.equals("")) {
 			ClientEntityManager cem = new ClientEntityManager();
 			Client c = cem.findById(Long.parseLong(cId));
-			order.setClient(c);				
-		}	
-		
+			order.setClient(c);
+		}
+
 		OrderEntityManager oem = new OrderEntityManager();
 		
 		for (User o : owners) {
@@ -148,6 +118,38 @@ public class OrderManagedBean implements Serializable {
 		return fromPage;
 	}
 	
+	public Date getLateOrdersEnd() {
+		return lateOrdersEnd;
+	}
+
+	public void setLateOrdersEnd(Date lateOrdersEnd) {
+		this.lateOrdersEnd = lateOrdersEnd;
+	}
+
+	public Date getNextOrdersEnd() {
+		return nextOrdersEnd;
+	}
+
+	public void setNextOrdersEnd(Date nextOrdersEnd) {
+		this.nextOrdersEnd = nextOrdersEnd;
+	}
+
+	public Date getLateOrdersBegin() {
+		return lateOrdersBegin;
+	}
+
+	public void setLateOrdersBegin(Date lateOrdersBegin) {
+		this.lateOrdersBegin = lateOrdersBegin;
+	}
+
+	public Date getNextOrdersBegin() {
+		return nextOrdersBegin;
+	}
+
+	public void setNextOrdersBegin(Date nextOrdersBegin) {
+		this.nextOrdersBegin = nextOrdersBegin;
+	}
+	
 	public String loadLateOrders() {
 		getLateOrders();
 		return "index";
@@ -159,12 +161,10 @@ public class OrderManagedBean implements Serializable {
 	}
 				
 	public Order getOrder() {
-		logger.debug("getting order " + order.hashCode() + " from object " + this);
 		return order;
 	}
 
 	public void setOrder(Order order) {
-		logger.debug("setting order " + order.hashCode() + " in object " + this);
 		this.order = order;
 	}
 	
@@ -198,11 +198,16 @@ public class OrderManagedBean implements Serializable {
 	
 	public Map<Date, List<Order>> getLateOrders() {
 		OrderEntityManager oem = new OrderEntityManager();
+		logger.debug("getting late orders");
 		if (lateOrders == null || lateOrders.size() <= 0) {
 			lateOrders = oem.getOrders(lateOrdersBegin, lateOrdersEnd, null, null,
 					Order.Status.INPROGRESS, Order.Status.READY);
 		}
-		
+		if (lateOrders != null) {
+			for (List<Order> n : lateOrders.values()) {
+				logger.debug("late orders size: " + n.size());
+			}
+		}
 		return lateOrders;
 	}
 
@@ -216,9 +221,15 @@ public class OrderManagedBean implements Serializable {
 	
 	public Map<Date, List<Order>> getNextOrders() {
 		OrderEntityManager oem = new OrderEntityManager();
+		logger.debug("getting next orders");
 		if (nextOrders == null || nextOrders.size() <= 0) {
 			nextOrders = oem.getOrders(nextOrdersBegin, nextOrdersEnd, null, null,
 					Order.Status.INPROGRESS, Order.Status.READY);
+		}
+		if (nextOrders != null) {
+			for (List<Order> n : nextOrders.values()) {
+				logger.debug("next orders size: " + n.size());
+			}
 		}
 		return nextOrders;
 	}
@@ -233,8 +244,9 @@ public class OrderManagedBean implements Serializable {
 	private List<Order.Status> statuses;
 	private Map<Date, List<Order>> lateOrders;
 	private Date lateOrdersBegin, lateOrdersEnd;
-	private Date nextOrdersBegin, nextOrdersEnd;
 	private Map<Date, List<Order>> nextOrders;
+	private Date nextOrdersBegin, nextOrdersEnd;
+	
 
 	private static final long serialVersionUID = 536149967322807306L;
 	private static Logger logger = Logger.getLogger(OrderManagedBean.class);

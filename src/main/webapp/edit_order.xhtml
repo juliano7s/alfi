@@ -26,7 +26,7 @@
 			</h:form>
 			Índice: <h:outputText value="#{orderManagedBean.order.id}" />
 			<ui:include src="includes/order_form.xhtml">
-				<f:param id="fromPage" value="#{requestScope.fromPage}"></f:param>
+				<ui:param name="fromPage" value="#{requestScope.fromPage}"></ui:param>
 			</ui:include>				
 		</div>
 	</ui:define>

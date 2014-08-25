@@ -3,6 +3,7 @@ package com.creationguts.alfi.jpa.vo;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -78,7 +79,7 @@ public class Order implements Serializable {
 		this.cost = cost;
 	}
 	
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.MERGE)
 	@JoinColumn(name="clientid", nullable=false)
 	public Client getClient() {
 		return client;

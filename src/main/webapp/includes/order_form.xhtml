@@ -10,10 +10,10 @@
 			<h:inputHidden value="#{orderManagedBean.order.id}" />
 			<div id="order">
 				<h:panelGrid columns="1" styleClass="form_grid">
-					<h:inputHidden id="order_clientid_input" value="#{clientId}"></h:inputHidden>
+					<input type="hidden" id="order_clientid_input" name="clientId" value="#{clientId}" />
 					<h:panelGrid columns="1">
 						<h:outputText>Descrição: </h:outputText>
-						<h:inputTextarea id="order_description_input" cols="40" rows="1"
+						<h:inputTextarea id="order_description_input" cols="40" rows="5"
 							value="#{orderManagedBean.order.description}" />
 					</h:panelGrid>
 
