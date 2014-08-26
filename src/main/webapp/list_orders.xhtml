@@ -13,35 +13,12 @@
 		<h:panelGrid columns="1">
 			<h:panelGroup>
 				<div id="order_list">
-					<h:dataTable rowClasses="rowOdd, rowEven" var="order"
-						value="#{orderSearchManagedBean.ordersFound}" cellpadding="5">
-						<h:column>
-							<f:facet name="header">Índice</f:facet>
-							#{order.id}
-						</h:column>
-						<h:column>
-							<f:facet name="header">Cliente</f:facet>
-							#{order.client.name}
-						</h:column>
-						<h:column>
-							<f:facet name="header">Descrição</f:facet>
-							#{order.description}
-						</h:column>
-						<h:column>
-							<f:facet name="header">Status</f:facet>
-							#{order.status.viewName}
-						</h:column>
-						<h:column>
-							<f:facet name="header">Ações</f:facet>
-							<h:form>
-								<h:commandLink action="#{orderSearchManagedBean.editOrder}"
-									value="editar">
-									<f:param name="orderId" value="#{order.id}" />
-									<f:param name="fromPage" value="list_orders" />
-								</h:commandLink>								
-							</h:form>
-						</h:column>
-					</h:dataTable>
+					<ui:include src="includes/order_table.xhtml">
+						<ui:param name="orderList" value="#{orderSearchManagedBean.ordersFound}"></ui:param>
+						<ui:param name="fromPage" value="list_orders"></ui:param>
+						<ui:param name="orderBean" value="#{orderSearchManagedBean}"></ui:param>
+						<ui:param name="editOrderAction" value="editOrder"></ui:param>
+					</ui:include>
 				</div>
 			</h:panelGroup>
 		</h:panelGrid>

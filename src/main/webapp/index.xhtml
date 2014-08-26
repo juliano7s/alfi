@@ -41,9 +41,11 @@
 							<f:convertDateTime pattern="dd/MM/yyyy" />
 						</h:outputText>
 					</h3>
-					Tamanho #{orderManagedBean.lateOrders[keydate].size} #{keydate}
 					<ui:include src="includes/order_table.xhtml">
-						<ui:param name="orderList" value="#{orderManagedBean.lateOrders[keydate]}"></ui:param>
+						<ui:param name="orderList" value="#{orderManagedBean.lateOrders[keyDate]}"></ui:param>
+						<ui:param name="fromPage" value="index"></ui:param>
+						<ui:param name="orderBean" value="#{orderManagedBean}"></ui:param>
+						<ui:param name="editOrderAction" value="editOrder"></ui:param>
 					</ui:include>
 				</ui:repeat>
 			</div>
@@ -75,9 +77,11 @@
 							<f:convertDateTime pattern="dd/MM/yyyy" />
 						</h:outputText>
 					</h3>
-					Tamanho #{orderManagedBean.nextOrders[keydate].size} #{keydate}
 					<ui:include src="includes/order_table.xhtml">
-						<ui:param name="orderList" value="#{orderManagedBean.nextOrders[keydate]}"></ui:param>
+						<ui:param name="orderList" value="#{orderManagedBean.nextOrders[keyDate]}"></ui:param>
+						<ui:param name="fromPage" value="index"></ui:param>
+						<ui:param name="orderBean" value="#{orderManagedBean}"></ui:param>
+						<ui:param name="editOrderAction" value="editOrder"></ui:param>
 					</ui:include>
 				</ui:repeat>
 			</div>

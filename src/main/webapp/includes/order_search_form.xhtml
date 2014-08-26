@@ -16,87 +16,93 @@
 							value="#{orderSearchManagedBean.description}" />
 					</h:panelGrid>
 
-					<h:panelGrid columns="1">
-						<h:outputText>Data do pedido: </h:outputText>
-						<h:panelGrid columns="2">
-							<h:outputText>Depois de:</h:outputText>
-							<h:inputText id="order_request_date_after_input" cols="10"
-								value="#{orderSearchManagedBean.requestDateAfter}"
-								styleClass="datepicker">
-								<f:convertDateTime pattern="dd/MM/yyyy" type="date" />
-							</h:inputText>						
-							<h:outputText>Antes de:</h:outputText>
-							<h:inputText id="order_request_date_before_input" cols="10"
-								value="#{orderSearchManagedBean.requestDateBefore}"
-								styleClass="datepicker">
-								<f:convertDateTime pattern="dd/MM/yyyy" type="date" />
-							</h:inputText>
+					<h:panelGrid columns="2">
+						<h:panelGrid columns="1">
+							<h:outputText>Data do pedido: </h:outputText>
+							<h:panelGrid columns="2">
+								<h:outputText>Depois de:</h:outputText>
+								<h:inputText id="order_request_date_after_input" cols="10"
+									value="#{orderSearchManagedBean.requestDateAfter}"
+									styleClass="datepicker">
+									<f:convertDateTime pattern="dd/MM/yyyy" type="date" />
+								</h:inputText>
+								<h:outputText>Antes de:</h:outputText>
+								<h:inputText id="order_request_date_before_input" cols="10"
+									value="#{orderSearchManagedBean.requestDateBefore}"
+									styleClass="datepicker">
+									<f:convertDateTime pattern="dd/MM/yyyy" type="date" />
+								</h:inputText>
+							</h:panelGrid>
+						</h:panelGrid>
+
+						<h:panelGrid columns="1">
+							<h:outputText>Data da entrega: </h:outputText>
+							<h:panelGrid columns="2">
+								<h:outputText>Depois de:</h:outputText>
+								<h:inputText id="order_delivery_date_after_input" cols="10"
+									value="#{orderSearchManagedBean.deliveryDateAfter}"
+									styleClass="datepicker">
+									<f:convertDateTime pattern="dd/MM/yyyy" type="date" />
+								</h:inputText>
+								<h:outputText>Antes de:</h:outputText>
+								<h:inputText id="order_delivery_date_before_input" cols="10"
+									value="#{orderSearchManagedBean.deliveryDateBefore}"
+									styleClass="datepicker">
+									<f:convertDateTime pattern="dd/MM/yyyy" type="date" />
+								</h:inputText>
+							</h:panelGrid>
 						</h:panelGrid>
 					</h:panelGrid>
 
-					<h:panelGrid columns="1">
-						<h:outputText>Data da entrega: </h:outputText>
-						<h:panelGrid columns="2">
-							<h:outputText>Depois de:</h:outputText>
-							<h:inputText id="order_delivery_date_after_input" cols="10"
-								value="#{orderSearchManagedBean.deliveryDateAfter}"
-								styleClass="datepicker">
-								<f:convertDateTime pattern="dd/MM/yyyy" type="date" />
-							</h:inputText>						
-							<h:outputText>Antes de:</h:outputText>
-							<h:inputText id="order_delivery_date_before_input" cols="10"
-								value="#{orderSearchManagedBean.deliveryDateBefore}"
-								styleClass="datepicker">
-								<f:convertDateTime pattern="dd/MM/yyyy" type="date" />
-							</h:inputText>
+					<h:panelGrid columns="2">
+						<h:panelGrid columns="1">
+							<h:outputText>Valor (R$): </h:outputText>
+							<h:panelGrid columns="2">
+								<h:outputText>Maior que:</h:outputText>
+								<h:inputText id="order_value_greater_input" cols="10"
+									value="#{orderSearchManagedBean.valueGreater}"
+									converter="javax.faces.Float" />
+								<h:outputText>Menor que:</h:outputText>
+								<h:inputText id="order_value_lesser_input" cols="10"
+									value="#{orderSearchManagedBean.valueLesser}"
+									converter="javax.faces.Float" />
+							</h:panelGrid>
+						</h:panelGrid>
+
+						<h:panelGrid columns="1">
+							<h:outputText>Custo (R$): </h:outputText>
+							<h:panelGrid columns="2">
+								<h:outputText>Maior que:</h:outputText>
+								<h:inputText id="order_cost_greater_input" cols="10"
+									value="#{orderSearchManagedBean.costGreater}"
+									converter="javax.faces.Float" />
+								<h:outputText>Menor que:</h:outputText>
+								<h:inputText id="order_cost_lesser_input" cols="10"
+									value="#{orderSearchManagedBean.costLesser}"
+									converter="javax.faces.Float" />
+							</h:panelGrid>
 						</h:panelGrid>
 					</h:panelGrid>
 
-					<h:panelGrid columns="1">
-						<h:outputText>Valor (R$): </h:outputText>
-						<h:panelGrid columns="2">
-						<h:outputText>Maior que:</h:outputText>
-						<h:inputText id="order_value_greater_input" cols="10"
-								value="#{orderSearchManagedBean.valueGreater}"
-								converter="javax.faces.Float" />						
-						<h:outputText>Menor que:</h:outputText>
-						<h:inputText id="order_value_lesser_input" cols="10"
-								value="#{orderSearchManagedBean.valueLesser}"
-								converter="javax.faces.Float" />
+					<h:panelGrid columns="2">
+						<h:panelGrid columns="1">
+							<h:outputText>Responsável: </h:outputText>
+							<h:selectOneMenu id="order_owner_input"
+								value="#{orderSearchManagedBean.ownerId}">
+								<f:selectItem itemValue="" itemLabel=""></f:selectItem>
+								<f:selectItems value="#{orderManagedBean.owners}" var="owner"
+									itemValue="#{owner.id}" itemLabel="#{owner.name}" />
+							</h:selectOneMenu>
 						</h:panelGrid>
-					</h:panelGrid>
 
-					<h:panelGrid columns="1">
-						<h:outputText>Custo (R$): </h:outputText>
-						<h:panelGrid columns="2">
-						<h:outputText>Maior que:</h:outputText>
-						<h:inputText id="order_cost_greater_input" cols="10"
-								value="#{orderSearchManagedBean.costGreater}"
-								converter="javax.faces.Float" />
-						<h:outputText>Menor que:</h:outputText>
-						<h:inputText id="order_cost_lesser_input" cols="10"
-								value="#{orderSearchManagedBean.costLesser}"
-								converter="javax.faces.Float" />
+						<h:panelGrid columns="1">
+							<h:outputText>Status: </h:outputText>
+							<h:selectOneMenu id="order_status_input"
+								value="#{orderSearchManagedBean.status}">
+								<f:selectItems value="#{orderManagedBean.statuses}" var="status"
+									itemValue="#{status}" itemLabel="#{status.viewName}" />
+							</h:selectOneMenu>
 						</h:panelGrid>
-					</h:panelGrid>
-
-					<h:panelGrid columns="1">
-						<h:outputText>Responsável: </h:outputText>
-						<h:selectOneMenu id="order_owner_input"
-							value="#{orderSearchManagedBean.ownerId}">
-							<f:selectItem itemValue="" itemLabel=""></f:selectItem>
-							<f:selectItems value="#{orderManagedBean.owners}" var="owner"
-								itemValue="#{owner.id}" itemLabel="#{owner.name}" />
-						</h:selectOneMenu>
-					</h:panelGrid>
-
-					<h:panelGrid columns="1">
-						<h:outputText>Status: </h:outputText>
-						<h:selectOneMenu id="order_status_input"
-							value="#{orderSearchManagedBean.status}">
-							<f:selectItems value="#{orderManagedBean.statuses}" var="status"
-								itemValue="#{status}" itemLabel="#{status.viewName}" />
-						</h:selectOneMenu>
 					</h:panelGrid>
 
 					<h:commandButton id="order_button" value="Procurar"
