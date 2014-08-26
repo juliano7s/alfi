@@ -2,6 +2,8 @@ package com.creationguts.alfi.jpa.manager;
 
 import java.util.List;
 
+import javax.persistence.NoResultException;
+
 import org.apache.log4j.Logger;
 
 import com.creationguts.alfi.jpa.vo.Product;
@@ -16,7 +18,7 @@ public class ProductEntityManager extends EntityManager<Product> {
 		super(clazz);
 	}
 
-	public Product findByBarcode(String barcode) {
+	public Product findByBarcode(String barcode) throws NoResultException {
 		Product p = getEntityManager()
 				.createQuery("from Product where barcode = '" + barcode + "'",
 						Product.class).getSingleResult();
@@ -32,6 +34,7 @@ public class ProductEntityManager extends EntityManager<Product> {
 		return prods;
 	}
 	
+	@Override
 	public Product loadAll(Product product) {
 		return product;
 	}

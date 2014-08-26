@@ -4,10 +4,12 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.persistence.NoResultException;
 
 import org.apache.log4j.Logger;
 
@@ -30,20 +32,33 @@ public class ProductSearchManagedBean implements Serializable {
 		ProductEntityManager pem = new ProductEntityManager();
 		String page = "list_products";
 
-		if (description.trim().equals("")) {
-			if (!barcode.trim().equals("")) {
+		try {
+			if (barcode.trim().equals("")) {
+				if (!description.trim().equals("")) {
+					foundProducts = pem.findByDescription(description);
+				}
+			} else {
 				foundProduct = pem.findByBarcode(barcode);
 			}
-		} else {
-			foundProducts = pem.findByDescription(description);
-		}
 
-		if (foundProduct != null
-				|| (foundProducts != null && foundProducts.size() == 1)) {
-			Product product = foundProduct == null ? foundProducts.get(0)
-					: foundProduct;
-			getProductManagedBean().setProduct(product);
-			page = "edit_product";
+			if (foundProduct != null
+					|| (foundProducts != null && foundProducts.size() == 1)) {
+				Product product = foundProduct == null ? foundProducts.get(0)
+						: foundProduct;
+				getProductManagedBean().setProduct(product);
+				page = "edit_product";
+			} else if (foundProducts.size() == 0) {
+				FacesContext.getCurrentInstance().addMessage(null,
+						new FacesMessage("Nenhum produto encontrado"));
+				page = "search_product";
+			}
+		} catch (NoResultException e) {
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(
+							"Produto não encontrado com código de barra "
+									+ barcode));
+			page = "search_product";
 		}
 
 		return page;

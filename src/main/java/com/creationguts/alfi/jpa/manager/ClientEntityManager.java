@@ -34,7 +34,7 @@ public class ClientEntityManager extends EntityManager<Client> {
 		getEntityManager().getTransaction().begin();
 		List<Client> result = getEntityManager()
 				.createQuery(
-						"from Client c where c in (select Client from Order o join p.client where o.paidStatus = 0)",
+						"from Client c where c in (select Client from Order o join o.client where o.paidStatus = 0)",
 						Client.class).getResultList();
 		getEntityManager().getTransaction().commit();
 		closeEntityManager();
@@ -92,6 +92,7 @@ public class ClientEntityManager extends EntityManager<Client> {
 		return result.get(0);
 	}
 
+	@Override
 	public Client loadAll(Client client) {
 		getEntityManager().getTransaction().begin();
 		client = getEntityManager().createQuery(

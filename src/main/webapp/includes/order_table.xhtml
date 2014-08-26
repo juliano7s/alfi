@@ -6,10 +6,21 @@
 	xmlns:t="http://myfaces.apache.org/tomahawk">
 <body>
 	<ui:composition>
-		<h:dataTable rowClasses="rowOdd, rowEven"  var="order" value="#{orderList}" cellpadding="5">
+		<h:dataTable rowClasses="rowOdd, rowEven" var="order"
+			value="#{orderList}" cellpadding="5">
 			<h:column>
 				<f:facet name="header">Índice</f:facet>
 							#{order.id}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Cliente</f:facet>
+				<h:form>
+					<h:commandLink action="#{clientManagedBean.viewClient}"
+						value="#{order.client.name}">
+						<f:param name="clientId" value="#{order.client.id}" />
+					</h:commandLink>
+				</h:form>
+
 			</h:column>
 			<h:column>
 				<f:facet name="header">Pedido</f:facet>
@@ -33,7 +44,7 @@
 			</h:column>
 			<h:column>
 				<f:facet name="header">Valor</f:facet>
-							$ #{order.value}
+							R$ #{order.value}
 			</h:column>
 			<h:column>
 				<f:facet name="header">Status</f:facet>

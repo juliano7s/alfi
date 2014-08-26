@@ -11,7 +11,8 @@
 	<ui:define name="section_title"></ui:define>
 	<ui:define name="content">
 		<div id="tabs">
-			<span><a id="open_orders_tab_link" href="#">Próximas entregas</a></span> | <span><a id="delayed_orders_tab_link" href="#">Pedidos
+			<span><a id="open_orders_tab_link" href="#">Próximas
+					entregas</a></span> | <span><a id="delayed_orders_tab_link" href="#">Pedidos
 					atrasados</a></span> | <span><a id="clients_in_debt_tab_link" href="#">Clientes
 					com dívida</a></span>
 		</div>
@@ -36,13 +37,14 @@
 					</h:panelGrid>
 				</h:form>
 				<ui:repeat var="keyDate" value="#{orderManagedBean.lateOrdersKeys}">
-					<h3>
+					<h4>
 						<h:outputText value="#{keyDate}">
 							<f:convertDateTime pattern="dd/MM/yyyy" />
 						</h:outputText>
-					</h3>
+					</h4>
 					<ui:include src="includes/order_table.xhtml">
-						<ui:param name="orderList" value="#{orderManagedBean.lateOrders[keyDate]}"></ui:param>
+						<ui:param name="orderList"
+							value="#{orderManagedBean.lateOrders[keyDate]}"></ui:param>
 						<ui:param name="fromPage" value="index"></ui:param>
 						<ui:param name="orderBean" value="#{orderManagedBean}"></ui:param>
 						<ui:param name="editOrderAction" value="editOrder"></ui:param>
@@ -72,13 +74,14 @@
 					</h:panelGrid>
 				</h:form>
 				<ui:repeat var="keyDate" value="#{orderManagedBean.nextOrdersKeys}">
-					<h3>
+					<h4>
 						<h:outputText value="#{keyDate}">
 							<f:convertDateTime pattern="dd/MM/yyyy" />
 						</h:outputText>
-					</h3>
+					</h4>
 					<ui:include src="includes/order_table.xhtml">
-						<ui:param name="orderList" value="#{orderManagedBean.nextOrders[keyDate]}"></ui:param>
+						<ui:param name="orderList"
+							value="#{orderManagedBean.nextOrders[keyDate]}"></ui:param>
 						<ui:param name="fromPage" value="index"></ui:param>
 						<ui:param name="orderBean" value="#{orderManagedBean}"></ui:param>
 						<ui:param name="editOrderAction" value="editOrder"></ui:param>
@@ -90,6 +93,40 @@
 		<h:panelGroup id="clients_in_debt_tab">
 			<div>
 				<h4>Clientes devendo:</h4>
+				<h:dataTable rowClasses="rowOdd, rowEven" var="client"
+					value="#{clientManagedBean.inDebtClients}" cellpadding="5">
+					<h:column>
+						<f:facet name="header">Índice</f:facet>
+							#{client.id}
+						</h:column>
+					<h:column>
+						<f:facet name="header">Nome</f:facet>
+							#{client.name}
+						</h:column>
+					<h:column>
+						<f:facet name="header">CPF</f:facet>
+							#{client.cpf}
+						</h:column>
+					<h:column>
+						<f:facet name="header">Telefones</f:facet>
+						<ui:repeat value="#{client.phoneNumbers}" var="phone">
+								[#{phone.type}: <b>#{phone.number}</b>]  
+							</ui:repeat>
+					</h:column>
+					<h:column>
+						<f:facet name="header">Ações</f:facet>
+						<h:form>
+							<h:commandLink action="#{clientManagedBean.viewClient}"
+								value="info">
+								<f:param name="clientId" value="#{client.id}" />
+							</h:commandLink> | 
+								<h:commandLink action="#{clientManagedBean.editClient}"
+								value="editar">
+								<f:param name="clientId" value="#{client.id}" />
+							</h:commandLink>
+						</h:form>
+					</h:column>
+				</h:dataTable>
 			</div>
 		</h:panelGroup>
 	</ui:define>

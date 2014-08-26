@@ -26,7 +26,7 @@ import com.creationguts.alfi.jpa.vo.Purchase;
 @ManagedBean
 @SessionScoped
 public class ClientManagedBean implements Serializable {
-	
+
 	@PostConstruct
 	public void init() {
 		newClient();
@@ -89,7 +89,7 @@ public class ClientManagedBean implements Serializable {
 		} else {
 			String foundClients = (clients.size() > 1) ? " clientes econtrados "
 					: " cliente encontrado ";
-			foundClients += "para o termo de busca '" + wholeSearch +"'";
+			foundClients += "para o termo de busca '" + wholeSearch + "'";
 			logger.debug(clients.size() + foundClients);
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(clients.size() + foundClients));
@@ -131,24 +131,19 @@ public class ClientManagedBean implements Serializable {
 	 */
 	public String viewClient() {
 		logger.debug("Viewing client");
-		if (client == null || client != null
-				&& client.getId() == 0) {
-			Long clientId = Long.parseLong(FacesContext.getCurrentInstance()
-					.getExternalContext().getRequestParameterMap()
-					.get("clientId"));
+		String clientIdParam = FacesContext.getCurrentInstance()
+				.getExternalContext().getRequestParameterMap().get("clientId");
+		if (clientIdParam != null && !clientIdParam.trim().equals("")) {
+			Long clientId = Long.parseLong(clientIdParam);
 			logger.debug("Id: " + clientId);
 
-			for (Client c : clients) {
-				if (c.getId().equals(clientId)) {
-					client = c;
-				}
-			}
+			client = (new ClientEntityManager()).findById(clientId);
+
+			orderManagedBean.setOrder(new Order()); // Clearing order form
+
+			logger.debug("Client to view: " + client.getName());
+			client = (new ClientEntityManager()).loadAll(client);
 		}
-		
-		orderManagedBean.setOrder(new Order());
-		
-		logger.debug("Client to view: " + client.getName());
-		client = (new ClientEntityManager()).loadAll(client);
 
 		return "client";
 	}
@@ -160,12 +155,10 @@ public class ClientManagedBean implements Serializable {
 		logger.debug("Saving client on the database");
 		ClientEntityManager cem = new ClientEntityManager();
 		client = cem.save(client);
-	
+
 		logger.debug("Cliente salvo com id " + client.getId());
-		FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage("Cliente salvo com id "
-								+ client.getId()));
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage("Cliente salvo com id " + client.getId()));
 
 		return viewClient();
 	}
@@ -175,19 +168,27 @@ public class ClientManagedBean implements Serializable {
 		client.getPhoneNumbers().add(new Phone());
 		return "edit_client";
 	}
-	
+
 	/**
 	 * Validator for CPF field
+	 * 
 	 * @param context
 	 * @param component
 	 * @param value
 	 * @throws ValidatorException
 	 */
-	public void validateCpf(FacesContext context, UIComponent component, Object value) throws ValidatorException {
+	public void validateCpf(FacesContext context, UIComponent component,
+			Object value) throws ValidatorException {
 		String cpf = ((String) value).trim().replace(".", "").replace("-", "");
 		if (cpf.length() != 11) {
-			throw new ValidatorException(new FacesMessage("CPF deve ter 11 d�gitos."));
+			throw new ValidatorException(new FacesMessage(
+					"CPF deve ter 11 d�gitos."));
 		}
+	}
+	
+	public List<Client> getInDebtClients() {
+		ClientEntityManager cem = new ClientEntityManager();
+		return cem.getClientsInDebt();
 	}
 
 	public String getWholeSearch() {
@@ -222,9 +223,10 @@ public class ClientManagedBean implements Serializable {
 	public void setPhoneNumbers(List<Phone> phoneNumbers) {
 		this.phoneNumbers = phoneNumbers;
 	}
-	
+
 	public List<Order> getOrdersInProgress() {
-		logger.debug("Getting orders in progress from client " + client.getName());
+		logger.debug("Getting orders in progress from client "
+				+ client.getName());
 		List<Order> list = new ArrayList<Order>();
 		if (client != null) {
 			for (Order o : client.getOrders()) {
@@ -236,9 +238,10 @@ public class ClientManagedBean implements Serializable {
 		}
 		return list;
 	}
-	
-	public void setOrdersInProgress(List<Order> list) {}
-	
+
+	public void setOrdersInProgress(List<Order> list) {
+	}
+
 	public List<Order> getOrdersReady() {
 		logger.debug("Getting orders ready from client " + client.getName());
 		List<Order> list = new ArrayList<Order>();
@@ -252,8 +255,9 @@ public class ClientManagedBean implements Serializable {
 		}
 		return list;
 	}
-	
-	public void setOrdersReady(List<Order> list) {}
+
+	public void setOrdersReady(List<Order> list) {
+	}
 
 	public OrderManagedBean getOrderManagedBean() {
 		return orderManagedBean;
@@ -271,10 +275,10 @@ public class ClientManagedBean implements Serializable {
 	private List<Purchase> clientOpenPurchases;
 	private List<Purchase> clientClosedPurchases;
 	private List<Phone> phoneNumbers;
-	
-	@ManagedProperty(value="#{orderManagedBean}")
+
+	@ManagedProperty(value = "#{orderManagedBean}")
 	private OrderManagedBean orderManagedBean;
-	
+
 	private static Logger logger = Logger.getLogger(ClientManagedBean.class);
 	private static final long serialVersionUID = 2461829560777826670L;
 }

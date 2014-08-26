@@ -36,7 +36,7 @@
 		<h:panelGrid columns="2" id="order_purchase_forms_grid"
 			cellspacing="20">
 			<h:panelGroup id="order_form_group">
-				<h4>Registrar pedido:</h4>				
+				<h4>Registrar pedido:</h4>
 				<ui:include src="includes/order_form.xhtml">
 					<ui:param name="fromPage" value="client"></ui:param>
 					<ui:param name="clientId" value="#{clientManagedBean.client.id}"></ui:param>
@@ -50,89 +50,29 @@
 
 		<div id="client_orders_inprogress">
 			<h4>Pedidos em aberto</h4>
-			<h:dataTable rowClasses="rowOdd, rowEven" var="order"
-				value="#{clientManagedBean.ordersInProgress}" cellpadding="5">
-				<h:column>
-					<f:facet name="header">Índice</f:facet>
-							#{order.id}
-						</h:column>
-				<h:column>
-					<f:facet name="header">Cliente</f:facet>
-							#{order.client.name}
-						</h:column>
-				<h:column>
-					<f:facet name="header">Descrição</f:facet>
-							#{order.description}
-						</h:column>
-				<h:column>
-					<f:facet name="header">Ações</f:facet>
-					<h:form>
-						<h:commandLink action="#{orderManagedBean.editOrder}"
-							value="editar">
-							<f:param name="orderId" value="#{order.id}" />
-							<f:param name="fromPage" value="client" />
-						</h:commandLink>
-					</h:form>
-				</h:column>
-			</h:dataTable>
+			<ui:include src="includes/order_table.xhtml">
+				<ui:param name="orderList"
+					value="#{clientManagedBean.ordersInProgress}"></ui:param>
+				<ui:param name="fromPage" value="client"></ui:param>
+				<ui:param name="orderBean" value="#{orderManagedBean}"></ui:param>
+				<ui:param name="editOrderAction" value="editOrder"></ui:param>
+			</ui:include>
 		</div>
 
-		<div id="client_orders_inprogress">
+		<div id="client_purchases_inprogress">
 			<h4>Compras em aberto</h4>
-			<h:dataTable rowClasses="rowOdd, rowEven" var="order"
-				value="#{clientManagedBean.ordersInProgress}" cellpadding="5">
-				<h:column>
-					<f:facet name="header">Índice</f:facet>
-							#{order.id}
-						</h:column>
-				<h:column>
-					<f:facet name="header">Cliente</f:facet>
-							#{order.client.name}
-						</h:column>
-				<h:column>
-					<f:facet name="header">Descrição</f:facet>
-							#{order.description}
-						</h:column>
-				<h:column>
-					<f:facet name="header">Ações</f:facet>
-					<h:form>
-						<h:commandLink action="#{orderManagedBean.editOrder}"
-							value="editar">
-							<f:param name="orderId" value="#{order.id}" />
-							<f:param name="fromPage" value="client" />
-						</h:commandLink>
-					</h:form>
-				</h:column>
-			</h:dataTable>
+			
 		</div>
 
 		<div id="client_orders_ready">
 			<h4>Histórico</h4>
-			<h:dataTable rowClasses="rowOdd, rowEven" var="order"
-				value="#{clientManagedBean.ordersReady}" cellpadding="5">
-				<h:column>
-					<f:facet name="header">Índice</f:facet>
-							#{order.id}
-						</h:column>
-				<h:column>
-					<f:facet name="header">Cliente</f:facet>
-							#{order.client.name}
-						</h:column>
-				<h:column>
-					<f:facet name="header">Descrição</f:facet>
-							#{order.description}
-						</h:column>
-				<h:column>
-					<f:facet name="header">Ações</f:facet>
-					<h:form>
-						<h:commandLink action="#{orderManagedBean.editOrder}"
-							value="editar">
-							<f:param name="orderId" value="#{order.id}" />
-							<f:param name="fromPage" value="client" />
-						</h:commandLink>
-					</h:form>
-				</h:column>
-			</h:dataTable>
+				<ui:include src="includes/order_table.xhtml">
+				<ui:param name="orderList"
+					value="#{clientManagedBean.ordersReady}"></ui:param>
+				<ui:param name="fromPage" value="client"></ui:param>
+				<ui:param name="orderBean" value="#{orderManagedBean}"></ui:param>
+				<ui:param name="editOrderAction" value="editOrder"></ui:param>
+			</ui:include>
 		</div>
 	</ui:define>
 </ui:composition>
