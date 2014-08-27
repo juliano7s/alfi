@@ -41,8 +41,7 @@ public class ProductSearchManagedBean implements Serializable {
 				foundProduct = pem.findByBarcode(barcode);
 			}
 
-			if (foundProduct != null
-					|| (foundProducts != null && foundProducts.size() == 1)) {
+			if (foundProducts != null && foundProducts.size() == 1) {
 				Product product = foundProduct == null ? foundProducts.get(0)
 						: foundProduct;
 				getProductManagedBean().setProduct(product);

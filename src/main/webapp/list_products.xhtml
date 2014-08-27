@@ -38,6 +38,10 @@
 							#{product.cost}
 						</h:column>
 						<h:column>
+							<f:facet name="header">Quantidade</f:facet>
+							#{product.quantity}
+						</h:column>
+						<h:column>
 							<f:facet name="header">Ações</f:facet>
 							<h:form>
 								<h:commandLink action="#{productSearchManagedBean.editProduct}"

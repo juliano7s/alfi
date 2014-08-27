@@ -16,7 +16,7 @@ import com.creationguts.alfi.jpa.vo.Order;
 import com.creationguts.alfi.jsf.bean.OrderSearchManagedBean;
 
 public class OrderEntityManager extends EntityManager<Order> {
-	
+
 	public OrderEntityManager() {
 		super(Order.class);
 	}
@@ -27,21 +27,22 @@ public class OrderEntityManager extends EntityManager<Order> {
 	}
 
 	public List<Order> getOrders() {
-		
+
 		logger.debug("Getting orders");
 		getEntityManager().getTransaction().begin();
-		List<Order> result = getEntityManager().createQuery( "from Order", Order.class ).getResultList();
+		List<Order> result = getEntityManager().createQuery("from Order",
+				Order.class).getResultList();
 		logger.debug("total orders returned: " + result.size());
 		getEntityManager().getTransaction().commit();
 		getEntityManager().close();
-	
+
 		return result;
 	}
-	
+
 	public List<Order> getOrders(OrderSearchManagedBean searchBean) {
 		logger.debug("Getting orders by order search bean");
 		String query = "from Order where 1=1";
-		
+
 		String requestDateCondition = "";
 		if (searchBean.getRequestDateAfter() != null) {
 			requestDateCondition += "requestDate >= :reqDateBegin";
@@ -56,7 +57,7 @@ public class OrderEntityManager extends EntityManager<Order> {
 		if (!requestDateCondition.equals("")) {
 			query += " and " + requestDateCondition;
 		}
-		
+
 		String deliveryDateCondition = "";
 		if (searchBean.getDeliveryDateAfter() != null) {
 			deliveryDateCondition += "deliveryDate >= :dvryDateBegin";
@@ -71,7 +72,7 @@ public class OrderEntityManager extends EntityManager<Order> {
 		if (!deliveryDateCondition.equals("")) {
 			query += " and " + deliveryDateCondition;
 		}
-		
+
 		String valueCondition = "";
 		if (searchBean.getValueLesser() != 0.0) {
 			valueCondition += "value <= :valueLesser";
@@ -86,7 +87,7 @@ public class OrderEntityManager extends EntityManager<Order> {
 		if (!valueCondition.equals("")) {
 			query += " and " + valueCondition;
 		}
-		
+
 		String costCondition = "";
 		if (searchBean.getCostLesser() != 0.0) {
 			costCondition += "cost <= :costLesser";
@@ -101,15 +102,16 @@ public class OrderEntityManager extends EntityManager<Order> {
 		if (!costCondition.equals("")) {
 			query += " and " + costCondition;
 		}
-		
+
 		String descriptionCondition = "";
-		if (searchBean.getDescription() != null && !searchBean.getDescription().equals("")) {
+		if (searchBean.getDescription() != null
+				&& !searchBean.getDescription().equals("")) {
 			descriptionCondition += "description like :desc";
 		}
 		if (!descriptionCondition.equals("")) {
 			query += " and " + descriptionCondition;
 		}
-		
+
 		String ownerCondition = "";
 		if (searchBean.getOwnerId() != 0) {
 			ownerCondition += "owner.id = :ownerid";
@@ -120,57 +122,63 @@ public class OrderEntityManager extends EntityManager<Order> {
 
 		String statusCondition = "";
 		if (!searchBean.getStatus().getViewName().equals("")) {
-			statusCondition += "status = ':status'";
+			statusCondition += "status = :status";
 		}
 		if (!statusCondition.equals("")) {
 			query += " and " + statusCondition;
 		}
 		logger.debug("query: " + query);
-		
-		TypedQuery<Order> q = getEntityManager().createQuery(query, Order.class);
+
+		TypedQuery<Order> q = getEntityManager()
+				.createQuery(query, Order.class);
 		for (Parameter<?> p : q.getParameters()) {
 			if (p.getName().equals("reqDateBegin")) {
-				q.setParameter("reqDateBegin", searchBean.getRequestDateAfter(), TemporalType.DATE);
+				q.setParameter("reqDateBegin",
+						searchBean.getRequestDateAfter(), TemporalType.DATE);
 			}
-			
+
 			if (p.getName().equals("reqDateEnd")) {
-				q.setParameter("reqDateEnd", searchBean.getRequestDateBefore(), TemporalType.DATE);
+				q.setParameter("reqDateEnd", searchBean.getRequestDateBefore(),
+						TemporalType.DATE);
 			}
-			
+
 			if (p.getName().equals("dvryDateBegin")) {
-				q.setParameter("dvryDateBegin", searchBean.getDeliveryDateAfter(), TemporalType.DATE);
+				q.setParameter("dvryDateBegin",
+						searchBean.getDeliveryDateAfter(), TemporalType.DATE);
 			}
-			
+
 			if (p.getName().equals("dvryDateEnd")) {
-				q.setParameter("dvryDateEnd", searchBean.getDeliveryDateBefore(), TemporalType.DATE);
+				q.setParameter("dvryDateEnd",
+						searchBean.getDeliveryDateBefore(), TemporalType.DATE);
 			}
-			
+
 			if (p.getName().equals("valueLesser")) {
 				q.setParameter("valueLesser", searchBean.getValueLesser());
 			}
-			
+
 			if (p.getName().equals("valueGreater")) {
 				q.setParameter("valueGreater", searchBean.getValueGreater());
 			}
-			
+
 			if (p.getName().equals("costLesser")) {
 				q.setParameter("costLesser", searchBean.getCostLesser());
 			}
-			
+
 			if (p.getName().equals("costGreater")) {
 				q.setParameter("costGreater", searchBean.getCostGreater());
 			}
-			
+
 			if (p.getName().equals("desc")) {
 				q.setParameter("desc", "%" + searchBean.getDescription() + "%");
 			}
-			
+
 			if (p.getName().equals("ownerid")) {
 				q.setParameter("ownerid", searchBean.getOwnerId());
 			}
-			
+
 			if (p.getName().equals("status")) {
-				q.setParameter("status", searchBean.getStatus().toString());
+				logger.debug("setting query parameter status: " + searchBean.getStatus());
+				q.setParameter("status", searchBean.getStatus());
 			}
 		}
 
@@ -182,15 +190,16 @@ public class OrderEntityManager extends EntityManager<Order> {
 
 		return orders;
 	}
-	
+
 	public Map<Date, List<Order>> getOrders(Date beginDeliveryDate,
 			Date endDeliveryDate, Date beginReadyDate, Date endReadyDate,
 			Order.Status... status) {
-		
-		logger.debug("Parameters passed: " + beginDeliveryDate + endDeliveryDate + beginReadyDate + endReadyDate);
+
+		logger.debug("Parameters passed: " + beginDeliveryDate
+				+ endDeliveryDate + beginReadyDate + endReadyDate);
 
 		String orderBy = "";
-		
+
 		String rdyDate = "";
 		if (beginReadyDate == null) {
 			if (endReadyDate != null) {
@@ -204,7 +213,7 @@ public class OrderEntityManager extends EntityManager<Order> {
 				rdyDate = " and o.readyDate >= :beginrdy";
 			orderBy = " order by o.readyDate asc";
 		}
-		
+
 		String dvrDate = "";
 		if (beginDeliveryDate == null) {
 			if (endDeliveryDate != null) {
@@ -218,7 +227,7 @@ public class OrderEntityManager extends EntityManager<Order> {
 				dvrDate = " and o.deliveryDate >= :begindvry";
 			orderBy = " order by o.deliveryDate asc";
 		}
-		
+
 		String statusQry = status.length > 0 ? " and (" : "";
 		logger.debug("status parameter: ");
 		for (int i = 0; i < status.length; i++) {
@@ -232,13 +241,15 @@ public class OrderEntityManager extends EntityManager<Order> {
 		logger.debug("Getting orders");
 		getEntityManager().getTransaction().begin();
 		TypedQuery<Order> q = getEntityManager().createQuery(
-				"from Order o where 1=1 " + dvrDate + rdyDate + statusQry + orderBy,
-				Order.class);
-		logger.debug(" query formed: " + "from Order o where 1=1 " + dvrDate + rdyDate + statusQry + orderBy);
-		
+				"from Order o where 1=1 " + dvrDate + rdyDate + statusQry
+						+ orderBy, Order.class);
+		logger.debug(" query formed: " + "from Order o where 1=1 " + dvrDate
+				+ rdyDate + statusQry + orderBy);
+
 		for (Parameter<?> p : q.getParameters()) {
 			if (p.getName().equals("begindvry")) {
-				q.setParameter("begindvry", beginDeliveryDate, TemporalType.DATE);
+				q.setParameter("begindvry", beginDeliveryDate,
+						TemporalType.DATE);
 			}
 			if (p.getName().equals("enddvry")) {
 				q.setParameter("enddvry", endDeliveryDate, TemporalType.DATE);
@@ -256,10 +267,10 @@ public class OrderEntityManager extends EntityManager<Order> {
 			}
 			logger.debug("Parameter " + p.getName() + " - " + q.isBound(p));
 		}
-		
+
 		List<Order> result = q.getResultList();
 		Map<java.util.Date, List<Order>> resultMap = new HashMap<java.util.Date, List<Order>>();
-		
+
 		for (Order o : result) {
 			List<Order> ol = null;
 			if (!resultMap.containsKey(o.getDeliveryDate())) {
@@ -271,7 +282,7 @@ public class OrderEntityManager extends EntityManager<Order> {
 				ol.add(o);
 			}
 		}
-		
+
 		logger.debug("total orders returned: " + result.size());
 		logger.debug("Result map: ");
 		for (Date k : resultMap.keySet()) {
@@ -294,12 +305,11 @@ public class OrderEntityManager extends EntityManager<Order> {
 						+ order.getId(), Order.class).getSingleResult();
 		getEntityManager().getTransaction().commit();
 		closeEntityManager();
-		
+
 		logger.debug("All attributes loaded from order: " + order);
 		return order;
 	}
-	
+
 	private static Logger logger = Logger.getLogger(OrderEntityManager.class);
 
-	
 }
