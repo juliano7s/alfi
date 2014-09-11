@@ -3,6 +3,7 @@ package com.creationguts.alfi.jpa.vo;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
@@ -57,10 +58,10 @@ public class Client implements Serializable {
 	}
 	
 	@OneToMany(targetEntity=Order.class, mappedBy="client")
-	public List<Order> getOrders() {
+	public Set<Order> getOrders() {
 		return orders;
 	}
-	public void setOrders(List<Order> orders) {
+	public void setOrders(Set<Order> orders) {
 		this.orders = orders;
 	}
 
@@ -81,12 +82,22 @@ public class Client implements Serializable {
 				+ phoneNumbers + "]";
 	}
 
+	@OneToMany(targetEntity=Purchase.class, mappedBy="client")
+	public Set<Purchase> getPurchases() {
+		return purchases;
+	}
+
+	public void setPurchases(Set<Purchase> purchases) {
+		this.purchases = purchases;
+	}
+
 	private Long id;
 	private String name;
 	private String cpf;
 	private String address;
 	private String email;
-	private List<Order> orders;
+	private Set<Order> orders;
+	private Set<Purchase> purchases;
 	private List<Phone> phoneNumbers;
 	
 	private static final long serialVersionUID = 3811526042595751057L;

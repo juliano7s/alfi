@@ -36,7 +36,7 @@
 							action="#{orderManagedBean.loadLateOrders}"></h:commandButton>
 					</h:panelGrid>
 				</h:form>
-				<ui:repeat var="keyDate" value="#{orderManagedBean.lateOrdersKeys}">
+				<ui:repeat var="keyDate" value="#{orderManagedBean.lateOrdersDates}">
 					<h4>
 						<h:outputText value="#{keyDate}">
 							<f:convertDateTime pattern="dd/MM/yyyy" />
@@ -73,7 +73,7 @@
 							action="#{orderManagedBean.loadNextOrders}"></h:commandButton>
 					</h:panelGrid>
 				</h:form>
-				<ui:repeat var="keyDate" value="#{orderManagedBean.nextOrdersKeys}">
+				<ui:repeat var="keyDate" value="#{orderManagedBean.nextOrdersDates}">
 					<h4>
 						<h:outputText value="#{keyDate}">
 							<f:convertDateTime pattern="dd/MM/yyyy" />

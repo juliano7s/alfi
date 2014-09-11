@@ -45,7 +45,7 @@ CREATE TABLE `clients` (
   `address` varchar(1000) DEFAULT NULL,
   `email` varchar(150) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=494 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=495 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -75,7 +75,7 @@ CREATE TABLE `orders` (
   KEY `fk_order_owner` (`ownerid`),
   CONSTRAINT `fk_order_client` FOREIGN KEY (`clientid`) REFERENCES `clients` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`clientid`) REFERENCES `clients` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=725 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=728 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -111,7 +111,7 @@ CREATE TABLE `products` (
   `quantity` tinyint(3) unsigned DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `barcode_UNIQUE` (`barcode`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -138,7 +138,7 @@ DROP TABLE IF EXISTS `purchases`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `purchases` (
-  `id` int(10) unsigned NOT NULL,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `clientid` int(10) unsigned NOT NULL,
   `date` datetime DEFAULT NULL,
   `payment_date` datetime DEFAULT NULL,
@@ -157,4 +157,4 @@ CREATE TABLE `purchases` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-08-21 17:24:00
+-- Dump completed on 2014-08-28 11:11:30

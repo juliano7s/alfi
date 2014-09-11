@@ -14,6 +14,7 @@ import javax.faces.context.FacesContext;
 
 import org.apache.log4j.Logger;
 
+import com.creationguts.alfi.jpa.manager.ClientEntityManager;
 import com.creationguts.alfi.jpa.manager.ProductEntityManager;
 import com.creationguts.alfi.jpa.manager.PurchaseEntityManager;
 import com.creationguts.alfi.jpa.vo.Product;
@@ -26,12 +27,42 @@ public class PurchaseManagedBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
+		logger.debug("Initializing purchaseManagedBean");
 		purchasedProducts = new HashSet<PurchaseProduct>();
 		purchase = new Purchase();
 	}
 
+	public String editPurchase() {
+		logger.debug("Editing purchase");
+		Long purchaseId = Long.parseLong(FacesContext.getCurrentInstance()
+				.getExternalContext().getRequestParameterMap()
+				.get("purchaseId"));
+		logger.debug("Id: " + purchaseId);
+		String fromPage = FacesContext.getCurrentInstance()
+				.getExternalContext().getRequestParameterMap().get("fromPage");
+		logger.debug("fromPage: " + fromPage);
+
+		FacesContext.getCurrentInstance().getExternalContext().getRequestMap()
+				.put("fromPage", fromPage);
+		purchase = (new PurchaseEntityManager()).findById(purchaseId);
+		purchase = new PurchaseEntityManager().loadAll(purchase);
+		purchasedProducts = purchase.getPurchaseProducts();
+		for (PurchaseProduct purchaseProduct : purchasedProducts) {
+			logger.debug("pp: " + purchaseProduct.getProduct().getBarcode());
+		}
+
+		return "edit_purchase";
+	}
+
 	public String savePurchase() {
 
+		String clientIdParam = FacesContext.getCurrentInstance()
+				.getExternalContext().getRequestParameterMap().get("clientId");
+		logger.debug("Adding purchase to client with id " + clientIdParam);
+		Long clientId = clientIdParam != null ? Long.parseLong(clientIdParam)
+				: 0L;
+		purchase.setClient((new ClientEntityManager()).findById(clientId));
+		purchase.setPurchaseProducts(purchasedProducts);
 		PurchaseEntityManager purchaseEntityManager = new PurchaseEntityManager();
 		purchase = purchaseEntityManager.save(purchase);
 
@@ -45,8 +76,13 @@ public class PurchaseManagedBean implements Serializable {
 	}
 
 	public String addProduct() {
+		String fromPage = FacesContext.getCurrentInstance()
+				.getExternalContext().getRequestParameterMap().get("fromPage");
+		logger.debug("fromPage: " + fromPage);
+
 		if (!barcodeToAdd.trim().equals("")) {
-			Product p = (new ProductEntityManager()).findByBarcode(barcodeToAdd);
+			Product p = (new ProductEntityManager())
+					.findByBarcode(barcodeToAdd);
 			PurchaseProduct pp = new PurchaseProduct();
 			pp.setProduct(p);
 			pp.setPurchase(purchase);
@@ -58,8 +94,8 @@ public class PurchaseManagedBean implements Serializable {
 		}
 
 		barcodeToAdd = "";
-		
-		return "client";
+
+		return fromPage;
 	}
 
 	public Purchase getPurchase() {
@@ -85,11 +121,11 @@ public class PurchaseManagedBean implements Serializable {
 	public void setPurchasedProducts(Set<PurchaseProduct> purchasedProducts) {
 		this.purchasedProducts = purchasedProducts;
 	}
-	
+
 	public List<PurchaseProduct> getPurchasedProductsList() {
 		return new ArrayList<PurchaseProduct>(purchasedProducts);
 	}
-	
+
 	public void setPurchasedProductsList(List<PurchaseProduct> productList) {
 		purchasedProducts = new HashSet<PurchaseProduct>(productList);
 	}

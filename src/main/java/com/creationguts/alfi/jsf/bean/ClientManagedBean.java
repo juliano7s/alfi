@@ -2,6 +2,7 @@ package com.creationguts.alfi.jsf.bean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -22,6 +23,7 @@ import com.creationguts.alfi.jpa.vo.Order;
 import com.creationguts.alfi.jpa.vo.Order.Status;
 import com.creationguts.alfi.jpa.vo.Phone;
 import com.creationguts.alfi.jpa.vo.Purchase;
+import com.creationguts.alfi.jpa.vo.PurchaseProduct;
 
 @ManagedBean
 @SessionScoped
@@ -29,6 +31,7 @@ public class ClientManagedBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
+		logger.debug("Initializing clientManagedBean");
 		newClient();
 	}
 
@@ -102,7 +105,7 @@ public class ClientManagedBean implements Serializable {
 	 * Action: create new client to persist and redirect to edit_client.xhtml
 	 */
 	public String newClient() {
-		logger.debug("Adding new client");
+		logger.debug("Clearing client bean");
 		client = new Client();
 		client.getPhoneNumbers().add(new Phone());
 		phoneNumbers = new ArrayList<Phone>();
@@ -140,6 +143,8 @@ public class ClientManagedBean implements Serializable {
 			client = (new ClientEntityManager()).findById(clientId);
 
 			orderManagedBean.setOrder(new Order()); // Clearing order form
+			purchaseManagedBean.setPurchase(new Purchase());
+			purchaseManagedBean.setPurchasedProducts(new HashSet<PurchaseProduct>());
 
 			logger.debug("Client to view: " + client.getName());
 			client = (new ClientEntityManager()).loadAll(client);
@@ -255,6 +260,18 @@ public class ClientManagedBean implements Serializable {
 		}
 		return list;
 	}
+	
+	public List<Purchase> getPurchasesOpened() {
+		logger.debug("Getting opened purchases for client");
+		List<Purchase> openedPurchases = new ArrayList<Purchase>();
+		new ClientEntityManager().loadAll(client);
+		for (Purchase p : client.getPurchases()) {
+			if (p.getPaidStatus() == false) {
+				openedPurchases.add(p);
+			}
+		}
+		return openedPurchases;
+	}
 
 	public void setOrdersReady(List<Order> list) {
 	}
@@ -265,6 +282,14 @@ public class ClientManagedBean implements Serializable {
 
 	public void setOrderManagedBean(OrderManagedBean orderManagedBean) {
 		this.orderManagedBean = orderManagedBean;
+	}
+
+	public PurchaseManagedBean getPurchaseManagedBean() {
+		return purchaseManagedBean;
+	}
+
+	public void setPurchaseManagedBean(PurchaseManagedBean purchaseManagedBean) {
+		this.purchaseManagedBean = purchaseManagedBean;
 	}
 
 	private String wholeSearch;
@@ -278,6 +303,10 @@ public class ClientManagedBean implements Serializable {
 
 	@ManagedProperty(value = "#{orderManagedBean}")
 	private OrderManagedBean orderManagedBean;
+
+	@ManagedProperty(value="#{purchaseManagedBean}")
+	private PurchaseManagedBean purchaseManagedBean;
+
 
 	private static Logger logger = Logger.getLogger(ClientManagedBean.class);
 	private static final long serialVersionUID = 2461829560777826670L;

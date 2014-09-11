@@ -3,6 +3,7 @@ package com.creationguts.alfi.jsf.bean;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -47,6 +48,8 @@ public class OrderManagedBean implements Serializable {
 		c.setTime(new Date());
 		c.add(Calendar.DAY_OF_MONTH, 7);
 		nextOrdersEnd = c.getTime();
+		getNextOrders();
+		getLateOrders();
 		logger.debug("Init dates: " + lateOrdersBegin + " " + lateOrdersEnd
 				+ " " + nextOrdersBegin + " " + nextOrdersEnd);
 	}
@@ -202,12 +205,10 @@ public class OrderManagedBean implements Serializable {
 		if (lateOrders == null || lateOrders.size() <= 0) {
 			lateOrders = oem.getOrders(lateOrdersBegin, lateOrdersEnd, null, null,
 					Order.Status.INPROGRESS, Order.Status.READY);
+			lateOrdersDates = new ArrayList<Date>(lateOrders.keySet());
+			Collections.sort(lateOrdersDates);
 		}
-		if (lateOrders != null) {
-			for (List<Order> n : lateOrders.values()) {
-				logger.debug("late orders size: " + n.size());
-			}
-		}
+		
 		return lateOrders;
 	}
 
@@ -225,12 +226,10 @@ public class OrderManagedBean implements Serializable {
 		if (nextOrders == null || nextOrders.size() <= 0) {
 			nextOrders = oem.getOrders(nextOrdersBegin, nextOrdersEnd, null, null,
 					Order.Status.INPROGRESS, Order.Status.READY);
+			nextOrdersDates = new ArrayList<Date>(nextOrders.keySet());
+			Collections.sort(nextOrdersDates);
 		}
-		if (nextOrders != null) {
-			for (List<Order> n : nextOrders.values()) {
-				logger.debug("next orders size: " + n.size());
-			}
-		}
+		
 		return nextOrders;
 	}
 
@@ -238,13 +237,31 @@ public class OrderManagedBean implements Serializable {
 		this.nextOrders = nextOrders;
 	}
 
+	public List<Date> getLateOrdersDates() {
+		return lateOrdersDates;
+	}
+
+	public void setLateOrdersDates(List<Date> lateOrdersDates) {
+		this.lateOrdersDates = lateOrdersDates;
+	}
+
+	public List<Date> getNextOrdersDates() {
+		return nextOrdersDates;
+	}
+
+	public void setNextOrdersDates(List<Date> nextOrdersDates) {
+		this.nextOrdersDates = nextOrdersDates;
+	}
+
 	private Order order;
 	private Long orderOwnerId;
 	private List<User> owners;
 	private List<Order.Status> statuses;
 	private Map<Date, List<Order>> lateOrders;
+	private List<Date> lateOrdersDates;
 	private Date lateOrdersBegin, lateOrdersEnd;
 	private Map<Date, List<Order>> nextOrders;
+	private List<Date> nextOrdersDates;
 	private Date nextOrdersBegin, nextOrdersEnd;
 	
 

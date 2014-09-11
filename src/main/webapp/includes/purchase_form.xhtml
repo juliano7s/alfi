@@ -15,17 +15,19 @@
 					<h:inputText value="#{purchaseManagedBean.barcodeToAdd}" />
 				
 					<h:commandButton value="+ Produto"
-                        action="#{purchaseManagedBean.addProduct}" />
+                        action="#{purchaseManagedBean.addProduct}">
+						<f:param name="fromPage" value="#{fromPage}" />                        
+                    </h:commandButton>
 					
 					<ui:repeat value="#{purchaseManagedBean.purchasedProductsList}" var="p">
 						<h:panelGrid columns="3">
 							<h:panelGrid columns="1">
 								<h:outputText>Código: </h:outputText>
-								<h:inputText disabled="true">#{p.product.barcode}</h:inputText>
+								<h:inputText disabled="true" value="#{p.product.barcode}"></h:inputText>
 							</h:panelGrid>
 							<h:panelGrid columns="1">
 								<h:outputText>Descrição: </h:outputText>
-								<h:inputText disabled="true">#{p.product.description}</h:inputText>
+								<h:inputText disabled="true" value="#{p.product.description}"></h:inputText>
 							</h:panelGrid>
 							<h:panelGrid columns="1">
 								<h:outputText>Quantidade: </h:outputText>
@@ -70,7 +72,9 @@
 						</h:panelGrid>
 
 						<h:commandButton id="purchase_button" value="Salvar"
-							action="#{purchaseManagedBean.savePurchase}"></h:commandButton>
+							action="#{purchaseManagedBean.savePurchase}">
+							<f:param name="clientId" value="#{clientManagedBean.client.id}"></f:param>	
+						</h:commandButton>
 					</h:panelGrid>
 				</h:panelGrid>
 

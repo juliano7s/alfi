@@ -61,7 +61,13 @@
 
 		<div id="client_purchases_inprogress">
 			<h4>Compras em aberto</h4>
-			
+			<ui:include src="includes/purchase_table.xhtml">
+				<ui:param name="purchaseList"
+					value="#{clientManagedBean.purchasesOpened}"></ui:param>
+				<ui:param name="fromPage" value="client"></ui:param>
+				<ui:param name="purchaseBean" value="#{purchaseManagedBean}"></ui:param>
+				<ui:param name="editPurchaseAction" value="editPurchase"></ui:param>
+			</ui:include>	
 		</div>
 
 		<div id="client_orders_ready">

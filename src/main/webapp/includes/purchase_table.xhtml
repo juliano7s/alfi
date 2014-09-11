@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:t="http://myfaces.apache.org/tomahawk">
+<body>
+	<ui:composition>
+		<h:dataTable rowClasses="rowOdd, rowEven" var="purchase"
+			value="#{purchaseList}" cellpadding="5">
+			<h:column>
+				<f:facet name="header">Índice</f:facet>
+							#{purchase.id}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Cliente</f:facet>
+				<h:form>
+					<h:commandLink action="#{clientManagedBean.viewClient}"
+						value="#{purchase.client.name}">
+						<f:param name="clientId" value="#{purchase.client.id}" />
+					</h:commandLink>
+				</h:form>
+
+			</h:column>
+			<h:column>
+				<f:facet name="header">Data</f:facet>
+				<h:outputText value="#{purchase.date}">
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</h:column>
+			<h:column>
+				<f:facet name="header">Data do pagamento</f:facet>
+				<h:outputText value="#{purchase.paymentDate}">
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</h:column>
+			<h:column>
+				<f:facet name="header">Status</f:facet>
+				<c:choose>
+					<c:when test="#{purchase.status}">
+    					PAGO
+    				</c:when>
+					<c:otherwise>
+        				NÃO PAGO
+    				</c:otherwise>
+				</c:choose>
+			</h:column>
+			<h:column>
+				<f:facet name="header">Ações</f:facet>
+				<h:form>
+					<h:commandLink action="#{purchaseBean[editPurchaseAction]}"
+						value="editar">
+						<f:param name="purchaseId" value="#{purchase.id}" />
+						<f:param name="fromPage" value="#{fromPage}" />
+					</h:commandLink>
+				</h:form>
+			</h:column>
+		</h:dataTable>
+	</ui:composition>
+</body>
+</html>
