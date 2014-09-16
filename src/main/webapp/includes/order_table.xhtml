@@ -8,11 +8,11 @@
 	<ui:composition>
 		<h:dataTable rowClasses="rowOdd, rowEven" var="order"
 			value="#{orderList}" cellpadding="5">
-			<h:column>
+			<h:column rendered="#{not empty orderList}">
 				<f:facet name="header">Índice</f:facet>
 							#{order.id}
 			</h:column>
-			<h:column>
+			<h:column rendered="#{not empty orderList}">
 				<f:facet name="header">Cliente</f:facet>
 				<h:form>
 					<h:commandLink action="#{clientManagedBean.viewClient}"
@@ -22,39 +22,39 @@
 				</h:form>
 
 			</h:column>
-			<h:column>
+			<h:column rendered="#{not empty orderList}">
 				<f:facet name="header">Pedido</f:facet>
 							#{order.description}
 			</h:column>
-			<h:column>
+			<h:column rendered="#{not empty orderList}">
 				<f:facet name="header">Data</f:facet>
 				<h:outputText value="#{order.requestDate}">
 					<f:convertDateTime pattern="dd/MM/yyyy" />
 				</h:outputText>
 			</h:column>
-			<h:column>
+			<h:column rendered="#{not empty orderList}">
 				<f:facet name="header">Entrega</f:facet>
 				<h:outputText value="#{order.deliveryDate}">
 					<f:convertDateTime pattern="dd/MM/yyyy" />
 				</h:outputText>
 			</h:column>
-			<h:column>
+			<h:column rendered="#{not empty orderList}">
 				<f:facet name="header">Custo</f:facet>
 							R$ #{order.cost}
 			</h:column>
-			<h:column>
+			<h:column rendered="#{not empty orderList}">
 				<f:facet name="header">Valor</f:facet>
 							R$ #{order.value}
 			</h:column>
-			<h:column>
+			<h:column rendered="#{not empty orderList}">
 				<f:facet name="header">Status</f:facet>
 							#{order.status.viewName}
 			</h:column>
-			<h:column>
+			<h:column rendered="#{not empty orderList}">
 				<f:facet name="header">Responsável</f:facet>
 							#{order.owner.name}
 			</h:column>
-			<h:column>
+			<h:column rendered="#{not empty orderList}">
 				<f:facet name="header">Ações</f:facet>
 				<h:form>
 					<h:commandLink action="#{orderBean[editOrderAction]}"

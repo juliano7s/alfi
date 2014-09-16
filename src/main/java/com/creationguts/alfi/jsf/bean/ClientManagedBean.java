@@ -145,6 +145,10 @@ public class ClientManagedBean implements Serializable {
 			orderManagedBean.setOrder(new Order()); // Clearing order form
 			purchaseManagedBean.setPurchase(new Purchase());
 			purchaseManagedBean.setPurchasedProducts(new HashSet<PurchaseProduct>());
+			clientOpenOrders = null;
+			clientClosedOrders = null;
+			clientOpenPurchases = null;
+			clientClosedPurchases = null;
 
 			logger.debug("Client to view: " + client.getName());
 			client = (new ClientEntityManager()).loadAll(client);
@@ -229,48 +233,68 @@ public class ClientManagedBean implements Serializable {
 		this.phoneNumbers = phoneNumbers;
 	}
 
-	public List<Order> getOrdersInProgress() {
+	public List<Order> getOrdersOpened() {
 		logger.debug("Getting orders in progress from client "
 				+ client.getName());
-		List<Order> list = new ArrayList<Order>();
-		if (client != null) {
-			for (Order o : client.getOrders()) {
-				logger.debug("Checking order status: " + o.getStatus());
-				if (o.getStatus().equals(Status.INPROGRESS)) {
-					list.add(o);
+		if (clientOpenOrders == null) {
+			clientOpenOrders = new ArrayList<Order>();
+			if (client != null) {
+				for (Order o : client.getOrders()) {
+					logger.debug("Checking order status: " + o.getStatus());
+					if (o.getStatus().equals(Status.INPROGRESS)
+							|| o.getStatus().equals(Status.READY)) {
+						clientOpenOrders.add(o);
+					}
 				}
 			}
 		}
-		return list;
+		return clientOpenOrders;
 	}
 
-	public void setOrdersInProgress(List<Order> list) {
+	public void setOrdersOpened(List<Order> list) {
 	}
 
-	public List<Order> getOrdersReady() {
+	public List<Order> getOrdersDelivered() {
 		logger.debug("Getting orders ready from client " + client.getName());
-		List<Order> list = new ArrayList<Order>();
-		if (client != null) {
-			for (Order o : client.getOrders()) {
-				logger.debug("Checking order status: " + o.getStatus());
-				if (o.getStatus().equals(Status.READY)) {
-					list.add(o);
+		
+		if (clientClosedOrders == null) {
+			clientClosedOrders = new ArrayList<Order>();
+			if (client != null) {
+				for (Order o : client.getOrders()) {
+					logger.debug("Checking order status: " + o.getStatus());
+					if (o.getStatus().equals(Status.DELIVERED)) {
+						clientClosedOrders.add(o);
+					}
 				}
 			}
 		}
-		return list;
+		return clientClosedOrders;
 	}
 	
 	public List<Purchase> getPurchasesOpened() {
 		logger.debug("Getting opened purchases for client");
-		List<Purchase> openedPurchases = new ArrayList<Purchase>();
-		new ClientEntityManager().loadAll(client);
-		for (Purchase p : client.getPurchases()) {
-			if (p.getPaidStatus() == false) {
-				openedPurchases.add(p);
+		if (clientOpenPurchases == null) {
+			clientOpenPurchases = new ArrayList<Purchase>();
+			for (Purchase p : client.getPurchases()) {
+				if (p.getPaidStatus() == false) {
+					clientOpenPurchases.add(p);
+				}
 			}
 		}
-		return openedPurchases;
+		return clientOpenPurchases;
+	}
+	
+	public List<Purchase> getPurchasesClosed() {
+		logger.debug("Getting closed purchases for client");
+		if (clientClosedPurchases == null) {
+			clientClosedPurchases = new ArrayList<Purchase>();
+			for (Purchase p : client.getPurchases()) {
+				if (p.getPaidStatus() == true) {
+					clientClosedPurchases.add(p);
+				}
+			}
+		}
+		return clientClosedPurchases;
 	}
 
 	public void setOrdersReady(List<Order> list) {

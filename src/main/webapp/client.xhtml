@@ -5,6 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:f="http://java.sun.com/jsf/core">
 
 <ui:composition template="templates/_template.xhtml">
@@ -50,9 +51,12 @@
 
 		<div id="client_orders_inprogress">
 			<h4>Pedidos em aberto</h4>
+			<c:if test="#{empty clientManagedBean.ordersOpened}">
+				não há pedidos em aberto
+			</c:if>
 			<ui:include src="includes/order_table.xhtml">
 				<ui:param name="orderList"
-					value="#{clientManagedBean.ordersInProgress}"></ui:param>
+					value="#{clientManagedBean.ordersOpened}"></ui:param>
 				<ui:param name="fromPage" value="client"></ui:param>
 				<ui:param name="orderBean" value="#{orderManagedBean}"></ui:param>
 				<ui:param name="editOrderAction" value="editOrder"></ui:param>
@@ -61,6 +65,9 @@
 
 		<div id="client_purchases_inprogress">
 			<h4>Compras em aberto</h4>
+			<c:if test="#{empty clientManagedBean.purchasesOpened}">
+				não há compras em aberto
+			</c:if>
 			<ui:include src="includes/purchase_table.xhtml">
 				<ui:param name="purchaseList"
 					value="#{clientManagedBean.purchasesOpened}"></ui:param>
@@ -70,14 +77,31 @@
 			</ui:include>	
 		</div>
 
-		<div id="client_orders_ready">
-			<h4>Histórico</h4>
-				<ui:include src="includes/order_table.xhtml">
+		<div id="client_orders_history">
+			<h4>Histórico de pedidos</h4>
+			<c:if test="#{empty clientManagedBean.ordersDelivered}">
+				não há pedidos no histórico
+			</c:if>
+			<ui:include src="includes/order_table.xhtml">
 				<ui:param name="orderList"
-					value="#{clientManagedBean.ordersReady}"></ui:param>
+					value="#{clientManagedBean.ordersDelivered}"></ui:param>
 				<ui:param name="fromPage" value="client"></ui:param>
 				<ui:param name="orderBean" value="#{orderManagedBean}"></ui:param>
 				<ui:param name="editOrderAction" value="editOrder"></ui:param>
+			</ui:include>
+		</div>
+		
+		<div id="client_purchase_history">
+			<h4>Histórico de compras</h4>
+			<c:if test="#{empty clientManagedBean.purchasesClosed}">
+				não há compras no histórico
+			</c:if>
+			<ui:include src="includes/purchase_table.xhtml">
+				<ui:param name="purchaseList"
+					value="#{clientManagedBean.purchasesClosed}"></ui:param>
+				<ui:param name="fromPage" value="client"></ui:param>
+				<ui:param name="purchaseBean" value="#{purchaseManagedBean}"></ui:param>
+				<ui:param name="editPurchaseAction" value="editPurchase"></ui:param>
 			</ui:include>
 		</div>
 	</ui:define>

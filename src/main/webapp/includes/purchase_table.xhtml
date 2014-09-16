@@ -9,11 +9,11 @@
 	<ui:composition>
 		<h:dataTable rowClasses="rowOdd, rowEven" var="purchase"
 			value="#{purchaseList}" cellpadding="5">
-			<h:column>
+			<h:column rendered="#{not empty purchaseList}">
 				<f:facet name="header">Índice</f:facet>
 							#{purchase.id}
 			</h:column>
-			<h:column>
+			<h:column rendered="#{not empty purchaseList}">
 				<f:facet name="header">Cliente</f:facet>
 				<h:form>
 					<h:commandLink action="#{clientManagedBean.viewClient}"
@@ -23,19 +23,19 @@
 				</h:form>
 
 			</h:column>
-			<h:column>
+			<h:column rendered="#{not empty purchaseList}">
 				<f:facet name="header">Data</f:facet>
 				<h:outputText value="#{purchase.date}">
 					<f:convertDateTime pattern="dd/MM/yyyy" />
 				</h:outputText>
 			</h:column>
-			<h:column>
+			<h:column rendered="#{not empty purchaseList}">
 				<f:facet name="header">Data do pagamento</f:facet>
 				<h:outputText value="#{purchase.paymentDate}">
 					<f:convertDateTime pattern="dd/MM/yyyy" />
 				</h:outputText>
 			</h:column>
-			<h:column>
+			<h:column rendered="#{not empty purchaseList}">
 				<f:facet name="header">Status</f:facet>
 				<c:choose>
 					<c:when test="#{purchase.status}">
@@ -46,7 +46,7 @@
     				</c:otherwise>
 				</c:choose>
 			</h:column>
-			<h:column>
+			<h:column rendered="#{not empty purchaseList}">
 				<f:facet name="header">Ações</f:facet>
 				<h:form>
 					<h:commandLink action="#{purchaseBean[editPurchaseAction]}"
