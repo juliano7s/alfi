@@ -51,12 +51,12 @@
 
 		<div id="client_orders_inprogress">
 			<h4>Pedidos em aberto</h4>
-			<c:if test="#{empty clientManagedBean.ordersOpened}">
+			<c:if test="#{empty clientManagedBean.clientOpenOrders}">
 				não há pedidos em aberto
 			</c:if>
 			<ui:include src="includes/order_table.xhtml">
 				<ui:param name="orderList"
-					value="#{clientManagedBean.ordersOpened}"></ui:param>
+					value="#{clientManagedBean.clientOpenOrders}"></ui:param>
 				<ui:param name="fromPage" value="client"></ui:param>
 				<ui:param name="orderBean" value="#{orderManagedBean}"></ui:param>
 				<ui:param name="editOrderAction" value="editOrder"></ui:param>
@@ -65,12 +65,12 @@
 
 		<div id="client_purchases_inprogress">
 			<h4>Compras em aberto</h4>
-			<c:if test="#{empty clientManagedBean.purchasesOpened}">
+			<c:if test="#{empty clientManagedBean.clientOpenPurchases}">
 				não há compras em aberto
 			</c:if>
 			<ui:include src="includes/purchase_table.xhtml">
 				<ui:param name="purchaseList"
-					value="#{clientManagedBean.purchasesOpened}"></ui:param>
+					value="#{clientManagedBean.clientClosedPurchases}"></ui:param>
 				<ui:param name="fromPage" value="client"></ui:param>
 				<ui:param name="purchaseBean" value="#{purchaseManagedBean}"></ui:param>
 				<ui:param name="editPurchaseAction" value="editPurchase"></ui:param>
@@ -79,12 +79,12 @@
 
 		<div id="client_orders_history">
 			<h4>Histórico de pedidos</h4>
-			<c:if test="#{empty clientManagedBean.ordersDelivered}">
+			<c:if test="#{empty clientManagedBean.clientClosedOrders}">
 				não há pedidos no histórico
 			</c:if>
 			<ui:include src="includes/order_table.xhtml">
 				<ui:param name="orderList"
-					value="#{clientManagedBean.ordersDelivered}"></ui:param>
+					value="#{clientManagedBean.clientClosedOrders}"></ui:param>
 				<ui:param name="fromPage" value="client"></ui:param>
 				<ui:param name="orderBean" value="#{orderManagedBean}"></ui:param>
 				<ui:param name="editOrderAction" value="editOrder"></ui:param>
@@ -93,12 +93,12 @@
 		
 		<div id="client_purchase_history">
 			<h4>Histórico de compras</h4>
-			<c:if test="#{empty clientManagedBean.purchasesClosed}">
+			<c:if test="#{empty clientManagedBean.clientClosedPurchases}">
 				não há compras no histórico
 			</c:if>
 			<ui:include src="includes/purchase_table.xhtml">
 				<ui:param name="purchaseList"
-					value="#{clientManagedBean.purchasesClosed}"></ui:param>
+					value="#{clientManagedBean.clientClosedPurchases}"></ui:param>
 				<ui:param name="fromPage" value="client"></ui:param>
 				<ui:param name="purchaseBean" value="#{purchaseManagedBean}"></ui:param>
 				<ui:param name="editPurchaseAction" value="editPurchase"></ui:param>

@@ -121,6 +121,31 @@ public class OrderManagedBean implements Serializable {
 		return fromPage;
 	}
 	
+	public String loadLateOrders() {
+		OrderEntityManager oem = new OrderEntityManager();
+		logger.debug("getting late orders");
+		if (lateOrders == null || lateOrders.size() <= 0) {
+			lateOrders = oem.getOrders(lateOrdersBegin, lateOrdersEnd, null, null,
+					Order.Status.INPROGRESS, Order.Status.READY);
+			lateOrdersDates = new ArrayList<Date>(lateOrders.keySet());
+			Collections.sort(lateOrdersDates);
+		}
+		return "index";
+	}
+	
+	public String loadNextOrders() {
+		OrderEntityManager oem = new OrderEntityManager();
+		logger.debug("getting next orders");
+		if (nextOrders == null || nextOrders.size() <= 0) {
+			nextOrders = oem.getOrders(nextOrdersBegin, nextOrdersEnd, null, null,
+					Order.Status.INPROGRESS, Order.Status.READY);
+			nextOrdersDates = new ArrayList<Date>(nextOrders.keySet());
+			Collections.sort(nextOrdersDates);
+		}
+		
+		return "index";
+	}
+				
 	public Date getLateOrdersEnd() {
 		return lateOrdersEnd;
 	}
@@ -152,17 +177,7 @@ public class OrderManagedBean implements Serializable {
 	public void setNextOrdersBegin(Date nextOrdersBegin) {
 		this.nextOrdersBegin = nextOrdersBegin;
 	}
-	
-	public String loadLateOrders() {
-		getLateOrders();
-		return "index";
-	}
-	
-	public String loadNextOrders() {
-		getNextOrders();
-		return "index";
-	}
-				
+
 	public Order getOrder() {
 		return order;
 	}
@@ -200,15 +215,6 @@ public class OrderManagedBean implements Serializable {
 	}
 	
 	public Map<Date, List<Order>> getLateOrders() {
-		OrderEntityManager oem = new OrderEntityManager();
-		logger.debug("getting late orders");
-		if (lateOrders == null || lateOrders.size() <= 0) {
-			lateOrders = oem.getOrders(lateOrdersBegin, lateOrdersEnd, null, null,
-					Order.Status.INPROGRESS, Order.Status.READY);
-			lateOrdersDates = new ArrayList<Date>(lateOrders.keySet());
-			Collections.sort(lateOrdersDates);
-		}
-		
 		return lateOrders;
 	}
 
@@ -221,15 +227,6 @@ public class OrderManagedBean implements Serializable {
 	}
 	
 	public Map<Date, List<Order>> getNextOrders() {
-		OrderEntityManager oem = new OrderEntityManager();
-		logger.debug("getting next orders");
-		if (nextOrders == null || nextOrders.size() <= 0) {
-			nextOrders = oem.getOrders(nextOrdersBegin, nextOrdersEnd, null, null,
-					Order.Status.INPROGRESS, Order.Status.READY);
-			nextOrdersDates = new ArrayList<Date>(nextOrders.keySet());
-			Collections.sort(nextOrdersDates);
-		}
-		
 		return nextOrders;
 	}
 

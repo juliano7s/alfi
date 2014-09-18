@@ -145,9 +145,44 @@ public class ClientManagedBean implements Serializable {
 			orderManagedBean.setOrder(new Order()); // Clearing order form
 			purchaseManagedBean.setPurchase(new Purchase());
 			purchaseManagedBean.setPurchasedProducts(new HashSet<PurchaseProduct>());
+
+			clientOpenPurchases = new ArrayList<Purchase>();
+			for (Purchase p : client.getPurchases()) {
+				if (p.getPaidStatus() == false) {
+					clientOpenPurchases.add(p);
+				}
+			}
+			
+			clientOpenOrders = new ArrayList<Order>();
+			if (client != null) {
+				for (Order o : client.getOrders()) {
+					logger.debug("Checking order status: " + o.getStatus());
+					if (o.getStatus().equals(Status.INPROGRESS)
+							|| o.getStatus().equals(Status.READY)) {
+						clientOpenOrders.add(o);
+					}
+				}
+			}
+			
+			clientClosedOrders = new ArrayList<Order>();
+			if (client != null) {
+				for (Order o : client.getOrders()) {
+					logger.debug("Checking order status: " + o.getStatus());
+					if (o.getStatus().equals(Status.DELIVERED)) {
+						clientClosedOrders.add(o);
+					}
+				}
+			}
+			
+			clientClosedPurchases = new ArrayList<Purchase>();
+			for (Purchase p : client.getPurchases()) {
+				if (p.getPaidStatus() == true) {
+					clientClosedPurchases.add(p);
+				}
+			}
+		
 			clientOpenOrders = null;
 			clientClosedOrders = null;
-			clientOpenPurchases = null;
 			clientClosedPurchases = null;
 
 			logger.debug("Client to view: " + client.getName());
@@ -233,73 +268,6 @@ public class ClientManagedBean implements Serializable {
 		this.phoneNumbers = phoneNumbers;
 	}
 
-	public List<Order> getOrdersOpened() {
-		logger.debug("Getting orders in progress from client "
-				+ client.getName());
-		if (clientOpenOrders == null) {
-			clientOpenOrders = new ArrayList<Order>();
-			if (client != null) {
-				for (Order o : client.getOrders()) {
-					logger.debug("Checking order status: " + o.getStatus());
-					if (o.getStatus().equals(Status.INPROGRESS)
-							|| o.getStatus().equals(Status.READY)) {
-						clientOpenOrders.add(o);
-					}
-				}
-			}
-		}
-		return clientOpenOrders;
-	}
-
-	public void setOrdersOpened(List<Order> list) {
-	}
-
-	public List<Order> getOrdersDelivered() {
-		logger.debug("Getting orders ready from client " + client.getName());
-		
-		if (clientClosedOrders == null) {
-			clientClosedOrders = new ArrayList<Order>();
-			if (client != null) {
-				for (Order o : client.getOrders()) {
-					logger.debug("Checking order status: " + o.getStatus());
-					if (o.getStatus().equals(Status.DELIVERED)) {
-						clientClosedOrders.add(o);
-					}
-				}
-			}
-		}
-		return clientClosedOrders;
-	}
-	
-	public List<Purchase> getPurchasesOpened() {
-		logger.debug("Getting opened purchases for client");
-		if (clientOpenPurchases == null) {
-			clientOpenPurchases = new ArrayList<Purchase>();
-			for (Purchase p : client.getPurchases()) {
-				if (p.getPaidStatus() == false) {
-					clientOpenPurchases.add(p);
-				}
-			}
-		}
-		return clientOpenPurchases;
-	}
-	
-	public List<Purchase> getPurchasesClosed() {
-		logger.debug("Getting closed purchases for client");
-		if (clientClosedPurchases == null) {
-			clientClosedPurchases = new ArrayList<Purchase>();
-			for (Purchase p : client.getPurchases()) {
-				if (p.getPaidStatus() == true) {
-					clientClosedPurchases.add(p);
-				}
-			}
-		}
-		return clientClosedPurchases;
-	}
-
-	public void setOrdersReady(List<Order> list) {
-	}
-
 	public OrderManagedBean getOrderManagedBean() {
 		return orderManagedBean;
 	}
@@ -314,6 +282,38 @@ public class ClientManagedBean implements Serializable {
 
 	public void setPurchaseManagedBean(PurchaseManagedBean purchaseManagedBean) {
 		this.purchaseManagedBean = purchaseManagedBean;
+	}
+
+	public List<Order> getClientOpenOrders() {
+		return clientOpenOrders;
+	}
+
+	public void setClientOpenOrders(List<Order> clientOpenOrders) {
+		this.clientOpenOrders = clientOpenOrders;
+	}
+
+	public List<Order> getClientClosedOrders() {
+		return clientClosedOrders;
+	}
+
+	public void setClientClosedOrders(List<Order> clientClosedOrders) {
+		this.clientClosedOrders = clientClosedOrders;
+	}
+
+	public List<Purchase> getClientOpenPurchases() {
+		return clientOpenPurchases;
+	}
+
+	public void setClientOpenPurchases(List<Purchase> clientOpenPurchases) {
+		this.clientOpenPurchases = clientOpenPurchases;
+	}
+
+	public List<Purchase> getClientClosedPurchases() {
+		return clientClosedPurchases;
+	}
+
+	public void setClientClosedPurchases(List<Purchase> clientClosedPurchases) {
+		this.clientClosedPurchases = clientClosedPurchases;
 	}
 
 	private String wholeSearch;
