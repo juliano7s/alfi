@@ -13,40 +13,13 @@
 		<h:panelGrid columns="1">
 			<h:panelGroup>
 				<div id="client_list">
-					<h:dataTable rowClasses="rowOdd, rowEven" var="client"
-						value="#{clientManagedBean.clients}" cellpadding="5">
-						<h:column>
-							<f:facet name="header">Índice</f:facet>
-							#{client.id}
-						</h:column>
-						<h:column>
-							<f:facet name="header">Nome</f:facet>
-							#{client.name}
-						</h:column>
-						<h:column>
-							<f:facet name="header">CPF</f:facet>
-							#{client.cpf}
-						</h:column>
-						<h:column>
-							<f:facet name="header">Telefones</f:facet>
-							<ui:repeat value="#{client.phoneNumbers}" var="phone">
-								[#{phone.type}: <b>#{phone.number}</b>]  
-							</ui:repeat>
-						</h:column>
-						<h:column>
-							<f:facet name="header">Ações</f:facet>
-							<h:form>
-								<h:commandLink action="#{clientManagedBean.viewClient}"
-									value="info">
-									<f:param name="clientId" value="#{client.id}" />
-								</h:commandLink> | 
-								<h:commandLink action="#{clientManagedBean.editClient}"
-									value="editar">
-									<f:param name="clientId" value="#{client.id}" />
-								</h:commandLink>
-							</h:form>
-						</h:column>
-					</h:dataTable>
+					<ui:include src="includes/client_table.xhtml">
+						<ui:param name="clientList" value="#{clientManagedBean.clients}"></ui:param>
+						<ui:param name="fromPage" value="list_clients"></ui:param>
+						<ui:param name="clientBean" value="#{clientManagedBean}"></ui:param>						
+						<ui:param name="viewClientAction" value="viewClient"></ui:param>						
+						<ui:param name="editClientAction" value="editClient"></ui:param>						
+					</ui:include>				
 				</div>
 			</h:panelGroup>
 		</h:panelGrid>

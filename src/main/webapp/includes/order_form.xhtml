@@ -58,13 +58,38 @@
 									itemValue="#{owner.id}" itemLabel="#{owner.name}" />
 							</h:selectOneMenu>
 						</h:panelGrid>
-
+						
 						<h:panelGrid columns="1">
 							<h:outputText>Status: </h:outputText>
 							<h:selectOneMenu id="order_status_input"
 								value="#{orderManagedBean.order.status}">
 								<f:selectItems value="#{orderManagedBean.statuses}" var="status"
 									itemValue="#{status}" itemLabel="#{status.viewName}" />
+							</h:selectOneMenu>
+						</h:panelGrid>
+						
+						<h:panelGrid columns="1">
+							<h:outputText>Pagamento do responsável: </h:outputText>
+							<h:selectOneMenu id="order_owner_paid_input"
+								value="#{orderManagedBean.order.ownerPaidStatus}">
+								<f:selectItem itemLabel="Não pago" itemValue="false"></f:selectItem>
+								<f:selectItem itemLabel="Pago" itemValue="true"></f:selectItem>
+							</h:selectOneMenu>
+						</h:panelGrid>		
+										
+						<h:panelGrid columns="1">
+							<h:outputText>Valor Pago (R$): </h:outputText>
+							<h:inputText id="order_paid_value_input" cols="10"
+								value="#{orderManagedBean.order.paidValue}"
+								converter="javax.faces.Float" />
+						</h:panelGrid>						
+						
+						<h:panelGrid columns="1">
+							<h:outputText>Pagamento: </h:outputText>
+							<h:selectOneMenu id="order_paid_status_input"
+								value="#{orderManagedBean.order.paidStatus}">
+								<f:selectItem itemLabel="Não pago" itemValue="false"></f:selectItem>								
+								<f:selectItem itemLabel="Pago" itemValue="true"></f:selectItem>
 							</h:selectOneMenu>
 						</h:panelGrid>
 

@@ -34,7 +34,7 @@ public class ClientEntityManager extends EntityManager<Client> {
 		getEntityManager().getTransaction().begin();
 		List<Client> result = getEntityManager()
 				.createQuery(
-						"from Client c where c in (select Client from Order o join o.client where o.paidStatus = 0)",
+						"select distinct(client) from Order o where o.paidStatus = 0",
 						Client.class).getResultList();
 		getEntityManager().getTransaction().commit();
 		closeEntityManager();

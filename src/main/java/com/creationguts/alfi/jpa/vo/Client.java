@@ -78,7 +78,7 @@ public class Client implements Serializable {
 	public String toString() {
 		return "Client [id=" + id + ", name=" + name + ", cpf=" + cpf
 				+ ", address=" + address + ", email="
-				+ email + ", orders=" + orders + ", phoneNumbers="
+				+ email + ", phoneNumbers="
 				+ phoneNumbers + "]";
 	}
 

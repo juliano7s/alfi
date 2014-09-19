@@ -70,6 +70,13 @@ public class Purchase implements Serializable {
 	public void setPurchaseProducts(Set<PurchaseProduct> products) {
 		purchasedProducts = products;
 	}
+	
+	@Override
+	public String toString() {
+		return "Purchase [id=" + id + ", client=" + client + ", date=" + date
+				+ ", paymentDate=" + paymentDate + ", paidValue=" + paidValue
+				+ ", paidStatus=" + paidStatus + "]";
+	}
 
 	private Long id;
 	private Client client;

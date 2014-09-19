@@ -22,6 +22,15 @@ public class OrderSearchManagedBean implements Serializable {
 	
 	public String searchOrder() {
 		ordersFound = (new OrderEntityManager()).getOrders(this);
+		valueTotal = 0F;
+		costTotal = 0F;
+		logger.debug("Summing orders cost and value");
+		for (Order order : ordersFound) {
+			if (order.getValue() != null)
+				valueTotal += order.getValue();
+			if (order.getCost() != null)
+				costTotal += order.getCost();
+		}
 		String goTo = "list_orders";
 		if (ordersFound.size() == 0) {
 			goTo = "search_orders";
@@ -136,6 +145,22 @@ public class OrderSearchManagedBean implements Serializable {
 		this.orderManagedBean = orderManagedBean;
 	}
 
+	public Float getValueTotal() {
+		return valueTotal;
+	}
+
+	public void setValueTotal(Float valueTotal) {
+		this.valueTotal = valueTotal;
+	}
+
+	public Float getCostTotal() {
+		return costTotal;
+	}
+
+	public void setCostTotal(Float costTotal) {
+		this.costTotal = costTotal;
+	}
+
 	private Float valueGreater;
 	private Float valueLesser;
 	private Float costGreater;
@@ -148,6 +173,8 @@ public class OrderSearchManagedBean implements Serializable {
 	private Order.Status status;
 	private Long ownerId;
 	private List<Order> ordersFound;
+	private Float valueTotal;
+	private Float costTotal;
 	
 	@ManagedProperty(value = "#{orderManagedBean}")
 	private OrderManagedBean orderManagedBean;

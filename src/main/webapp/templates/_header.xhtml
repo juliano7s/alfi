@@ -17,7 +17,9 @@
 			</span>   			
 			<span><h:outputLink value="edit_product.xhtml">+ Produto</h:outputLink></span>  
 			<span><h:outputLink value="search_orders.xhtml">Pesquisar pedidos</h:outputLink></span>  
-			<span><h:outputLink value="search_products.xhtml">Pesquisar produtos</h:outputLink></span>
+			<span style="float: right;">				
+				<h:commandLink action="#{userManagedBean.logout}" value="Recarregar" />
+			</span>   			
 		</div>
 		<div id="header_message_block">
 			<span class="error"><h:message for="main_search_button" /></span>

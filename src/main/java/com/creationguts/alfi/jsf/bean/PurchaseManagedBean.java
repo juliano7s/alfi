@@ -11,6 +11,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.persistence.NoResultException;
 
 import org.apache.log4j.Logger;
 
@@ -80,6 +81,7 @@ public class PurchaseManagedBean implements Serializable {
 				.getExternalContext().getRequestParameterMap().get("fromPage");
 		logger.debug("fromPage: " + fromPage);
 
+		try {
 		if (!barcodeToAdd.trim().equals("")) {
 			Product p = (new ProductEntityManager())
 					.findByBarcode(barcodeToAdd);
@@ -91,6 +93,13 @@ public class PurchaseManagedBean implements Serializable {
 					+ purchasedProducts.size());
 		} else {
 			logger.debug("barcode empty. Product not added to purchase.");
+		}
+		} catch (NoResultException e) {
+			logger.warn("Product with barcode " + barcodeToAdd + " not found");
+			FacesContext.getCurrentInstance()
+			.addMessage(
+					null,
+					new FacesMessage("Produto com código " + barcodeToAdd + " não encontrado"));
 		}
 
 		barcodeToAdd = "";

@@ -5,12 +5,25 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
 <ui:composition template="templates/_template.xhtml">
 	<ui:define name="section_title"></ui:define>
 	<ui:define name="content">
 		<h:panelGrid columns="1">
+			<h:panelGroup>				
+				<h:outputText value="Total: " />
+				<b><h:outputText value="#{fn:length(orderSearchManagedBean.ordersFound)} pedidos" /></b> 
+			</h:panelGroup>
+			<h:panelGroup>				
+				<h:outputText value="Valor total: " />
+				<b><h:outputText value="R$ #{orderSearchManagedBean.valueTotal}" /></b> 
+			</h:panelGroup>
+			<h:panelGroup>				
+				<h:outputText value="Custo total: " />
+				<b><h:outputText value="R$ #{orderSearchManagedBean.costTotal}" /></b> 
+			</h:panelGroup>
 			<h:panelGroup>
 				<div id="order_list">
 					<ui:include src="includes/order_table.xhtml">

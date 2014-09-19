@@ -22,7 +22,7 @@
 	</context-param>
 
 	<session-config>
-		<session-timeout>60</session-timeout>
+		<session-timeout>360</session-timeout>
 	</session-config>
 
 	<context-param>

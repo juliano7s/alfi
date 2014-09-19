@@ -33,6 +33,7 @@ public class ClientManagedBean implements Serializable {
 	public void init() {
 		logger.debug("Initializing clientManagedBean");
 		newClient();
+		loadClientsInDebt();
 	}
 
 	/**
@@ -141,10 +142,15 @@ public class ClientManagedBean implements Serializable {
 			logger.debug("Id: " + clientId);
 
 			client = (new ClientEntityManager()).findById(clientId);
+			client = (new ClientEntityManager()).loadAll(client);
+		}
+
+		if (client != null) {
 
 			orderManagedBean.setOrder(new Order()); // Clearing order form
 			purchaseManagedBean.setPurchase(new Purchase());
-			purchaseManagedBean.setPurchasedProducts(new HashSet<PurchaseProduct>());
+			purchaseManagedBean
+					.setPurchasedProducts(new HashSet<PurchaseProduct>());
 
 			clientOpenPurchases = new ArrayList<Purchase>();
 			for (Purchase p : client.getPurchases()) {
@@ -152,7 +158,8 @@ public class ClientManagedBean implements Serializable {
 					clientOpenPurchases.add(p);
 				}
 			}
-			
+			logger.debug("client open purchases: " + clientOpenPurchases.size());
+
 			clientOpenOrders = new ArrayList<Order>();
 			if (client != null) {
 				for (Order o : client.getOrders()) {
@@ -163,7 +170,8 @@ public class ClientManagedBean implements Serializable {
 					}
 				}
 			}
-			
+			logger.debug("client open orders: " + clientOpenOrders.size());
+
 			clientClosedOrders = new ArrayList<Order>();
 			if (client != null) {
 				for (Order o : client.getOrders()) {
@@ -173,20 +181,21 @@ public class ClientManagedBean implements Serializable {
 					}
 				}
 			}
-			
+			logger.debug("client closed orders: " + clientClosedOrders.size());
+
 			clientClosedPurchases = new ArrayList<Purchase>();
 			for (Purchase p : client.getPurchases()) {
 				if (p.getPaidStatus() == true) {
 					clientClosedPurchases.add(p);
 				}
 			}
-		
-			clientOpenOrders = null;
-			clientClosedOrders = null;
-			clientClosedPurchases = null;
+			logger.debug("client closed purchases: "
+					+ clientClosedPurchases.size());
 
 			logger.debug("Client to view: " + client.getName());
 			client = (new ClientEntityManager()).loadAll(client);
+		} else {
+			logger.error("No client set to view");
 		}
 
 		return "client";
@@ -199,6 +208,7 @@ public class ClientManagedBean implements Serializable {
 		logger.debug("Saving client on the database");
 		ClientEntityManager cem = new ClientEntityManager();
 		client = cem.save(client);
+		client = cem.loadAll(client);
 
 		logger.debug("Cliente salvo com id " + client.getId());
 		FacesContext.getCurrentInstance().addMessage(null,
@@ -211,6 +221,16 @@ public class ClientManagedBean implements Serializable {
 		logger.debug("Adding phone number");
 		client.getPhoneNumbers().add(new Phone());
 		return "edit_client";
+	}
+
+	public String loadClientsInDebt() {
+		ClientEntityManager cem = new ClientEntityManager();
+		inDebtClients = cem.getClientsInDebt();
+		for (Client c : inDebtClients) {
+			logger.debug("client in debt: " + c);
+		}
+
+		return "index";
 	}
 
 	/**
@@ -226,13 +246,8 @@ public class ClientManagedBean implements Serializable {
 		String cpf = ((String) value).trim().replace(".", "").replace("-", "");
 		if (cpf.length() != 11) {
 			throw new ValidatorException(new FacesMessage(
-					"CPF deve ter 11 dï¿½gitos."));
+					"CPF deve ter 11 dígitos."));
 		}
-	}
-	
-	public List<Client> getInDebtClients() {
-		ClientEntityManager cem = new ClientEntityManager();
-		return cem.getClientsInDebt();
 	}
 
 	public String getWholeSearch() {
@@ -273,6 +288,7 @@ public class ClientManagedBean implements Serializable {
 	}
 
 	public void setOrderManagedBean(OrderManagedBean orderManagedBean) {
+		orderManagedBean.setClientManagedBean(this);
 		this.orderManagedBean = orderManagedBean;
 	}
 
@@ -316,8 +332,17 @@ public class ClientManagedBean implements Serializable {
 		this.clientClosedPurchases = clientClosedPurchases;
 	}
 
+	public void setInDebtClients(List<Client> inDebtClients) {
+		this.inDebtClients = inDebtClients;
+	}
+
+	public List<Client> getInDebtClients() {
+		return inDebtClients;
+	}
+
 	private String wholeSearch;
 	private List<Client> clients;
+	private List<Client> inDebtClients;
 	private Client client;
 	private List<Order> clientOpenOrders;
 	private List<Order> clientClosedOrders;
@@ -328,9 +353,8 @@ public class ClientManagedBean implements Serializable {
 	@ManagedProperty(value = "#{orderManagedBean}")
 	private OrderManagedBean orderManagedBean;
 
-	@ManagedProperty(value="#{purchaseManagedBean}")
+	@ManagedProperty(value = "#{purchaseManagedBean}")
 	private PurchaseManagedBean purchaseManagedBean;
-
 
 	private static Logger logger = Logger.getLogger(ClientManagedBean.class);
 	private static final long serialVersionUID = 2461829560777826670L;

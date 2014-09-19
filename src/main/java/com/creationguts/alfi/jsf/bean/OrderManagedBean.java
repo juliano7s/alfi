@@ -118,6 +118,11 @@ public class OrderManagedBean implements Serializable {
 
 		logger.debug("Order saved. Clearing order bean.");
 		order = new Order();
+		
+		if (fromPage.equals("client")) {
+			clientManagedBean.viewClient();
+		}
+		
 		return fromPage;
 	}
 	
@@ -250,6 +255,14 @@ public class OrderManagedBean implements Serializable {
 		this.nextOrdersDates = nextOrdersDates;
 	}
 
+	public ClientManagedBean getClientManagedBean() {
+		return clientManagedBean;
+	}
+
+	public void setClientManagedBean(ClientManagedBean clientManagedBean) {
+		this.clientManagedBean = clientManagedBean;
+	}
+
 	private Order order;
 	private Long orderOwnerId;
 	private List<User> owners;
@@ -261,6 +274,7 @@ public class OrderManagedBean implements Serializable {
 	private List<Date> nextOrdersDates;
 	private Date nextOrdersBegin, nextOrdersEnd;
 	
+	private ClientManagedBean clientManagedBean;
 
 	private static final long serialVersionUID = 536149967322807306L;
 	private static Logger logger = Logger.getLogger(OrderManagedBean.class);
