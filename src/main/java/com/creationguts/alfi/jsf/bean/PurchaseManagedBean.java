@@ -63,7 +63,11 @@ public class PurchaseManagedBean implements Serializable {
 		Long clientId = clientIdParam != null ? Long.parseLong(clientIdParam)
 				: 0L;
 		purchase.setClient((new ClientEntityManager()).findById(clientId));
+		logger.debug("purchase: " + purchase);
 		purchase.setPurchaseProducts(purchasedProducts);
+		for (PurchaseProduct pp : purchasedProducts) {
+			logger.debug("purchase product: " + pp);
+		}
 		PurchaseEntityManager purchaseEntityManager = new PurchaseEntityManager();
 		purchase = purchaseEntityManager.save(purchase);
 

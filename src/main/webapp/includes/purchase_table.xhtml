@@ -21,7 +21,6 @@
 						<f:param name="clientId" value="#{purchase.client.id}" />
 					</h:commandLink>
 				</h:form>
-
 			</h:column>
 			<h:column rendered="#{not empty purchaseList}">
 				<f:facet name="header">Data</f:facet>
@@ -38,7 +37,7 @@
 			<h:column rendered="#{not empty purchaseList}">
 				<f:facet name="header">Status</f:facet>
 				<c:choose>
-					<c:when test="#{purchase.status}">
+					<c:when test="#{purchase.paidStatus}">
     					PAGO
     				</c:when>
 					<c:otherwise>

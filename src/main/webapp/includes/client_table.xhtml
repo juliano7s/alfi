@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:t="http://myfaces.apache.org/tomahawk">
+<body>
+	<ui:composition>
+		<h:dataTable rowClasses="rowOdd, rowEven" var="client"
+			value="#{clientList}" cellpadding="5">
+			<h:column rendered="#{not empty clientList}">
+				<f:facet name="header">Índice</f:facet>
+				#{client.id}
+			</h:column>
+			<h:column rendered="#{not empty clientList}">
+				<f:facet name="header">Nome</f:facet>
+				#{client.name}
+			</h:column>
+			<h:column rendered="#{not empty clientList}">
+				<f:facet name="header">CPF</f:facet>
+				#{client.cpf}
+			</h:column>
+			<h:column rendered="#{not empty clientList}">
+				<f:facet name="header">Telefones</f:facet>
+				<ui:repeat value="#{client.phoneNumbers}" var="phone">
+					[#{phone.type}: <b>#{phone.number}</b>]  
+				</ui:repeat>
+			</h:column>
+			<h:column rendered="#{not empty clientList}">
+				<f:facet name="header">Ações</f:facet>
+				<h:form>
+					<h:commandLink action="#{clientBean[viewClientAction]}"	value="info">
+						<f:param name="clientId" value="#{client.id}" />
+					</h:commandLink> | 
+					<h:commandLink action="#{clientBean[editClientAction]}"	value="editar">
+						<f:param name="clientId" value="#{client.id}" />
+					</h:commandLink>
+				</h:form>
+			</h:column>
+		</h:dataTable>
+	</ui:composition>
+</body>
+</html>

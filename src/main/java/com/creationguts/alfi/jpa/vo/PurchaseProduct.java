@@ -52,6 +52,12 @@ public class PurchaseProduct implements Serializable {
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
+		
+	@Override
+	public String toString() {
+		return "PurchaseProduct [id=" + id + ", purchase=" + purchase
+				+ ", product=" + product + ", quantity=" + quantity + "]";
+	}
 
 	private Long id;
 	private Purchase purchase;

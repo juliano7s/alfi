@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -63,10 +64,11 @@ public class Purchase implements Serializable {
 		this.paidStatus = paidStatus;
 	}
 	
-	@OneToMany(targetEntity=PurchaseProduct.class, mappedBy="purchase", fetch = FetchType.LAZY)
+	@OneToMany(targetEntity = PurchaseProduct.class, mappedBy = "purchase", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST })
 	public Set<PurchaseProduct> getPurchaseProducts() {
 		return purchasedProducts;
 	}
+	
 	public void setPurchaseProducts(Set<PurchaseProduct> products) {
 		purchasedProducts = products;
 	}
